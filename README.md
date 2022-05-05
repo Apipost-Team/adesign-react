@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://adesign.apipost.cn/" target="_blank">
-    <img alt="A-Design Logo" src="./libs/banner-blog.jpg" />
+    <img alt="A-Design Logo" src="https://img.cdn.apipost.cn/adesign/github-banner.svg" />
   </a>
 </p>
 

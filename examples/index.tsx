@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import './index.less';
 import Menus from './constant';
-import Logo from './assets/logo2022.svg';
+
 import Github from './assets/github.svg';
 
 const Main = (props: any) => {
@@ -17,7 +17,7 @@ const Main = (props: any) => {
     <div className="examples">
       <div className="header">
         <Link to="/">
-          <Logo className="logo" />
+          <img src="https://img.cdn.apipost.cn/adesign/adesign-logo.svg" className="logo" />
         </Link>
         <div className="header-nav">
           <a className="header-nav-link" href="javescritp:l">
@@ -29,7 +29,7 @@ const Main = (props: any) => {
           <a className="header-nav-link" href="javescritp:l">
             关于
           </a>
-          <a className="header-nav-git" href="javescritp:l">
+          <a className="header-nav-git" href="https://github.com/Apipost-Team/adesign-react">
             <span className="header-nav-git_ico">
               <Github />
             </span>
