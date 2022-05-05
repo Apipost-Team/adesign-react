@@ -20,13 +20,13 @@ const Main = (props: any) => {
           <img src="https://img.cdn.apipost.cn/adesign/adesign-logo.svg" className="logo" />
         </Link>
         <div className="header-nav">
-          <a className="header-nav-link" href="javescritp:l">
+          <a className="header-nav-link" href="javescritp:">
             设计
           </a>
-          <a className="header-nav-link" href="javescritp:l">
+          <a className="header-nav-link" href="javescritp:">
             资源
           </a>
-          <a className="header-nav-link" href="javescritp:l">
+          <a className="header-nav-link" href="javescritp:">
             关于
           </a>
           <a className="header-nav-git" href="https://github.com/Apipost-Team/adesign-react">
