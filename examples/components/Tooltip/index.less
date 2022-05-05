@@ -1,0 +1,40 @@
+.tooltip-example {
+
+
+  .example-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .rectbox{
+      margin: 30px 0;
+      width: 440px;
+      height: 270px;
+      position: relative;
+      & .btntrigger{
+        position: absolute;
+      }
+    }
+  }
+
+
+}
+
+.drop-menus[data-module=dropdown-example] {
+  &>div{
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    padding: 0 10px;
+    cursor: pointer;
+    &.special{
+      color: #ffffff;
+      background: #409eff;
+    }
+    &:hover:not(&.special) {
+      background: #eeeeee;
+    }
+
+  }
+}
+
+

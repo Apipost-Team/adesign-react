@@ -1,0 +1,60 @@
+.iconfont-example {
+  .iconfont-container {
+    width: 100%;
+  }
+  .iconfont-list {
+    list-style: none;
+    padding: 0;
+    border: solid #E5E6EB;
+    border-width: 1px 0 0 1px;
+    overflow: hidden;
+    .list-item {
+      float: left;
+      position: relative;
+      box-sizing: border-box;
+      padding: 12px;
+      width: 130px;
+      height: 130px;
+      border: solid #E5E6EB;
+      border-width: 0 1px 1px 0;
+      text-align: center;
+      &:hover {
+        background-color: #F2F3F5;
+      }
+
+      .name {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .apipost-icon {
+        width: 100%;
+        height: 100%;
+        line-height: 130px;
+        font-size: 32px;
+        color: #666;
+        &:hover {
+          font-size: 42px;
+          transition: all linear 0.2s;
+        }
+      }
+    }
+  }
+
+}
+.apipost-icon {
+  color: #E5E6EB;
+  svg {
+    fill: currentColor;
+    display: inline-block;
+    color: inherit;
+    font-style: normal;
+    width: 1em;
+    height: 1em;
+  }
+}

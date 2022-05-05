@@ -1,0 +1,35 @@
+.apipost-checkbox{
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid #0000000f;
+  cursor: pointer;
+  display:inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  margin-right: 4px;
+  &.checked{
+      background-color:#409eff ;
+  }
+  &.halfcheck{
+      background-color:#409eff ;
+  }
+  &.disable{
+      background-color:#474F5815;
+      cursor:default;
+  }
+  &.readOnly{
+      opacity: 0.5;
+  }
+  &-svg {
+    fill: currentColor;
+    color: #666;
+    width: 1em;
+    height: 1em;
+    font-size: 14px;
+    color: #fff;
+  }
+}
+

@@ -1,0 +1,50 @@
+.apipost-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  overflow-y: hidden;
+  background-color: #F4F4F4;
+  border: 1px solid #E9E9E9;
+  color: #666666;
+  font-size: 12px;
+  font-family: "PingFang SC";
+  resize: none;
+  caret-color: var(--fn1);
+  top: 0;
+  left: 0;
+
+  &:focus {
+    border-color: #409eff;
+    background-color: #ffffff;
+  }
+
+  &-wrapper {
+    width: 100%;
+    position: relative;
+  }
+
+
+  /* Opera/IE 8+ */
+  &:focus {
+    border-right-width: 1px !important;
+    outline: 0;
+  }
+
+  &::-webkit-input-placeholder {
+    color: var(--fn5);
+  }
+
+
+  .api-input-clear-icon {
+    position: absolute;
+    top: 0;
+    right: 2px;
+
+    img {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}

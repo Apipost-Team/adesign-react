@@ -1,0 +1,41 @@
+.apipost-input-number {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+
+  .apipost-input-inner-wrapper {
+    border-radius: 0;
+  }
+  &-step {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgb(242, 242, 242);
+    cursor: pointer;
+  }
+
+  .column_before,
+  .column_after {
+    position: absolute;
+    right: 0;
+    path {
+      fill: #2b2b2b;
+    }
+    cursor: pointer;
+  }
+  .column_before {
+    top: 6px;
+    right: 10px;
+    border-radius: 0 0 3px 3px;
+  }
+  .column_after {
+    bottom: 6px;
+    right: 10px;
+    border-radius: 3px 3px 0 0;
+  }
+
+}

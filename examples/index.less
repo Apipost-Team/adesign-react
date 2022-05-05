@@ -1,0 +1,158 @@
+
+html,body,#root{
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.examples{
+  width: 100%;
+  height: 100%;
+  .header{
+    height: 60px;
+    border-bottom: 1px solid #e5e6eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logo{
+      margin-left: 20px;
+      display: flex;
+      align-items: center;
+    }
+    &-nav {
+      display: flex;
+      align-items: center;
+      &-link {
+        padding: 4px 16px;
+        box-sizing: border-box;
+        height: 32px;
+        line-height: 24px;
+        color: rgba(0, 0, 0, 0.9);
+        text-decoration: none;
+        font-size: 14px;
+        border-radius: 5px;
+        margin: 0 8px 0 0;
+
+        &:hover, &.active {
+          background-color: rgba(238, 238, 238, 1);
+        }
+      }
+      &-git {
+        padding: 4px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        width: 32px;
+        height: 32px;
+        color: rgba(0, 0, 0, 0.9);
+        margin: 0 8px 0 0;
+
+        &:hover, &.active {
+          background-color: rgba(238, 238, 238, 1);
+        }
+        &_ico {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+
+  .contents{
+    height: calc(100% - 60px);
+    display: flex;
+    .left{
+      width: 260px;
+      border-right:1px solid #e5e6eb;
+      .menu-items{
+        padding-top: 10px;
+        a{
+          height: 40px;
+          padding: 0 10px;
+          margin: 3px 10px;
+          display: inline-block;
+          font-size: 12px;
+          display: block;
+          line-height: 40px;
+          color: #333333;
+          border-radius: 3px;
+          text-decoration: none;
+          &.active{
+            color: #ffffff;
+            background-color: #409eff
+          }
+          &:hover:not(&.active){
+            color: #333333;
+            background: #f2f3f5;
+          }
+        }
+      }
+    }
+    .main{
+      flex: 1;
+      padding: 10px 20px;
+      overflow: auto;
+      .titles{
+        border-bottom: 1px solid #eeeeee;
+        padding: 10px 0 20px 0;
+        .basetitle{
+          font-size: 36px;
+          font-weight: 500;
+        }
+        .desc{
+          font-size: 14px;
+          color: #999999;
+        }
+      }
+      .demo{
+        border: 1px solid #eeeeee;
+        margin: 5px 0;
+        padding: 20px;
+      }
+
+
+
+
+
+
+      .code-container{
+        border: 1px solid #eeeeee;
+        margin: 5px 0;
+        padding: 20px;
+        margin-bottom: 20px;
+        outline: none;
+      }
+
+      .doc-desc{
+        &>.second-title{
+          margin-top: 25px;
+          padding: 15px 0;
+          font-weight: 500;
+          font-size: 14px;
+        }
+        &>table{
+          width: 100%;
+          border-collapse: collapse;
+          tr{
+            border-collapse: collapse;
+          }
+
+          td{
+            font-size: 14px;
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #e5e6eb;
+          }
+          th{
+            font-size: 14px;
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #e5e6eb;
+            font-weight: normal;
+            background-color: #f2f3f5;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+}

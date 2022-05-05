@@ -1,0 +1,132 @@
+.apipost-tabs {
+  position: relative;
+
+  &-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    & .tabs-content {
+      flex: 1;
+      height: 100%;
+      white-space: nowrap;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      overflow: hidden;
+      .tabs-item {
+        font-size: 14px;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        position: relative;
+        cursor: pointer;
+        .item-close {
+          position: absolute;
+          right: 5px;
+        }
+      }
+
+      &_default {
+        height: 30px;
+        border-bottom: 2px solid #e4e7ed;
+        > div {
+          margin-bottom: -4px;
+        }
+        .tabs-item {
+          height: 30px;
+          box-sizing: border-box;
+          padding: 0 5px;
+          margin-right: 14px;
+          border-bottom: 2px solid transparent;
+  
+          &.active {
+            color: #409eff;
+            border-bottom: 2px solid #409eff;
+          }
+  
+  
+          &.removable {
+            padding-right: 30px;
+          }
+        }
+      }
+
+      &_card {
+        border-bottom: 1px solid #e4e7ed;
+        > div {
+          border: 1px solid #e4e7ed;
+          border-radius: 5px 5px 0 0;
+          border-bottom: none;
+          margin-bottom: -1px;
+        }
+        .tabs-item {
+          padding: 0 20px;
+          height: 40px;
+          box-sizing: border-box;
+          line-height: 40px;
+          font-size: 14px;
+          color: #303133;
+          position: relative;
+          border-bottom: 1px solid transparent;
+          &:not(:first-child) {
+            border-left: 1px solid #e4e7ed;
+          }
+          &.active {
+            color: #409eff;
+            border-bottom: 1px solid #fff;
+          }
+        }
+      }
+
+    }
+
+    & .add-button {
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &>svg {
+        fill: #000000;
+      }
+
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
+
+    & .scroll-buttons {
+      width: 40px;
+      display: inline-block;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+
+      .scroll-btn {
+        width: 18px;
+        height: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #cccccc;
+        }
+      }
+    }
+  }
+
+  &-content {
+    padding: 10px 0;
+    font-size: 12px;
+    text-align: left;
+  }
+
+}
