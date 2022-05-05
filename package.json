@@ -1,6 +1,6 @@
 {
   "name": "adesign-react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ADesign Component for React",
   "main": "libs/index.js",
   "files": [
@@ -9,6 +9,10 @@
   ],
   "directories": {
     "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Apipost-Team/adesign-react"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config scripts/start.js",
