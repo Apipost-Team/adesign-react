@@ -14,7 +14,6 @@ ADesign 适配桌面端的组件库，适合在 React 16.x 技术栈项目中使
 - 基于 React 16.x（全部基于 React Hooks 的 Functional Component）
 - 支持暗黑模式及其他主题定制
 - 支持按需加载
-- 测试提交
 
 
 # 安装
