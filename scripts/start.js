@@ -37,7 +37,7 @@ const devConfig = {
     new HtmlWebpackPlugin({
       title: 'ADesign - 企业级产品的完整设计和开发解决方案',
       filename: path.resolve(__dirname, '../dist/index.html'),
-      template: path.resolve(__dirname, '../public/index.html'),
+      template: path.resolve(__dirname, '../src/index.html'),
     }),
   ],
 };

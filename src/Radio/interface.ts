@@ -21,6 +21,12 @@ export interface RadioGroupProps {
   name?: string;
 
   /**
+   * @zh 按钮组类型 button ｜ radio
+   * @defaultValue radio
+   */
+  type?: 'button' | 'radio';
+
+  /**
    * @zh 选择单选框的回调
    */
   onChange?: (value: any) => void;
