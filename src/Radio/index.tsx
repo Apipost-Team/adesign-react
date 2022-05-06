@@ -5,15 +5,7 @@ import './index.less';
 import { RadioProps } from './interface';
 
 const InternalRadio: React.FC<RadioProps> = (props) => {
-  const {
-    className,
-    value,
-    children,
-    style,
-    onMouseLeave,
-    onChange = () => {},
-    ...restProps
-  } = props;
+  const { className, value, children, style, onChange = () => {}, ...restProps } = props;
 
   const [radioCheckbox, setRadioCheckBox] = useState(false);
   const Context = useContext(RadioContext);
@@ -22,7 +14,6 @@ const InternalRadio: React.FC<RadioProps> = (props) => {
   const wrapperClassString = classNames(
     `${prefixCls}-wrapper`,
     {
-      [`${prefixCls}-wrapper-checked`]: radioProps.checked || radioCheckbox,
       [`${prefixCls}-wrapper-disabled`]: radioProps.disabled || Context.disabled,
     },
     className
@@ -45,7 +36,12 @@ const InternalRadio: React.FC<RadioProps> = (props) => {
     }
   };
   return (
-    <label className={wrapperClassString} style={style}>
+    <label
+      className={classNames(wrapperClassString, {
+        [`${prefixCls}-wrapper-checked`]: radioProps.checked || radioCheckbox,
+      })}
+      style={style}
+    >
       <span className="apipost-Radio" onClick={onChange}>
         <input
           type="radio"
