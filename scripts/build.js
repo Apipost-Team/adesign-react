@@ -14,7 +14,7 @@ const webpackConfig = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
-    libraryTarget: 'commonjs', // 重要！
+    // libraryTarget: 'commonjs', // 重要！
   },
   mode: 'development',
   devtool: 'eval-source-map',
