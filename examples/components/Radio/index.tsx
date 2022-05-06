@@ -55,6 +55,34 @@ import RadioGroup from "../../../src/Radio/Group";
         </RadioGroup>
       </ExampleItem>
 
+      <ExampleItem
+        title="按钮类型单选框组"
+        description="通过设置type的方式使用"
+        codeContent={`import Radio from "../../../src/Radio";
+import RadioGroup from "../../../src/Radio/Group";
+  ReactDOM.render(
+    <div>
+      <RadioGroup value="A" type="button">
+        <Radio value="A">选项1</Radio>
+        <Radio value="B" disabled>
+          选项2
+        </Radio>
+        <Radio value="C">选项3</Radio>
+        <Radio value="D">选项4</Radio>
+      </RadioGroup>
+    </div>,
+  CONTAINER)`}
+      >
+        <RadioGroup value="A" type="button">
+          <Radio value="A">选项1</Radio>
+          <Radio value="B" disabled>
+            选项2
+          </Radio>
+          <Radio value="C">选项3</Radio>
+          <Radio value="D">选项4</Radio>
+        </RadioGroup>
+      </ExampleItem>
+
       <div className="titles">
         <div className="basetitle">API说明</div>
         <div className="desc">Radio</div>
@@ -113,6 +141,24 @@ import RadioGroup from "../../../src/Radio/Group";
               <th>描述</th>
               <th>类型</th>
               <th>默认值</th>
+            </tr>
+            <tr>
+              <td>style</td>
+              <td>自定义样式</td>
+              <td>React.CSSProperties</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>className</td>
+              <td>自定义class</td>
+              <td>string | string[]</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>type</td>
+              <td>按钮组类型</td>
+              <td>'radio' | 'button'</td>
+              <td>radio</td>
             </tr>
             <tr>
               <td>value</td>

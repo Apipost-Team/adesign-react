@@ -4,7 +4,7 @@ import Button from '../../../src/Button';
 import './index.less';
 import ExampleItem from '../_exampleItem';
 
-const InputSamples = () => {
+const CollapseSamples = () => {
   return (
     <div className="collapse-example">
       <div className="titles">
@@ -134,4 +134,4 @@ CONTAINER)`}
   );
 };
 
-export default InputSamples;
+export default CollapseSamples;

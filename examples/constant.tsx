@@ -21,6 +21,7 @@ import IconFont from './components/IconFont';
 import Color from './components/Color';
 import Card from './components/Card';
 import Collapse from './components/Collapse';
+import Progress from './components/Progress';
 
 export const Menus = [
   {
@@ -156,6 +157,12 @@ export const Menus = [
     key: 'collapse',
     name: '折叠面板 Collapse',
     elements: <Collapse />,
+  },
+  {
+    path: '/progress',
+    key: 'progress',
+    name: '进度条 Progress',
+    elements: <Progress />,
   },
 ];
 
