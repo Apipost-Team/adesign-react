@@ -19,6 +19,8 @@ import Tabs from './components/Tabs';
 import Table from './components/Table';
 import IconFont from './components/IconFont';
 import Color from './components/Color';
+import Card from './components/Card';
+import Collapse from './components/Collapse';
 import Progress from './components/Progress';
 
 export const Menus = [
@@ -143,6 +145,18 @@ export const Menus = [
     key: 'table',
     name: '表格组件 Table',
     elements: <Table />,
+  },
+  {
+    path: '/card',
+    key: 'card',
+    name: '卡片 Card',
+    elements: <Card />,
+  },
+  {
+    path: '/collapse',
+    key: 'collapse',
+    name: '折叠面板 Collapse',
+    elements: <Collapse />,
   },
   {
     path: '/progress',
