@@ -1,47 +1,13 @@
-const { argv } = require('yargs');
-const isDev = argv.mode === 'development';
-const plugins = [
+module.exports = {
+  presets: [
+    '@babel/preset-env',
     [
-        'const-enum',
-        {
-            transform: 'constObject',
-        },
+      '@babel/preset-react',
+      {
+        runtime: 'automatic',
+      },
     ],
-    'lodash',
-    '@babel/plugin-transform-runtime',
-    //支持import 懒加载
-    '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-transform-async-to-generator',
-    'transform-class-properties',
-    [
-        'import',
-        {
-            libraryName: 'antd',
-            libraryDirectory: 'es',
-            style: true, // or 'css'
-        },
-        'antd',
-    ],
-];
-module.exports = (api) => {
-    api.cache(true);
-    return {
-        presets: [
-            [
-                '@babel/preset-env',
-                {
-                    corejs: 3.9,
-                    useBuiltIns: 'usage',
-                },
-            ],
-            [
-                '@babel/preset-react',
-                {
-                    runtime: 'automatic',
-                },
-            ],
-            '@babel/preset-typescript',
-        ],
-        plugins: isDev ? [...plugins, 'react-refresh/babel'] : [...plugins],
-    };
+    '@babel/preset-typescript',
+  ],
+  plugins: ['@babel/plugin-transform-runtime'],
 };
