@@ -20,7 +20,7 @@ ReactDOM.render(
   </div>,
 CONTAINER)`}
       >
-        <Progress percent={30} />
+        <Progress percent={30} width="40%" />
       </ExampleItem>
 
       <ExampleItem
@@ -66,10 +66,41 @@ CONTAINER)`}
               <td>'circle' | 'line'</td>
               <td>‘line’</td>
             </tr>
+
             <tr>
-              <td>trailColo</td>
+              <td>color</td>
+              <td>进度条颜色</td>
+              <td>color</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>trailColor</td>
               <td>剩余进度条颜色</td>
               <td>color</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>strokeWidth</td>
+              <td>进度条线宽</td>
+              <td>number</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>showText</td>
+              <td>是否展示文本</td>
+              <td>boolean</td>
+              <td>true</td>
+            </tr>
+            <tr>
+              <td>percent</td>
+              <td>进度条百分比（必填）</td>
+              <td>number</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td>进度条宽度</td>
+              <td>string | number</td>
               <td>-</td>
             </tr>
           </tbody>

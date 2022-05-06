@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { ProgressProps } from './interface';
 
-function CircleProgress(props) {
+function CircleProgress(
+  props: ProgressProps & {
+    pathStrokeColor?: string;
+    pathStrokeWidth?: number;
+    prefixCls?: string;
+    color?: string;
+  }
+) {
   const { prefixCls, type, color, percent, showText } = props;
 
   const cls = `${prefixCls}-${type}`;

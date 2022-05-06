@@ -30,6 +30,7 @@ function Progress(props: ProgressProps, ref: any) {
     >
       {type === 'line' && (
         <LineProgress
+          showText={showText}
           type={type}
           strokeWidth={strokeWidth || 4}
           status={status}
@@ -39,9 +40,10 @@ function Progress(props: ProgressProps, ref: any) {
       )}
       {type === 'circle' && (
         <CircleProgress
+          pathStrokeColor={props.trailColor}
+          pathStrokeWidth={strokeWidth || 4}
           showText={showText}
           type={type}
-          strokeWidth={strokeWidth || 4}
           status={status}
           prefixCls={prefixCls}
           {...props}

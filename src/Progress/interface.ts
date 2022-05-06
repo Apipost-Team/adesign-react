@@ -12,7 +12,7 @@ export interface ProgressProps {
   /**
    * @zh 剩余进度条颜色
    */
-  trailColo?: string;
+  trailColor?: string;
 
   /**
    * @zh 是否展示文本
@@ -33,6 +33,11 @@ export interface ProgressProps {
    * 进度条宽度
    */
   width?: string | number;
+
+  /**
+   * @zh 进度条颜色
+   */
+  color?: string;
 
   /**
    * @zh 线宽
