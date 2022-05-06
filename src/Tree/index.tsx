@@ -5,10 +5,6 @@ import Indent from './Indent';
 
 import './index.less';
 
-export {
-  NodeList,
-  TreeNode,
-  Indent,
-};
+export { NodeList, TreeNode, Indent };
 
 export default Tree;
