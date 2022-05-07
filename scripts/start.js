@@ -35,7 +35,7 @@ const devConfig = {
     new HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'ADesign - 企业级产品的完整设计和开发解决方案',
+      title: 'ADesign UI组件库 - 开放、极简、共建 - By Apipost FE',
       filename: path.resolve(__dirname, '../dist/index.html'),
       template: path.resolve(__dirname, '../src/index.html'),
     }),
