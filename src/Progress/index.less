@@ -65,6 +65,43 @@
     }
   }
 
+  &-is-success {
+    .apipost-progress-circle {
+      &-path {
+        stroke: #67c23a;
+      }
+    }
+    .apipost-progress-line {
+      &-inner {
+        background-color: #67c23a;
+      }
+    }
+  }
+  &-is-warning {
+    .apipost-progress-circle {
+      &-path {
+        stroke: #e6a23c;
+      }
+    }
+    .apipost-progress-line {
+      &-inner {
+        background-color: #e6a23c;
+      }
+    }
+  }
+  &-is-error {
+    .apipost-progress-circle {
+      &-path {
+        stroke: #f56c6c;
+      }
+    }
+    .apipost-progress-line {
+      &-inner {
+        background-color: #f56c6c;
+      }
+    }
+  }
+
   display: inline-block;
   width: 100%;
   max-width: 100%;

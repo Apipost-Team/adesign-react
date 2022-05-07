@@ -27,18 +27,6 @@ function LineProgress(props) {
   const height = strokeWidth;
   const isFinish = status === 'success' || status === 'error' || percent >= 100;
 
-  const getText = useCallback(() => {
-    // if (isFunction(formatText)) {
-    //   return formatText(percent);
-    // }
-    switch (status) {
-      case 'error':
-        return <span>{percent}%</span>;
-      default:
-        return `${percent}%`;
-    }
-  }, [formatText, percent, status]);
-
   return (
     <div className={`${cls}-wrapper`}>
       <div
@@ -53,14 +41,12 @@ function LineProgress(props) {
           className={`${cls}-inner`}
           style={{
             width: `${percent}%`,
+            backgroundColor: color,
             // ...getBackground(color, percent),
           }}
         />
       </div>
       {showText && <div className={`${cls}-wrapper-percent`}>{percent}%</div>}
-      {/* {showText && (
-        <div className={cs(`${cls}-text`, { [`${cls}-text-with-icon`]: status })}>{getText()}</div>
-      )} */}
     </div>
   );
 }
