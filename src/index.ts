@@ -17,6 +17,8 @@ import Tooltip from './Tooltip';
 import Tree from './Tree';
 import Trigger from './Trigger';
 import Upload from './Upload';
+import Card from './Card';
+import Collapse from './Collapse';
 
 export default {
   Button,
@@ -38,4 +40,6 @@ export default {
   Tree,
   Trigger,
   Upload,
+  Card,
+  Collapse,
 };
