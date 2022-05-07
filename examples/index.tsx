@@ -20,13 +20,18 @@ const Main = (props: any) => {
           <img src="https://img.cdn.apipost.cn/adesign/adesign-logo.svg" className="logo" />
         </Link>
         <div className="header-nav">
-          <a className="header-nav-link" href="javescritp:">
+          {/* <a className="header-nav-link" href="javescritp:">
             设计
           </a>
           <a className="header-nav-link" href="javescritp:">
             资源
-          </a>
-          <a className="header-nav-link" href="javescritp:">
+          </a> */}
+          <a
+            className="header-nav-link"
+            target="_blank"
+            href="https://wiki.apipost.cn/document/00091641-1e36-490d-9caf-3e47cd38bcde/063ef304-6a5d-45b5-b909-cce5e573e640"
+            rel="noreferrer"
+          >
             关于
           </a>
           <a className="header-nav-git" href="https://github.com/Apipost-Team/adesign-react">
