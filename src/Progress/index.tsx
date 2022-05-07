@@ -11,7 +11,7 @@ function Progress(props: ProgressProps, ref: any) {
   const { className, type = 'line', width, style, showText = true, strokeWidth } = props;
 
   const widthStyle: CSSProperties = { width };
-  widthStyle.width = width || '100%';
+  widthStyle.width = width || 'auto';
 
   const percent = props.percent || 0;
   const status = 'status' in props ? props.status : percent >= 100 ? 'success' : 'normal';

@@ -34,7 +34,8 @@
       border-radius: 100px;
       background-color: #409eff;
       position: relative;
-      transition: width .6s cubic-bezier(.34,.69,.1,1),'background-color' .3s cubic-bezier(.34,.69,.1,1);
+      transition: width .6s cubic-bezier(.34,.69,.1,1),
+                  background-color .3s cubic-bezier(.34,.69,.1,1);
       max-width: 100%;
     }
   }
@@ -62,6 +63,43 @@
     }
     &-path {
       stroke: #409eff;
+    }
+  }
+
+  &-is-success {
+    .apipost-progress-circle {
+      &-path {
+        stroke: #67c23a;
+      }
+    }
+    .apipost-progress-line {
+      &-inner {
+        background-color: #67c23a;
+      }
+    }
+  }
+  &-is-warning {
+    .apipost-progress-circle {
+      &-path {
+        stroke: #e6a23c;
+      }
+    }
+    .apipost-progress-line {
+      &-inner {
+        background-color: #e6a23c;
+      }
+    }
+  }
+  &-is-error {
+    .apipost-progress-circle {
+      &-path {
+        stroke: #f56c6c;
+      }
+    }
+    .apipost-progress-line {
+      &-inner {
+        background-color: #f56c6c;
+      }
     }
   }
 

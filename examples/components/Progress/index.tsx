@@ -17,10 +17,15 @@ const RadioSamples = () => {
         codeContent={`import Radio from "../../../src/Radio";
 ReactDOM.render(
   <div>
+    <Progress percent={30} width="40%" />
+    <br />
+    <Progress percent={100} width="40%" />
   </div>,
 CONTAINER)`}
       >
         <Progress percent={30} width="40%" />
+        <br />
+        <Progress percent={100} width="40%" />
       </ExampleItem>
 
       <ExampleItem
@@ -28,11 +33,20 @@ CONTAINER)`}
         description="圆形进度条。"
         codeContent={`import Radio from "../../../src/Radio";
 ReactDOM.render(
-  <div>
+  <div className="progress_container">
+    <Progress percent={30} type="circle" />
+    <Progress percent={100} type="circle" />
+    <Progress percent={30} type="circle" status="warning" />
+    <Progress percent={30} type="circle" status="error" />
   </div>,
 CONTAINER)`}
       >
-        <Progress percent={30} type="circle" />
+        <div className="progress_container">
+          <Progress percent={30} type="circle" />
+          <Progress percent={100} type="circle" />
+          <Progress percent={30} type="circle" status="warning" />
+          <Progress percent={30} type="circle" status="error" />
+        </div>
       </ExampleItem>
 
       <div className="titles">
@@ -101,6 +115,12 @@ CONTAINER)`}
               <td>width</td>
               <td>进度条宽度</td>
               <td>string | number</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>status</td>
+              <td>自定义进度条状态</td>
+              <td>'success' | 'error' | 'warning' | 'normal'</td>
               <td>-</td>
             </tr>
           </tbody>
