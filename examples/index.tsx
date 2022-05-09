@@ -63,6 +63,12 @@ const Main = (props: any) => {
             ))}
             <Route path="/" element={<Navigate to="color" />} />
           </Routes>
+          <div className="main-copyright">
+            <div>
+              Copyright © 北京北极狐信息科技有限公司 . All Rights Reserved. 2019-2022 版权所有
+            </div>
+            <div>计算机软件著作登记号：2019SR0087419</div>
+          </div>
         </div>
       </div>
     </div>
