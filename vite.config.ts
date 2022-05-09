@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     reactSvgPlugin({
       defaultExport: 'component',
+      expandProps: 'end',
     }),
   ],
   build: {
