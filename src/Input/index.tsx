@@ -11,6 +11,7 @@ export const Input: React.FC<InputProps> = (props) => {
     onChange,
     className,
     style,
+    size = 'large',
     placeholder,
     beforeFix = null,
     afterFix = null,
@@ -68,6 +69,7 @@ export const Input: React.FC<InputProps> = (props) => {
     'apipost-input-inner-wrapper-focus': focus,
     'apipost-input-inner-wrapper-error': error,
     'apipost-input-inner-wrapper-disabled': disabled,
+    [`apipost-input-inner-wrapper-${size}`]: true,
   });
 
   const handleFocus = (e: any) => {
