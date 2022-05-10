@@ -99,6 +99,33 @@ CONTAINER)`}
         </div>
       </ExampleItem>
 
+      <ExampleItem
+        title="圆形按钮"
+        description="圆形的按钮"
+        codeContent={`import Button from '../../../src/Button';
+ReactDOM.render(
+  <div>
+    <Button disabled>Default</Button>
+    <Button type="primary" shape="round">Primary</Button>
+  </div>,
+CONTAINER)`}
+      >
+        <div>
+          <Button type="primary" size="mini" shape="round">
+            a
+          </Button>
+          <Button type="primary" size="small" shape="round">
+            a
+          </Button>
+          <Button type="primary" shape="round">
+            a
+          </Button>
+          <Button type="primary" size="large" shape="round">
+            a
+          </Button>
+        </div>
+      </ExampleItem>
+
       <div className="titles">
         <div className="basetitle">API说明</div>
         <div className="desc"></div>
