@@ -8,5 +8,5 @@
 package-lock.json
 yarn.lock
 /dist/*
-/lib
+/libs
 

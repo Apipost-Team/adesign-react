@@ -37,6 +37,13 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
 
   useEffect(() => {
     resizeObserver.observe(panelRef.current);
+
+    return () => {
+      if (panelRef.current) {
+        panelRef.current?.disconnect();
+        panelRef.current = null;
+      }
+    };
   }, []);
 
   useEffect(() => {
