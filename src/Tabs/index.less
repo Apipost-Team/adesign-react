@@ -14,6 +14,9 @@
       justify-content: flex-start;
       align-items: center;
       overflow: hidden;
+      & .enableTransition{
+          transition: transform  ease-in 0.2s;
+      }
       .tabs-item {
         font-size: 14px;
         display: inline-flex;
@@ -26,6 +29,10 @@
         .item-close {
           position: absolute;
           right: 5px;
+
+          &:hover{
+            background-color: rgba(0,0,0,0.1);
+          }
         }
       }
 
@@ -49,15 +56,16 @@
           height: 30px;
           box-sizing: border-box;
           padding: 0 5px;
-          margin-right: 14px;
+         // margin-right: 14px;
           border-bottom: 2px solid transparent;
-  
+
           &.active {
             color: #409eff;
             border-bottom: 2px solid #409eff;
+           // background-color: rgba(0,0,0,0.2);
           }
-  
-  
+
+
           &.removable {
             padding-right: 30px;
           }

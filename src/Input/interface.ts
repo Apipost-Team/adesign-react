@@ -12,6 +12,11 @@ export interface InputProps
   value?: string;
 
   /**
+   * @zh 输入框大小
+   */
+  size?: 'mini' | 'small' | 'middle' | 'large';
+
+  /**
    * @zh 输入框提示信息
    */
   placeholder?: string;

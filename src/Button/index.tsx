@@ -22,6 +22,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
     [`apipost-btn-${type}`]: true,
     [`apipost-btn-${size}`]: true,
     [`apipost-btn-${shape}`]: shape !== undefined,
+    [`apipost-btn-${size}-${shape}`]: shape !== undefined,
     'apipost-btn-disabled': disabled,
   };
   const btnclassName = classnames(className, tempClassName);

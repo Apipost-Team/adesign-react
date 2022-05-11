@@ -77,6 +77,36 @@ ReactDOM.render(
         </div>
       </ExampleItem>
 
+      <ExampleItem
+        title="文本框尺寸"
+        description="文本框尺寸，分为四种尺寸mini、small、middle、large"
+        codeContent={`
+import Input from '../../../src/Input';
+
+const Textarea = Input.Textarea;
+
+ReactDOM.render(
+  <>
+  </>,
+  CONTAINER
+);`}
+      >
+        <div className="demo">
+          <div>
+            <Input size="mini" placeholder="Please Enter" />
+          </div>
+          <div>
+            <Input size="small" placeholder="Please Enter" />
+          </div>
+          <div>
+            <Input size="middle" placeholder="Please Enter" />
+          </div>
+          <div>
+            <Input placeholder="Please Enter" />
+          </div>
+        </div>
+      </ExampleItem>
+
       <div className="titles">
         <div className="basetitle">API说明</div>
         <div className="desc">input</div>
@@ -113,6 +143,12 @@ ReactDOM.render(
               <td>未输入文字时组件默认提示文字</td>
               <td>string</td>
               <td>''</td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td>输入框尺寸</td>
+              <td>'mini' | 'small' | 'middle' | 'large'</td>
+              <td>-</td>
             </tr>
             <tr>
               <td>addBefore</td>

@@ -8,6 +8,7 @@ export interface TabPanProps {
   title: string | React.ReactNode;
   removable?: boolean;
   disabled?: boolean;
+  itemWidth?: number;
 }
 
 export interface RenderProps {
@@ -40,4 +41,5 @@ export interface TabsContextProps {
   activeId: string;
   handleSwitchTab: (activeId: string, tabpan: TabPanProps) => void;
   handleRemoveTab: (tabId: string, tabpan: TabPanProps) => void;
+  itemWidth?: number;
 }

@@ -16,7 +16,8 @@ const TabPan: React.FC<TabPanProps> = (props) => {
     removable,
     ...restProps
   } = props;
-  const { activeId, handleSwitchTab, handleRemoveTab } = useContext<TabsContextProps>(TabsContext);
+  const { itemWidth, activeId, handleSwitchTab, handleRemoveTab } =
+    useContext<TabsContextProps>(TabsContext);
 
   // 切换tabitem
   const handleChange = () => {
@@ -40,7 +41,15 @@ const TabPan: React.FC<TabPanProps> = (props) => {
 
   return (
     <>
-      <div style={style} {...restProps} onClick={handleChange} className={tempClassName}>
+      <div
+        style={{
+          ...style,
+          width: itemWidth,
+        }}
+        {...restProps}
+        onClick={handleChange}
+        className={tempClassName}
+      >
         {title}
         {removable && <TabRemove className="item-close" onClick={handleRemove} />}
       </div>
