@@ -13,24 +13,51 @@ const InputSamples = () => {
     { id: '3', title: '新建标题3', content: '新建内容3' },
   ];
 
+
+  const [activeId, setActiveId] = useState<string>('1');
   const [tabs, setTabs] = useState(_cloneDeep(defaultList));
 
   const handleAddTab = () => {
     const title = `新建标题·${tabs.length + 1}`;
     const content = `新建内容·${tabs.length + 1}`;
+
+    const tabId= uuidv4();
+    setActiveId(tabId);
     setTabs([
       ...tabs,
       {
-        id: uuidv4(),
+        id: tabId,
         title,
         content,
       },
     ]);
+
   };
 
   const handleRemoveTab = (id: string) => {
-    const newList = tabs?.filter((d) => d.id !== id);
-    setTabs(newList);
+
+
+    const newList = tabs.filter((d) => d.id !== id);
+    let newActiveId = "";
+    const tabIndex = tabs.reduce(
+      (a: number, b: any, index: number) => (b.id === id ? index : a),
+      -1
+    );
+    if (tabIndex === -1) {
+      return;
+    }
+    if (id === activeId) {
+      if (tabIndex < tabs.length - 1) {
+        // 如果tabindex不是最后一个，则把下一个设为选中态
+        newActiveId = tabs.find((d, index) => index === tabIndex + 1)?.id || "";
+      } else {
+        // 前一个设为选中态
+        newActiveId = tabs.find((d, index) => index === tabIndex - 1)?.id || "";
+      }
+      setActiveId(newActiveId);
+    }
+    setTabs([...newList]);
+
   };
 
   const renderHeaderItems = (
@@ -167,27 +194,55 @@ const defaultList = [
   { id: '3', title: '新建标题3', content: '新建内容3' },
 ];
 
+const [activeId, setActiveId] = useState<string>('1');
 const [tabs, setTabs] = useState(_cloneDeep(defaultList));
 
 const handleAddTab = () => {
-  const title = ‘新建标题·${tabs.length + 1}’;
-  const content = ‘新建内容·${tabs.length + 1}’;
+  const title = ‘新建标题’;
+  const content = ‘新建内容’;
+
+  const tabId= uuidv4();
+  if(activeId===''){
+    setActiveId(tabId);
+  }
   setTabs([
     ...tabs,
     {
-      id: uuidv4(),
+      id: tabId,
       title,
       content,
     },
   ]);
+
 };
 
-const handleRemoveTab = (id) => {
-  const newList = tabs?.filter((d) => d.id !== id);
-  setTabs(newList);
+const handleRemoveTab = (id: string) => {
+
+
+  const newList = tabs.filter((d) => d.id !== id);
+  let newActiveId = "";
+  const tabIndex = tabs.reduce(
+    (a: number, b: any, index: number) => (b.id === id ? index : a),
+    -1
+  );
+  if (tabIndex === -1) {
+    return;
+  }
+  if (id === activeId) {
+    if (tabIndex < tabs.length - 1) {
+      // 如果tabindex不是最后一个，则把下一个设为选中态
+      newActiveId = tabs.find((d, index) => index === tabIndex + 1)?.id || "";
+    } else {
+      // 前一个设为选中态
+      newActiveId = tabs.find((d, index) => index === tabIndex - 1)?.id || "";
+    }
+    setActiveId(newActiveId);
+  }
+  setTabs([...newList]);
+
 };
 
-<Tabs showAdd onAddTab={handleAddTab} onRemoveTab={handleRemoveTab} showScrollBtns>
+<Tabs showAdd onAddTab={handleAddTab} onRemoveTab={handleRemoveTab} showScrollBtns onChange={setActiveId} activeId={activeId} >
   {tabs.map((d) => (
     <TabPan key={d.id} id={d.id} title={d.title} removable>
       {d.content}
@@ -196,7 +251,7 @@ const handleRemoveTab = (id) => {
 </Tabs>
 `}
       >
-        <Tabs showAdd onAddTab={handleAddTab} onRemoveTab={handleRemoveTab} showScrollBtns defaultActiveId={'1'} >
+        <Tabs showAdd onAddTab={handleAddTab} onRemoveTab={handleRemoveTab} showScrollBtns onChange={setActiveId} activeId={activeId} >
           {tabs.map((d) => (
             <TabPan key={d.id} id={d.id} title={d.title} removable>
               {d.content}
