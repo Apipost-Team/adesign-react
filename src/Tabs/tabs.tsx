@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useImperativeHandle, useRef } from 'react';
 import cn from 'classnames';
 import _cloneDeep from 'lodash/cloneDeep';
+import _throttle from 'lodash/throttle';
 import _debounce from 'lodash/debounce';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
@@ -24,15 +25,60 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     onAddTab = () => undefined,
     onRemoveTab,
     renderHeader,
+    itemWidth = 150,
     ...restProps
   } = props;
+
+  const [enableTransition, setEnableTransition] = useState(true); // 是否开启动画效果
   const [activeTabId, setActiveTabId] = useState(defaultActiveId);
   const [translateX, setTranslateX] = useState(0);
 
   const { Provider } = TabsContext;
 
-  const refTabPanList = useRef<HTMLDivElement>(null);
+  const refHeadOuter = useRef<HTMLDivElement>(null);
   const refTranslateData = useRef<any>(null);
+
+  const handleMouseWeelDone = useCallback(
+    _debounce(() => {
+      setEnableTransition(true);
+    }, 100),
+    []
+  );
+
+  useEffect(() => {
+    refTranslateData.current = {
+      translateX,
+    };
+    handleMouseWeelDone();
+  }, [translateX]);
+
+  const handleMouseWeel = useCallback(
+    _throttle((e) => {
+      // e.preventDefault();
+      // e.stopPropagation();
+      setEnableTransition(false);
+      const moveStepX = e.nativeEvent.deltaY;
+      let movedWidth = 0;
+      if (e.nativeEvent.deltaY > 0) {
+        const innerPanel = refHeadOuter.current?.firstElementChild;
+        const outerPanel = refHeadOuter.current;
+        movedWidth = refTranslateData.current.translateX - moveStepX;
+        if (movedWidth < outerPanel?.offsetWidth - innerPanel.offsetWidth) {
+          movedWidth = outerPanel?.offsetWidth - innerPanel.offsetWidth;
+        }
+      } else {
+        movedWidth = refTranslateData.current.translateX - moveStepX;
+      }
+      if (movedWidth > 0) {
+        movedWidth = 0;
+      }
+      setTranslateX(movedWidth);
+
+      // e.stopPropagation();
+      // e?.preventDefault();
+    }, 20),
+    []
+  );
 
   const tabsList = Array.isArray(children)
     ? children.reduce((a: TabPanProps[], b: TabPanProps) => a.concat(b), [])
@@ -51,7 +97,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     let index = -1;
     for (let i = 0; i < elements.length; i++) {
       const item = elements[i];
-      if (item.id === activeId) {
+      if (item.props.id === activeId) {
         index = i;
       }
     }
@@ -62,32 +108,37 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     if (tabsList === 0) {
       setTranslateX(0);
     }
-    if (refTabPanList.current === null) {
+    if (refHeadOuter.current === null) {
       return;
     }
-
     const index = getTabIndex(tabsList, mergedActiveId);
-    // if (index === -1) {
-    //   return;
-    // }
-    // const itemWidth = 100;
-    // const outerWidth = refTabPanList.current.offsetWidth;
+    if (index === -1) {
+      return;
+    }
+    const outerWidth = refHeadOuter.current.offsetWidth;
+    const innerWidth = refHeadOuter.current.firstElementChild?.scrollWidth || 0;
+    const leftOffset = -index * itemWidth;
+    let newTranslateX = null;
+    if (leftOffset > translateX) {
+      newTranslateX = leftOffset;
+    }
+    const rightOffset = (index + 1) * itemWidth;
+    if (rightOffset > outerWidth && translateX >= outerWidth - rightOffset) {
+      newTranslateX = outerWidth - rightOffset;
+      // setTranslateX(outerWidth - rightOffset);
+    }
 
-    // // if (index <= 0) {
-    // //   setTranslateX(0);
-    // // }
-    // const leftOffset = -index * itemWidth;
-    // if (leftOffset > translateX) {
-    //   setTranslateX(leftOffset);
-    // }
-    // const rightOffset = (index + 1) * itemWidth;
-    // if (rightOffset > outerWidth && translateX >= outerWidth - rightOffset) {
-    //   setTranslateX(outerWidth - rightOffset);
-    // }
-
-    // if (translateX < outerWidth - innerWidth) {
-    //   setTranslateX(outerWidth - innerWidth);
-    // }
+    // 右侧有空间时
+    if (translateX < outerWidth - innerWidth) {
+      if (outerWidth >= innerWidth) {
+        newTranslateX = 0;
+      } else {
+        newTranslateX = outerWidth - innerWidth;
+      }
+    }
+    if (newTranslateX !== null) {
+      setTranslateX(newTranslateX);
+    }
   }, [mergedActiveId, tabsList.length]);
 
   useEffect(() => {
@@ -110,7 +161,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   };
 
   const handleMoveLeft = () => {
-    const tabsPanel = refTabPanList.current;
+    const tabsPanel = refHeadOuter.current;
 
     if (tabsPanel === null) {
       return;
@@ -126,7 +177,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   };
 
   const handleMoveRight = () => {
-    const tabsPanel = refTabPanList.current;
+    const tabsPanel = refHeadOuter.current;
     if (tabsPanel === null) {
       return;
     }
@@ -151,9 +202,12 @@ const Tabs = (props: TabsProps, rootRef: any) => {
         'tabs-content': true,
         [`tabs-content_${type}`]: true,
       })}
-      ref={refTabPanList}
+      ref={refHeadOuter}
     >
       <div
+        className={cn({
+          enableTransition: enableTransition === true,
+        })}
         style={{
           transform: `translate3d(${translateX}px,0,0)`,
         }}
@@ -180,12 +234,19 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   );
 
   return (
-    <div style={style} ref={rootRef} {...restProps} className={cn('apipost-tabs', className)}>
+    <div
+      onWheel={handleMouseWeel}
+      style={style}
+      ref={rootRef}
+      {...restProps}
+      className={cn('apipost-tabs', className)}
+    >
       <Provider
         value={{
           activeId: mergedActiveId,
           handleSwitchTab,
           handleRemoveTab,
+          itemWidth,
         }}
       >
         <div className="apipost-tabs-header">
