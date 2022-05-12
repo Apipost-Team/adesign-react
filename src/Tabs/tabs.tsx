@@ -235,7 +235,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
 
   return (
     <div
-      onWheel={handleMouseWeel}
+
       style={style}
       ref={rootRef}
       {...restProps}
@@ -249,7 +249,9 @@ const Tabs = (props: TabsProps, rootRef: any) => {
           itemWidth,
         }}
       >
-        <div className="apipost-tabs-header">
+        <div
+         onWheel={handleMouseWeel}
+         className="apipost-tabs-header">
           {typeof renderHeader !== 'function' ? (
             <>
               {headerTabItems}
