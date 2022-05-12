@@ -1,19 +1,17 @@
 import React, { useState, useContext, useImperativeHandle, useEffect } from 'react';
 import { List as VirtualList, AutoSizer } from 'react-virtualized';
-
-import _ from 'lodash';
 import TreeNode from './TreeNode';
-import Card from './NodeCard';
 import TreeContext from './TreeContext';
 
-let preNodeExpandStatus = false;
+type ScrollSize = {
+  width: number;
+  height: number;
+};
 
 const NodeList = (props, ref) => {
   const { perfixCls, data, dataList } = props;
   const {
     handleExpandItem,
-    handleNodeDragEnd,
-    draggable,
     handleCheckAll,
     checkStatus,
     fieldNames,
@@ -22,36 +20,6 @@ const NodeList = (props, ref) => {
     scrollToIndex,
     setScrollToIndex,
   } = useContext(TreeContext);
-
-  const [listRef, setListRef] = useState(null);
-  const [hoverIndex, setHoverIndex] = useState(-1);
-
-  const handleNodeMoveBegin = (dragIndex) => {
-    const dragedItem = data[dragIndex];
-    preNodeExpandStatus = dragedItem.isExpand;
-    if (dragedItem.isLeaf !== true && preNodeExpandStatus) {
-      handleExpandItem(dragedItem);
-    }
-  };
-
-  const handleNodeMoving = (s, hIndex) => {
-    if (hoverIndex !== hIndex) {
-      setHoverIndex(hIndex);
-    }
-  };
-
-  const handleNodeMoveEnd = (sIndex, toIndex, mode) => {
-    setHoverIndex(-1);
-    handleNodeDragEnd(sIndex, toIndex, mode);
-  };
-
-  const renderNodeItem = (item, nodeIndex) => (
-    <React.Fragment key={item.key}>
-      {item.show.reduce((a, b) => a && b, true) && (
-        <TreeNode perfixCls={perfixCls} {...item} nodeKey={item.key} nodeIndex={nodeIndex} />
-      )}
-    </React.Fragment>
-  );
 
   const [scrollKey, setScrollKey] = useState(null);
 
@@ -96,17 +64,28 @@ const NodeList = (props, ref) => {
     checkStatus,
   }));
 
-  const virtualRender = ({ key, index, style }) => (
-    <div key={key} style={style}>
-      {renderNodeItem(data[index], index)}
-    </div>
-  );
+  const renderNodeItem = (item, nodeIndex, params) => {
+    return (
+      item.show.every((visible: boolean) => visible === true) && (
+        <TreeNode
+          {...params}
+          perfixCls={perfixCls}
+          {...item}
+          nodeKey={item.key}
+          nodeIndex={nodeIndex}
+        />
+      )
+    );
+  };
+
+  const virtualRender = ({ key, index, style }) =>
+    renderNodeItem(data[index], index, { key, style });
 
   return (
     <>
       {enableVirtualList ? (
         <AutoSizer>
-          {({ width, height }) => (
+          {({ width, height }: ScrollSize) => (
             <VirtualList
               width={width}
               height={height}

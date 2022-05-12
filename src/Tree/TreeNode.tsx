@@ -6,7 +6,7 @@ import CheckBox from '../CheckBox';
 import { CheckStatus } from '../CheckBox/interface';
 
 const TreeNode = (props) => {
-  const { perfixCls, data, disabled, children, parent, ...restNodeProps } = props;
+  const { style, perfixCls, disabled, ...restNodeProps } = props;
 
   const {
     enableCheck,
@@ -69,24 +69,33 @@ const TreeNode = (props) => {
   const nodeTitle = <div className={`${nodePerfixCls}-title`}>{props.title}</div>;
 
   return (
-    <div
-      className={classNames({
-        [nodePerfixCls]: true,
-        'tree-node-selected': selectedKeys.includes(props.nodeKey),
-      })}
-      onClick={handleNodeClick}
-      onContextMenu={handleContextMenu}
-    >
+    <>
       {typeof render !== 'function' ? (
-        <>
+        <div
+          style={style}
+          className={classNames({
+            [nodePerfixCls]: true,
+            'tree-node-selected': selectedKeys.includes(props.nodeKey),
+          })}
+          onClick={handleNodeClick}
+          onContextMenu={handleContextMenu}
+        >
           {indent}
           {nodeTitle}
           {checkbox}
-        </>
+        </div>
       ) : (
-        render(props, { indent, checkbox, nodeTitle })
+        render(props, {
+          indent,
+          checkbox,
+          nodeTitle,
+          style,
+          selected: selectedKeys.includes(props.nodeKey),
+          onClick: handleNodeClick,
+          onContextMenu: handleContextMenu,
+        })
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,28 +1,29 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
 import './index.less';
 import useCheck from './hooks/useCheck';
-import useDrag from './hooks/useDrag';
 import { TreeProps } from './interface';
 
 const { Provider } = TreeContext;
+
 const perfixCls = 'apipost-tree';
+
 const Tree = (props: TreeProps, ref: any) => {
   const {
     dataList, // 数据源 一维数组格式
     showLine = false,
-    draggable = false,
     enableCheck = false,
     checkboxReadOnly = false, // 所有的勾选框是否只读
     isExpandAllKeys = true,
-    defaultExpandKeys = undefined,
+    defaultExpandKeys = undefined, // 默认展开节点
     onExpandKeysChange = () => undefined,
-    defaultCheckedKeys,
-    checkedKeys,
+    defaultCheckedKeys, // 默认选中节点
+    checkedKeys, // 选中的节点 （受控）
     fieldNames = {
       key: 'key',
       title: 'title',
@@ -31,24 +32,22 @@ const Tree = (props: TreeProps, ref: any) => {
     },
     onCheck = () => undefined,
     render,
-    renderList,
-    showIcon = true,
     onNodeClick = () => undefined,
-    onNodeDragEnd = () => undefined,
     onRightClick = () => undefined,
     onMultiSelect = () => undefined,
     onCheckAll = () => undefined,
     onOutSideClick = () => undefined,
     selectedKeys = [], // 默认选中节点
     style,
-    className,
-    enableVirtualList = false,
+    className, // 数组件class名称
+    enableVirtualList = false, // 是否开启虚拟列表
     nodeSort = undefined, // 节点排序
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [flattenNodes, setFlattenNodes] = useState([]);
   const [cachedTree, setCachedTree] = useState({});
   const [scrollToIndex, setScrollToIndex] = useState(0);
+
   const { mergeCheckedKeys, halfCheckedKeys, handleCheckNode, handleCheckAll } = useCheck({
     onCheck,
     onCheckAll,
@@ -59,15 +58,12 @@ const Tree = (props: TreeProps, ref: any) => {
     checkedKeys,
   });
 
-  // const mergeCheckedKeys = defaultCheckedKeys !== undefined ? defaultCheckedKeys : checkedKeys;
-
   useEffect(() => {
-    if (defaultExpandKeys !== undefined && _.isEqual(defaultExpandKeys, expandedKeys) === false) {
+    if (defaultExpandKeys !== undefined && isEqual(defaultExpandKeys, expandedKeys) === false) {
       setExpandedKeys(defaultExpandKeys);
     }
   }, [defaultExpandKeys, dataList]);
 
-  const { handleNodeDragEnd } = useDrag({ flattenNodes, fieldNames, onNodeDragEnd, cachedTree });
   // 批量展开/折叠
   const prepareExpandKeys = (expand, datalist) => {
     const expandKeys = {};
@@ -111,13 +107,6 @@ const Tree = (props: TreeProps, ref: any) => {
     setFlattenNodes(node);
   }, [dataList]);
 
-  // 默认勾选节点信息
-  // useEffect(() => {
-  //   if (defaultCheckedKeys.length !== 0) {
-  //     setCheckedKeys(defaultCheckedKeys);
-  //   }
-  // }, [defaultCheckedKeys]);
-
   /*
      展开或闭合节点
     nodeKeys: sring 节点展开闭合/Array 要展开的节点
@@ -137,7 +126,7 @@ const Tree = (props: TreeProps, ref: any) => {
     } else if (expandKeyData[nodeKeys] === undefined) {
       expandKeyData[nodeKeys] = true;
     } else {
-      expandKeyData = _.omit(expandKeyData, nodeKeys);
+      expandKeyData = omit(expandKeyData, nodeKeys);
     }
 
     const expandKeyArr = Object.keys(expandKeyData);
@@ -175,17 +164,14 @@ const Tree = (props: TreeProps, ref: any) => {
           fieldNames,
           dataList,
           showLine,
-          draggable,
           handleCheckNode,
           expandedKeys,
           handleExpandItem,
-          handleNodeDragEnd,
           enableCheck,
           checkboxReadOnly,
           checkedKeys: mergeCheckedKeys,
           halfCheckedKeys,
           render,
-          showIcon,
           onNodeClick,
           onRightClick: handleRightClick,
           selectedKeys,
@@ -196,7 +182,6 @@ const Tree = (props: TreeProps, ref: any) => {
           setScrollToIndex,
         }}
       >
-        {/* {dataList.length} */}
         <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />
       </Provider>
     </div>
