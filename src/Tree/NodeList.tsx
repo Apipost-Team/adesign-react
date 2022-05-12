@@ -1,6 +1,4 @@
 import React, { useState, useContext, useImperativeHandle, useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { List as VirtualList, AutoSizer } from 'react-virtualized';
 
 import _ from 'lodash';
@@ -49,22 +47,8 @@ const NodeList = (props, ref) => {
 
   const renderNodeItem = (item, nodeIndex) => (
     <React.Fragment key={item.key}>
-      {draggable ? (
-        <Card
-          index={nodeIndex}
-          key={item.key}
-          beginMove={handleNodeMoveBegin}
-          moved={handleNodeMoveEnd}
-          moving={handleNodeMoving}
-        >
-          {item.show.reduce((a, b) => a && b, true) && (
-            <TreeNode perfixCls={perfixCls} {...item} nodeKey={item.key} nodeIndex={nodeIndex} />
-          )}
-        </Card>
-      ) : (
-        item.show.reduce((a, b) => a && b, true) && (
-          <TreeNode perfixCls={perfixCls} {...item} nodeKey={item.key} nodeIndex={nodeIndex} />
-        )
+      {item.show.reduce((a, b) => a && b, true) && (
+        <TreeNode perfixCls={perfixCls} {...item} nodeKey={item.key} nodeIndex={nodeIndex} />
       )}
     </React.Fragment>
   );
@@ -119,27 +103,25 @@ const NodeList = (props, ref) => {
   );
 
   return (
-    <div
-      ref={(ref1) => {
-        setListRef(ref1);
-      }}
-    >
-      <DndProvider backend={HTML5Backend}>
-        {enableVirtualList ? (
-          <VirtualList
-            width={width}
-            height={height}
-            rowCount={data.length}
-            rowHeight={30}
-            rowRenderer={virtualRender}
-            overscanRowCount={10}
-            scrollToIndex={scrollToIndex}
-          />
-        ) : (
-          <>{data.map(renderNodeItem)}</>
-        )}
-      </DndProvider>
-    </div>
+    <>
+      {enableVirtualList ? (
+        <AutoSizer>
+          {({ width, height }) => (
+            <VirtualList
+              width={width}
+              height={height}
+              rowCount={data.length}
+              rowHeight={30}
+              rowRenderer={virtualRender}
+              overscanRowCount={10}
+              scrollToIndex={scrollToIndex}
+            />
+          )}
+        </AutoSizer>
+      ) : (
+        <div>{data.map(renderNodeItem)}</div>
+      )}
+    </>
   );
 };
 

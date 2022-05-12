@@ -30,7 +30,8 @@ const Tree = (props: TreeProps, ref: any) => {
       children: 'children',
     },
     onCheck = () => undefined,
-    render = undefined,
+    render,
+    renderList,
     showIcon = true,
     onNodeClick = () => undefined,
     onNodeDragEnd = () => undefined,
@@ -159,10 +160,6 @@ const Tree = (props: TreeProps, ref: any) => {
     return false;
   };
 
-  const TreeNodeList = useMemo(
-    () => <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />,
-    [flattenNodes, dataList]
-  );
   return (
     <div
       style={style}
@@ -199,7 +196,8 @@ const Tree = (props: TreeProps, ref: any) => {
           setScrollToIndex,
         }}
       >
-        {TreeNodeList}
+        {/* {dataList.length} */}
+        <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />
       </Provider>
     </div>
   );
