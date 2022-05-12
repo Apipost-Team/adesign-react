@@ -117,7 +117,11 @@ const Tree = (props: TreeProps, ref: any) => {
     if (typeof nodeKeys === 'boolean') {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
     } else {
-      expandKeyData = expandedKeys.reduce((a, b) => ({ ...a, [b]: true }), {});
+      const newExpandKeyData = {};
+      expandedKeys.forEach((item) => {
+        newExpandKeyData[item] = true;
+      });
+      expandKeyData = newExpandKeyData;
     }
     if (Array.isArray(nodeKeys)) {
       nodeKeys.forEach((nodeKey) => {
