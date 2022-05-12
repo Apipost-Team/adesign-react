@@ -4,10 +4,8 @@ const { mainModule } = require('process');
 
 function nameToUpperCase(str) {
   return str
-    .toLowerCase()
-    .replace(/( |^)[a-z]/g, (L) => L.toUpperCase())
-    .replaceAll(' ', '');
-  // .replaceAll('Icon', '');
+   // .toLowerCase()
+    .replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
 }
 
 function getSvgFileList(svgPath) {
@@ -19,9 +17,12 @@ function getSvgFileList(svgPath) {
 
         const camelName = filename
           .replace(/\.svg/g, '')
+          .replace(/icon/i,'')
+          .replace(/\s/g,'')
           .split('-')
           .map((d) => nameToUpperCase(d))
           .join('');
+
 
         let rawText = rawData.toString('utf8');
         rawText = rawText.replace(/fill="(#.*|white)"/g, '');
@@ -51,7 +52,7 @@ const main = async () => {
   const tsFileText = [];
   for (let i = 0; i < svgList.length; i++) {
     await saveSvgFile('./icons', `${svgList[i].camelName}.svg`, svgList[i].rawText);
-    tsFileText.push(`export * as ${svgList[i].camelName} from './${svgList[i].camelName}.svg';`);
+    tsFileText.push(`export { default as ${svgList[i].camelName} } from './${svgList[i].camelName}.svg';`);
   }
 
   const tsFile = fs.createWriteStream(resolve('./icons', 'index.ts'), 'utf8');

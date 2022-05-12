@@ -11,11 +11,11 @@ const IconFont = () => {
       </div>
       <div className="iconfont-container">
         <ul className="iconfont-list">
-          {Object.entries(Icons).map(([name, svg]) => (
-            <li className="list-item">
+          {Object.entries(Icons).map(([name, Svg],index) => (
+            <li key={index} className="list-item">
               <div className="name">{name}</div>
               <div className="apipost-icon">
-                <svg.default />
+                <Svg />
               </div>
             </li>
           ))}
