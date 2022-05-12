@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import Iconminus from '../../icons/minus.svg';
-import Iconcheck from '../../icons/check.svg';
+import Iconminus from '../assets/minus.svg';
+import Iconcheck from '../assets/check.svg';
 import './index.less';
 import { CheckBoxProps, CheckStatus } from './interface';
 

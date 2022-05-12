@@ -233,6 +233,11 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     </div>
   );
 
+  useImperativeHandle(rootRef, () => ({
+    handleMoveLeft,
+    handleMoveRight,
+  }));
+
   return (
     <div
 

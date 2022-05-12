@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { InputProps } from './interface';
 import Textarea from './Textarea';
 import './index.less';
-import Iconcancel from '../../icons/cancel.svg';
+import Iconcancel from '../assets/cancel.svg'
 
 export const Input: React.FC<InputProps> = (props) => {
   const {
