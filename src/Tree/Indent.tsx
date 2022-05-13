@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import SvgArrowDown from '../assets/arrow-down.svg';
-
 import TreeContext from './TreeContext';
 
 const Indent = (props) => {
