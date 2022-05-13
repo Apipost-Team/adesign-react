@@ -43,17 +43,18 @@ const useCheck = (props) => {
   };
 
   useEffect(() => {
-    const treeDatas = dataList?.reduce((a, b) => {
+    const treeDatas = {};
+    dataList?.forEach((item) => {
       const node = {};
-      if (halfCheckedKeys.includes(b[fieldNames.key])) {
+      if (halfCheckedKeys.includes(item[fieldNames.key])) {
         node.checked = CheckStatus.HALFCHECK;
-      } else if (mergeCheckedKeys.includes(b[fieldNames.key])) {
+      } else if (mergeCheckedKeys.includes(item[fieldNames.key])) {
         node.checked = CheckStatus.CHECKED;
       } else {
         node.checked = CheckStatus.UNCHECK;
       }
-      return { ...a, [b[fieldNames.key]]: node };
-    }, {});
+      treeDatas[item[fieldNames.key]] = node;
+    });
 
     // 设置parent
     const root = {};

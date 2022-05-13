@@ -98,11 +98,6 @@ export interface TreeProps {
   onNodeClick?: () => void;
 
   /**
-   * @zh 节点拖拽事件结束回调方法
-   */
-  onNodeDragEnd?: () => void;
-
-  /**
    * @zh 多选节点回调方法
    */
   onMultiSelect?: () => void;
