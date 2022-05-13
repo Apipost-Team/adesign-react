@@ -12,12 +12,13 @@ export interface TabPanProps {
 }
 
 export interface RenderProps {
-  headerTabItems: React.ReactNode;
-  addButton: React.ReactNode;
-  scrollButtons: React.ReactNode;
+  headerTabItems?: React.ReactNode;
+  addButton?: React.ReactNode;
+  scrollButtons?: React.ReactNode;
+  handleMouseWeel?: (ev: MouseEvent) => void;
 }
 
-export interface TabsProps {
+export interface TabsProps<T> {
   style?: React.CSSProperties;
   className?: string | string[];
   defaultActiveId?: string;
@@ -34,7 +35,7 @@ export interface TabsProps {
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
   onAddTab?: (id: string) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
-  renderHeader?: (tabsList: any[], tabs: RenderProps) => React.ReactNode;
+  renderTabPanel?: (tabsList: Array<T>, tabParams: RenderProps) => React.ReactNode;
 }
 
 export interface TabsContextProps {
