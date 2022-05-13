@@ -11,7 +11,7 @@ import TabPan from './tabpan';
 import './index.less';
 import { TabPanProps, TabsProps } from './interface';
 
-const Tabs = (props: TabsProps, rootRef: any) => {
+const Tabs = (props: TabsProps<any>, rootRef: any) => {
   const {
     style,
     className,
@@ -24,7 +24,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     onChange,
     onAddTab = () => undefined,
     onRemoveTab,
-    renderHeader,
+    renderTabPanel,
     itemWidth = 150,
     ...restProps
   } = props;
@@ -196,7 +196,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   const activedContent = tabsList.find((item: TabPanProps) => item?.props?.id === mergedActiveId)
     ?.props?.children;
 
-  const headerTabItems = (
+  const headerTabItems: React.ReactNode = (
     <div
       className={cn({
         'tabs-content': true,
@@ -216,7 +216,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
       </div>
     </div>
   );
-  const scrollButtons = (
+  const scrollButtons: React.ReactNode = (
     <div className="scroll-buttons">
       <div className="scroll-btn " onClick={handleMoveLeft}>
         <ArrowLeft />
@@ -227,7 +227,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     </div>
   );
 
-  const addButton = (
+  const addButton: React.ReactNode = (
     <div className="add-button" onClick={onAddTab}>
       <ButtonAdd />
     </div>
@@ -239,13 +239,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   }));
 
   return (
-    <div
-
-      style={style}
-      ref={rootRef}
-      {...restProps}
-      className={cn('apipost-tabs', className)}
-    >
+    <div style={style} ref={rootRef} {...restProps} className={cn('apipost-tabs', className)}>
       <Provider
         value={{
           activeId: mergedActiveId,
@@ -254,29 +248,21 @@ const Tabs = (props: TabsProps, rootRef: any) => {
           itemWidth,
         }}
       >
-        <div
-         onWheel={handleMouseWeel}
-         className="apipost-tabs-header">
-          {typeof renderHeader !== 'function' ? (
-            <>
+        {typeof renderTabPanel !== 'function' ? (
+          <>
+            <div onWheel={handleMouseWeel} className="apipost-tabs-header">
               {headerTabItems}
               {showAdd && addButton}
               {showScrollBtns && scrollButtons}
-            </>
-          ) : (
-            <>{renderHeader(tabsList, { headerTabItems, addButton, scrollButtons })}</>
-          )}
-        </div>
-        <div
-          className={cn({
-            'apipost-tabs-content': true,
-          })}
-        >
-          {activedContent}
-        </div>
+            </div>
+            <div className="apipost-tabs-content">{activedContent}</div>
+          </>
+        ) : (
+          renderTabPanel(tabsList, { headerTabItems, addButton, scrollButtons, handleMouseWeel })
+        )}
       </Provider>
     </div>
   );
 };
 
-export default React.forwardRef<HTMLDivElement, TabsProps>(Tabs);
+export default React.forwardRef<HTMLDivElement, TabsProps<any>>(Tabs);
