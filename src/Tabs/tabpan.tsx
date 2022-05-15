@@ -6,16 +6,7 @@ import './index.less';
 import { TabPanProps, TabsContextProps } from './interface';
 
 const TabPan: React.FC<TabPanProps> = (props) => {
-  const {
-    id,
-    style,
-    className,
-    children,
-    title,
-    disabled = false,
-    removable,
-    ...restProps
-  } = props;
+  const { id, style, className, title, disabled = false, removable, ...restProps } = props;
   const { itemWidth, activeId, handleSwitchTab, handleRemoveTab } =
     useContext<TabsContextProps>(TabsContext);
 
@@ -30,6 +21,7 @@ const TabPan: React.FC<TabPanProps> = (props) => {
   const handleRemove = (ev: Event) => {
     handleRemoveTab(id, props);
     ev.stopPropagation();
+    ev.preventDefault();
   };
 
   const tempClassName = classnames(className, {
@@ -40,21 +32,18 @@ const TabPan: React.FC<TabPanProps> = (props) => {
   });
 
   return (
-    <>
-      <div
-        style={{
-          ...style,
-          width: itemWidth,
-        }}
-        {...restProps}
-        onClick={handleChange}
-        className={tempClassName}
-      >
-        {title}
-        {removable && <TabRemove className="item-close" onClick={handleRemove} />}
-      </div>
-      {/* {children} */}
-    </>
+    <div
+      style={{
+        ...style,
+        width: itemWidth,
+      }}
+      {...restProps}
+      onClick={handleChange}
+      className={tempClassName}
+    >
+      {title}
+      {removable && <TabRemove className="item-close" onClick={handleRemove} />}
+    </div>
   );
 };
 

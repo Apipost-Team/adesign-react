@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback, useImperativeHandle, useRef } from 'react';
 import cn from 'classnames';
-import _cloneDeep from 'lodash/cloneDeep';
 import _throttle from 'lodash/throttle';
 import _debounce from 'lodash/debounce';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
 import ArrowRight from '../assets/arrow-right2.svg';
-import TabPan from './tabpan';
 import './index.less';
 import { TabPanProps, TabsProps } from './interface';
 
@@ -17,6 +15,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     className,
     defaultActiveId,
     activeId,
+    activeIndex = -1,
     showAdd = false,
     showScrollBtns = false,
     children,
@@ -25,7 +24,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     onAddTab = () => undefined,
     onRemoveTab,
     renderTabPanel,
-    itemWidth,
+    itemWidth = 150,
     ...restProps
   } = props;
 
@@ -60,8 +59,11 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
       const moveStepX = e.nativeEvent.deltaY;
       let movedWidth = 0;
       if (e.nativeEvent.deltaY > 0) {
-        const innerPanel = refHeadOuter.current?.firstElementChild;
-        const outerPanel = refHeadOuter.current;
+        if (refHeadOuter.current === null) {
+          return;
+        }
+        const outerPanel: HTMLDivElement = refHeadOuter.current;
+        const innerPanel: HTMLDivElement = refHeadOuter.current?.firstElementChild;
         movedWidth = refTranslateData.current.translateX - moveStepX;
         if (movedWidth < outerPanel?.offsetWidth - innerPanel.offsetWidth) {
           movedWidth = outerPanel?.offsetWidth - innerPanel.offsetWidth;
@@ -104,14 +106,17 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     return index;
   };
 
+  const mergedActiveIndex =
+    'activeIndex' in props ? activeIndex : getTabIndex(tabsList, mergedActiveId);
+
   useEffect(() => {
-    if (tabsList === 0) {
-      setTranslateX(0);
+    if (mergedActiveIndex === 0) {
+      return;
     }
     if (refHeadOuter.current === null) {
       return;
     }
-    const index = getTabIndex(tabsList, mergedActiveId);
+    const index = mergedActiveIndex;
     if (index === -1) {
       return;
     }
@@ -130,7 +135,6 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
       newTranslateX = outerWidth - rightOffset;
       // setTranslateX(outerWidth - rightOffset);
     }
-
     // 右侧有空间时
     if (translateX < outerWidth - innerWidth) {
       if (outerWidth >= innerWidth) {
@@ -142,7 +146,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     if (newTranslateX !== null) {
       setTranslateX(newTranslateX);
     }
-  }, [mergedActiveId, tabsList.length]);
+  }, [mergedActiveIndex, children]);
 
   useEffect(() => {
     refTranslateData.current = {
