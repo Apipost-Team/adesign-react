@@ -25,7 +25,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     onAddTab = () => undefined,
     onRemoveTab,
     renderTabPanel,
-    itemWidth = 150,
+    itemWidth,
     ...restProps
   } = props;
 
@@ -113,6 +113,9 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     }
     const index = getTabIndex(tabsList, mergedActiveId);
     if (index === -1) {
+      return;
+    }
+    if (itemWidth === undefined) {
       return;
     }
     const outerWidth = refHeadOuter.current.offsetWidth;

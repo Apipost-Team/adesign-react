@@ -26,7 +26,6 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.ico', '.less', '.css', '.svg'],
     alias: {
       '@': path.resolve(__dirname, '../src'),
-      react: '/Users/turenquan/work/apipost-fe-v2/node_modules/react',
       // '@c': paths.src + '/components',
       // '@m': paths.src + '/model',
       // '@s': paths.src + '/services',
