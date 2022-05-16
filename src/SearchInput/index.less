@@ -67,6 +67,8 @@
   left: 0;
   top: calc(100% + 2px);
   z-index: 999;
+  max-height: 200px;
+  overflow-y: auto;
   & .select-option{
     height: 32px;
     line-height: 32px;
@@ -83,7 +85,7 @@
     }
 
     &:hover:not(&.selected):not(&.disabled){
-      background-color:#f2f3f5;
+      background: #409eff;
     }
   }
 

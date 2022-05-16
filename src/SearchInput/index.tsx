@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import cn from 'classnames';
 import { SearchInputProps, OptionProps } from './interface';
 
@@ -10,6 +10,8 @@ import './index.less';
 const PERFIX = 'apipost-search-input';
 
 const { Provider } = Context;
+
+let bottomIndex = 0
 
 const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) => {
   const {
@@ -31,8 +33,13 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
 
   const triggerRef = useRef(null);
   const inputRef = useRef(null);
-
-
+  useEffect(() => {
+    return () => {
+      bottomIndex = 0
+      setSelectIndex(-1)
+    }
+  }, [])
+  const [selectIndex, setSelectIndex] = useState(-1)
   const [selectValue, setSelectValue] = useState<string | number | undefined>(defaultValue);
 
   const mergedValue = value !== undefined ? value : selectValue;
@@ -42,19 +49,55 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
   const getPopup = () => {
     const popup =
       typeof dropdownRender === 'function' ? dropdownRender(childrenList) : childrenList;
-    return <div {...restProps} style={{ display: childrenList.length > 0 ? "" : "none" }}>{popup}</div>;
+    return <div {...restProps} style={{ display: childrenList.length > 0 ? "" : "none" }} >
+      {
+        popup.map((item: any, index: any) => {
+          return (
+            <div
+              key={index}
+              style={style}
+              onClick={(event) => handleOptionClick(event)}
+              onMouseEnter={(event: any) => handleOptionMouseEnter(event, index)}
+              onMouseLeave={(event: any) => handleOptionMouseLeave(event, index)}
+              onKeyDown={() => console.error(2222)}
+              className={cn(className, {
+                'select-option': true,
+                'select-option-disabled': disabled === true,
+                selected: index === selectIndex,
+                disabled: disabled === true,
+              })}
+            >
+              {item}
+            </div>
+          )
+        })
+      }
+
+    </div>;
   };
+  const handleOptionMouseEnter = (event: any, index: number) => {
+    setSelectIndex(index)
+  }
+  const handleOptionMouseLeave = (event: any, index: number) => {
+    setSelectIndex(index)
+  }
+  const handleOptionClick = (event) => {
+    if (disabled) {
+      return;
+    }
+    bottomIndex = 0
+    setSelectIndex(-1)
+    if (labelInValue === true) {
+      setSelectValue(event.target.innerHTML);
+    } else {
+      setSelectValue(event.target.innerHTML);
+    }
+    inputRef.current.value = event.target.innerHTML
+    triggerRef?.current?.setPopupVisible(false);
+  }
 
   const onOptionClick = (text: string, value: any) => {
-    if (labelInValue === true) {
-      setSelectValue(value);
-      // onChange?.({ text, value: mergedValue });
-    } else {
-      setSelectValue(value);
-      // onChange?.(mergedValue);
-    }
-    inputRef.current.value = value
-    triggerRef?.current?.setPopupVisible(false);
+
   };
 
   let selectedText = placeholder;
@@ -64,19 +107,33 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
     }
   });
   const handleKeyDown = (event) => {
-    if (event.keyCode === 13) {
-      props?.onSearch(inputRef?.current?.value)
+    if (!triggerRef.current || !triggerRef.current.popupRef) {
+      return
     }
-  }
-  const handleBlur = () => {
-    props?.onSearch(inputRef?.current?.value)
+    if (event.keyCode === 38) {
+      setSelectIndex(selectIndex => {
+        let updateIndex = selectIndex > 0 ? selectIndex - 1 : 0
+        // 190 除去boder影响，可视区域高度
+        if ((bottomIndex - updateIndex + 1) * 32 > 190) {
+          triggerRef.current.popupRef.scrollTop -= 32
+        }
+        return updateIndex
+      })
+    } else if (event.keyCode === 40) {
+      setSelectIndex(selectIndex => {
+        bottomIndex = selectIndex >= childrenList.length - 1 ? childrenList.length - 1 : selectIndex + 1
+        if (bottomIndex * 32 > 190) {
+          triggerRef.current.popupRef.scrollTop += 32
+        }
+        return bottomIndex
+      })
+    }
   }
   return (
     <Provider
       value={{
         selectedValue: mergedValue,
         selectDisabled: disabled,
-        onOptionClick,
       }}
     >
       <Trigger
@@ -99,7 +156,7 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
           })}
           style={{ width: '240px', background: 'none' }}
         >
-          <input type="text" ref={inputRef} placeholder={placeholder} style={{ width: '100%', border: 'none', height: "90%", lineHeight: '32px' }} onKeyDown={handleKeyDown} onBlur={handleBlur} onChange={(e) => { props?.onChange(e) }} />
+          <input type="text" ref={inputRef} placeholder={placeholder} style={{ width: '100%', border: 'none', height: "90%", lineHeight: '32px' }} onChange={(e) => { props?.onChange(e) }} onKeyDown={handleKeyDown} />
         </div>
       </Trigger>
     </Provider>

@@ -7,7 +7,7 @@ const Option = SearchInput.Option;
 
 
 const SearchInputSamples = () => {
-  const data = [{ value: "a", text: "a" }, { value: "b", text: "b" }, { value: "c", text: "c" }, { value: "d", text: "d" }]
+  const data = [{ value: "a", text: "a" }, { value: "b", text: "b" }, { value: "c", text: "c" }, { value: "d", text: "d" }, { value: "e", text: "e" }, { value: "f", text: "f" }, { value: "g", text: "g" }]
   const [searchList, setSearchList] = useState(data)
   const handleChange = (event: any) => {
     const arr: any = []
@@ -17,9 +17,6 @@ const SearchInputSamples = () => {
       }
     })
     setSearchList(arr)
-  }
-  const handleSearch = () => {
-
   }
 
   return (
@@ -73,12 +70,11 @@ ReactDOM.render(
                 </>
               )}
               placeholder={"搜索"}
-              onSearch={handleSearch}
               onChange={handleChange}
             >
               {
-                searchList.map((d) => (
-                  <Option key={d.value} value={d.value}>{d.text}</Option>
+                searchList.map((d, index) => (
+                  <Option key={d.value} value={d.value} data-index={index}>{d.text}</Option>
                 ))
               }
             </SearchInput>
