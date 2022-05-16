@@ -63,6 +63,14 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
       selectedText = item?.props?.children;
     }
   });
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      props?.onSearch(inputRef?.current?.value)
+    }
+  }
+  const handleBlur = () => {
+    props?.onSearch(inputRef?.current?.value)
+  }
   return (
     <Provider
       value={{
@@ -91,7 +99,7 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
           })}
           style={{ width: '240px', background: 'none' }}
         >
-          <input type="text" ref={inputRef} placeholder={placeholder} style={{ width: '100%', border: 'none', height: "90%", lineHeight: '32px' }} onChange={(e) => { props?.onChange(e) }} />
+          <input type="text" ref={inputRef} placeholder={placeholder} style={{ width: '100%', border: 'none', height: "90%", lineHeight: '32px' }} onKeyDown={handleKeyDown} onBlur={handleBlur} onChange={(e) => { props?.onChange(e) }} />
         </div>
       </Trigger>
     </Provider>

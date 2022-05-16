@@ -18,6 +18,9 @@ const SearchInputSamples = () => {
     })
     setSearchList(arr)
   }
+  const handleSearch = () => {
+
+  }
 
   return (
     <div className="search-input-example">
@@ -36,12 +39,18 @@ class SearchInputSamples extends React.Component {
   state = {
     data: [],
   };
-  handleChange = value => {};
+  handleChange = value => {
+    // 文本框值变化时回调 可更新data
+  };
+  handleSearch = value => {
+    // 文本框值变化时回调 
+  };
   render() {
     const options = this.state.data.map(d => <Option key={d.value}>{d.text}</Option>);
     <SearchInput
       placeholder={this.props.placeholder}
       onChange={this.handleChange}
+      onSearch={handleSearch}
     >
       {options}
     </Select>
@@ -64,6 +73,7 @@ ReactDOM.render(
                 </>
               )}
               placeholder={"搜索"}
+              onSearch={handleSearch}
               onChange={handleChange}
             >
               {
@@ -95,12 +105,12 @@ ReactDOM.render(
               <td>string</td>
               <td>-</td>
             </tr>
-            {/* <tr>
+            <tr>
               <td>onSearch</td>
               <td>文本框值变化时回调</td>
               <td>function(value: string)</td>
               <td>-</td>
-            </tr> */}
+            </tr>
             <tr>
               <td>onChange</td>
               <td>input 的 value 变化时，调用此函数</td>
