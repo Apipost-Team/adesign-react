@@ -22,6 +22,7 @@ import Color from './components/Color';
 import Card from './components/Card';
 import Collapse from './components/Collapse';
 import Progress from './components/Progress';
+import SearchInput from './components/SearchInput';
 
 export const Menus = [
   {
@@ -163,6 +164,12 @@ export const Menus = [
     key: 'progress',
     name: '进度条 Progress',
     elements: <Progress />,
+  },
+  {
+    path: '/searchInput',
+    key: 'searchInput',
+    name: '搜索 SearchInput',
+    elements: <SearchInput />,
   },
 ];
 
