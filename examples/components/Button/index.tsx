@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '../../../src/Button';
+import { Plus } from '../../../icons';
 import './index.less';
 import ExampleItem from '../_exampleItem';
-
 const ButtonSamples = () => {
   return (
     <div className="button-example">
@@ -34,7 +34,36 @@ CONTAINER)`}
           <Button type="link">Link</Button>
         </div>
       </ExampleItem>
-
+      <ExampleItem
+        title="按钮形状"
+        description="按钮形状用法"
+        codeContent={`import Button from '../../../src/Button';
+ReactDOM.render(
+  <div>
+    <Button>Default</Button>
+    <Button type="primary">Primary</Button>
+    <Button type="warning">Warning</Button>
+    <Button type="success">Success</Button>
+    <Button type="error">Error</Button>
+    <Button type="link">Link</Button>
+  </div>,
+CONTAINER)`}
+      >
+        <div>
+          <Button type="primary" shape="square" size="small">
+            <Plus />
+          </Button>
+          <Button type="primary" shape="circle" size="small">
+            <Plus />
+          </Button>
+          <Button type="primary" shape="rectangle" size="small">
+            Primary
+          </Button>
+          <Button type="primary" shape="round" size="small">
+            Primary
+          </Button>
+        </div>
+      </ExampleItem>
       <ExampleItem
         title="按钮尺寸"
         description="按钮分为： 迷你、小、中、大。高度为24px/28px/32px/36px"
@@ -111,16 +140,16 @@ ReactDOM.render(
 CONTAINER)`}
       >
         <div>
-          <Button type="primary" size="mini" shape="round">
+          <Button type="primary" size="mini" shape="circle">
             a
           </Button>
-          <Button type="primary" size="small" shape="round">
+          <Button type="primary" size="small" shape="circle">
             a
           </Button>
-          <Button type="primary" shape="round">
+          <Button type="primary" shape="circle">
             a
           </Button>
-          <Button type="primary" size="large" shape="round">
+          <Button type="primary" size="large" shape="circle">
             a
           </Button>
         </div>

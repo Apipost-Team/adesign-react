@@ -11,7 +11,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
     style = {},
     size = 'middle',
     type = 'default',
-    shape = 'square',
+    shape = 'rectangle',
     className,
     afterFix,
     preFix,

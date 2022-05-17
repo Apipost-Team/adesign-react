@@ -29,9 +29,9 @@ export interface ApipostButtonProps {
 
   /**
    * @zh 按钮圆角类型
-   * @defaultValue square
+   * @defaultValue rectangle
    */
-  shape?: 'square' | 'circle' | 'round';
+  shape?: 'square' | 'circle' | 'round' | 'rectangle';
 
   /**
    * @zh 禁用按钮
