@@ -89,7 +89,16 @@
     &:hover:not(&.selected):not(&.disabled){
       background: #409eff;
     }
+    &.unselected{
+      &:hover:not(&.selected):not(&.disabled){
+        background-color: #ffffffcc;
+      }
+    }
+    .select-option-inner{
+      height: 32px;
+      line-height: 32px;
+      padding: 0 5px;
+      cursor: pointer;
+    }
   }
-
-
 }

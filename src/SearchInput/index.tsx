@@ -69,6 +69,7 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
                 'select-option-disabled': disabled === true,
                 selected: index === selectIndex,
                 disabled: disabled === true,
+                "unselected": index !== selectIndex,
               })}
             >
               {item}

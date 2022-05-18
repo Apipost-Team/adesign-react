@@ -9,7 +9,7 @@ const Option: React.FC<OptionProps> = (props) => {
     <div
       style={style}
       className={cn(className, {
-        'select-option': true,
+        'select-option-inner': true,
       })}
     >
       {children}
