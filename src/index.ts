@@ -4,7 +4,7 @@ export { default as Drawer } from './Drawer';
 export { default as Dropdown } from './Dropdown';
 export { default as Input } from './Input';
 export { default as InputNumber } from './InputNumber';
-// export { default as Message } from './Message';
+export { default as Message } from './Message';
 export { default as Modal } from './Modal';
 export { default as Radio } from './Radio';
 export { default as Scale } from './Scale';
