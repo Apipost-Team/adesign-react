@@ -1,7 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
 export interface SearchInputProps {
-  onSearch?: any
   // 默认选中值
   defaultValue?: string | number;
 

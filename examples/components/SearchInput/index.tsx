@@ -14,12 +14,19 @@ const SearchInputSamples = () => {
     { value: 'e', text: 'e' },
     { value: 'f', text: 'f' },
     { value: 'g', text: 'g' },
+    { value: 'a', text: 'a-1' },
+    { value: 'b', text: 'b-1' },
+    { value: 'c', text: 'c-1' },
+    { value: 'd', text: 'd-1' },
+    { value: 'e', text: 'e-1' },
+    { value: 'f', text: 'f-1' },
+    { value: 'g', text: 'g-1' },
   ];
-  const [searchList, setSearchList] = useState(data);
+  const [searchList, setSearchList] = useState([]);
   const handleChange = (event: any) => {
     const arr: any = [];
     data.map((item) => {
-      if (item.value.indexOf(event.target.value) >= 0) {
+      if (item.value.indexOf(event.target.value) >= 0 && event.target.value) {
         arr.push(item);
       }
     });
@@ -80,7 +87,7 @@ ReactDOM.render(
               onChange={handleChange}
             >
               {searchList.map((d, index) => (
-                <Option key={d.value} value={d.value} data-index={index}>
+                <Option key={d?.value} value={d?.text}>
                   {d.text}
                 </Option>
               ))}

@@ -12,6 +12,11 @@ const PERFIX = 'apipost-search-input';
 const { Provider } = Context;
 
 let bottomIndex = 0
+const KEY_CODE = {
+  "ENTER": 13,
+  "UP": 38,
+  "DOWN": 40
+}
 
 const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) => {
   const {
@@ -57,8 +62,8 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
               key={index}
               style={style}
               onClick={(event) => handleOptionClick(event)}
-              onMouseEnter={(event: any) => handleOptionMouseEnter(event, index)}
-              onMouseLeave={(event: any) => handleOptionMouseLeave(event, index)}
+              onMouseEnter={() => handleOptionMouseEnter(index)}
+              onMouseLeave={() => handleOptionMouseLeave(index)}
               className={cn(className, {
                 'select-option': true,
                 'select-option-disabled': disabled === true,
@@ -72,22 +77,22 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
         })
       }
 
-    </div>;
+    </div >;
   };
-  const handleOptionMouseEnter = (event: any, index: number) => {
+  const handleOptionMouseEnter = (index: number) => {
     setSelectIndex(index)
   }
-  const handleOptionMouseLeave = (event: any, index: number) => {
+  const handleOptionMouseLeave = (index: number) => {
     setSelectIndex(index)
   }
-  const handleOptionClick = (event) => {
+  const handleOptionClick = (event: any) => {
     if (disabled) {
       return;
     }
     bottomIndex = 0
     setSelectIndex(-1)
     if (labelInValue === true) {
-      setSelectValue(event.target.innerHTML);
+      setSelectValue(event.target?.innerHTML);
     } else {
       setSelectValue(event.target.innerHTML);
     }
@@ -95,39 +100,46 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
     triggerRef?.current?.setPopupVisible(false);
   }
 
-  const onOptionClick = (text: string, value: any) => {
-
-  };
 
   let selectedText = placeholder;
-  childrenList.forEach((item) => {
+  childrenList.forEach((item: { props: { value: string | number | undefined; children: string; }; }) => {
     if (item.props.value === mergedValue) {
       selectedText = item?.props?.children;
     }
   });
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: { keyCode: number; preventDefault: () => void; }) => {
     if (!triggerRef.current || !triggerRef.current.popupRef) {
       return
     }
-    if (event.keyCode === 38) {
-      event.preventDefault()
-      setSelectIndex(selectIndex => {
-        let updateIndex = selectIndex > 0 ? selectIndex - 1 : 0
-        // 190 除去boder影响，可视区域高度
-        if ((bottomIndex - updateIndex + 1) * 32 > 190) {
-          triggerRef.current.popupRef.scrollTop -= 32
+    switch (event.keyCode) {
+      case KEY_CODE.UP:
+        event.preventDefault()
+        setSelectIndex(selectIndex => {
+          let updateIndex = selectIndex > 0 ? selectIndex - 1 : 0
+          // 190 除去boder影响，可视区域高度
+          if ((bottomIndex - updateIndex + 1) * 32 > 190) {
+            triggerRef.current.popupRef.scrollTop -= 32
+          }
+          return updateIndex
+        })
+        break;
+      case KEY_CODE.DOWN:
+        setSelectIndex(selectIndex => {
+          bottomIndex = selectIndex >= childrenList.length - 1 ? childrenList.length - 1 : selectIndex + 1
+          if (bottomIndex * 32 > 190) {
+            triggerRef.current.popupRef.scrollTop += 32
+          }
+          return bottomIndex
+        })
+        break;
+      case KEY_CODE.ENTER:
+        if (childrenList[selectIndex]) {
+          inputRef.current.value = childrenList[selectIndex]?.props?.value
         }
-        return updateIndex
-      })
-    } else if (event.keyCode === 40) {
-      setSelectIndex(selectIndex => {
-        bottomIndex = selectIndex >= childrenList.length - 1 ? childrenList.length - 1 : selectIndex + 1
-        if (bottomIndex * 32 > 190) {
-          triggerRef.current.popupRef.scrollTop += 32
-        }
-        return bottomIndex
-      })
+        break;
+
     }
+
   }
   return (
     <Provider
