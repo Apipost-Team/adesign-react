@@ -59,7 +59,6 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
               onClick={(event) => handleOptionClick(event)}
               onMouseEnter={(event: any) => handleOptionMouseEnter(event, index)}
               onMouseLeave={(event: any) => handleOptionMouseLeave(event, index)}
-              onKeyDown={() => console.error(2222)}
               className={cn(className, {
                 'select-option': true,
                 'select-option-disabled': disabled === true,
@@ -111,6 +110,7 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
       return
     }
     if (event.keyCode === 38) {
+      event.preventDefault()
       setSelectIndex(selectIndex => {
         let updateIndex = selectIndex > 0 ? selectIndex - 1 : 0
         // 190 除去boder影响，可视区域高度
@@ -154,9 +154,8 @@ const Select = React.forwardRef<HTMLDivElement, SearchInputProps>((props, ref) =
             disabled: disabled === true,
             unselect: mergedValue === undefined,
           })}
-          style={{ width: '240px', background: 'none' }}
         >
-          <input type="text" ref={inputRef} placeholder={placeholder} style={{ width: '100%', border: 'none', height: "90%", lineHeight: '32px' }} onChange={(e) => { props?.onChange(e) }} onKeyDown={handleKeyDown} />
+          <input type="text" ref={inputRef} placeholder={placeholder} onChange={(e) => { props?.onChange(e) }} onKeyDown={handleKeyDown} />
         </div>
       </Trigger>
     </Provider>

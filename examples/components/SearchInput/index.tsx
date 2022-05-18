@@ -5,19 +5,26 @@ import './index.less';
 
 const Option = SearchInput.Option;
 
-
 const SearchInputSamples = () => {
-  const data = [{ value: "a", text: "a" }, { value: "b", text: "b" }, { value: "c", text: "c" }, { value: "d", text: "d" }, { value: "e", text: "e" }, { value: "f", text: "f" }, { value: "g", text: "g" }]
-  const [searchList, setSearchList] = useState(data)
+  const data = [
+    { value: 'a', text: 'a' },
+    { value: 'b', text: 'b' },
+    { value: 'c', text: 'c' },
+    { value: 'd', text: 'd' },
+    { value: 'e', text: 'e' },
+    { value: 'f', text: 'f' },
+    { value: 'g', text: 'g' },
+  ];
+  const [searchList, setSearchList] = useState(data);
   const handleChange = (event: any) => {
-    const arr: any = []
-    data.map(item => {
-      if (item["value"].indexOf(event.target.value) >= 0) {
-        arr.push(item)
+    const arr: any = [];
+    data.map((item) => {
+      if (item.value.indexOf(event.target.value) >= 0) {
+        arr.push(item);
       }
-    })
-    setSearchList(arr)
-  }
+    });
+    setSearchList(arr);
+  };
 
   return (
     <div className="search-input-example">
@@ -40,7 +47,7 @@ class SearchInputSamples extends React.Component {
     // 文本框值变化时回调 可更新data
   };
   handleSearch = value => {
-    // 文本框值变化时回调 
+    // 文本框值变化时回调
   };
   render() {
     const options = this.state.data.map(d => <Option key={d.value}>{d.text}</Option>);
@@ -69,14 +76,14 @@ ReactDOM.render(
                   <span style={{ paddingLeft: '10px' }}>{text}</span>
                 </>
               )}
-              placeholder={"搜索"}
+              placeholder="搜索"
               onChange={handleChange}
             >
-              {
-                searchList.map((d, index) => (
-                  <Option key={d.value} value={d.value} data-index={index}>{d.text}</Option>
-                ))
-              }
+              {searchList.map((d, index) => (
+                <Option key={d.value} value={d.value} data-index={index}>
+                  {d.text}
+                </Option>
+              ))}
             </SearchInput>
           </div>
         </div>
@@ -110,7 +117,7 @@ ReactDOM.render(
             <tr>
               <td>onChange</td>
               <td>input 的 value 变化时，调用此函数</td>
-              <td>{`function(value)`}</td>
+              <td>function(value)</td>
               <td>-</td>
             </tr>
             {/* <tr>
