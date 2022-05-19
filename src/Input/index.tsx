@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useImperativeHandle, useEffect } from 'react';
 import cn from 'classnames';
 import { InputProps } from './interface';
 import Textarea from './Textarea';
 import './index.less';
-import Iconcancel from '../assets/cancel.svg'
+import Iconcancel from '../assets/cancel.svg';
 
-export const Input: React.FC<InputProps> = (props) => {
+export const Input = React.forwardRef<any, InputProps>((props, inputRef) => {
   const {
     value,
     onChange,
@@ -23,6 +23,7 @@ export const Input: React.FC<InputProps> = (props) => {
     onKeyDown = () => undefined,
     readonly = false,
     allowClear,
+    ...restProps
   } = props;
 
   const isComposition = useRef(false);
@@ -33,7 +34,7 @@ export const Input: React.FC<InputProps> = (props) => {
   }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.FormEvent<HTMLement>) => {
     const newValue = e.currentTarget.value;
     if (!isComposition.current) {
       if (onChange) {
@@ -46,7 +47,7 @@ export const Input: React.FC<InputProps> = (props) => {
     }
   };
 
-  const handleComposition = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleComposition = (e: React.FormEvent<HTMLement>) => {
     if (e.type === 'compositionend') {
       isComposition.current = false;
       setCompositionValue(undefined);
@@ -61,8 +62,6 @@ export const Input: React.FC<InputProps> = (props) => {
   };
 
   const { width, height, border, borderRadius, ...restStyles } = style || {};
-
-  const inputEl = useRef<any>(null);
 
   const [focus, setFocus] = useState(false);
   const wrapperClassnames = cn('apipost-input-inner-wrapper', {
@@ -82,7 +81,7 @@ export const Input: React.FC<InputProps> = (props) => {
   };
 
   const handleClear = () => {
-    onChange && onChange('', inputEl.current);
+    onChange && onChange('', inputRef?.current);
     setInputValue('');
     onClear && onClear();
   };
@@ -93,12 +92,13 @@ export const Input: React.FC<InputProps> = (props) => {
 
   return (
     <span
-      ref={inputEl}
+      ref={inputRef}
       className={cn(className, wrapperClassnames)}
       style={{ width, height, border, borderRadius }}
     >
       {beforeFix !== undefined && beforeFix}
       <input
+        {...restProps}
         className="apipost-input"
         spellCheck="false"
         placeholder={placeholder}
@@ -124,7 +124,7 @@ export const Input: React.FC<InputProps> = (props) => {
       )}
     </span>
   );
-};
+});
 
 const InputComponent = Input as typeof Input & {
   Textarea: typeof Textarea;

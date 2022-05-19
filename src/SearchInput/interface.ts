@@ -1,11 +1,30 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React from 'react';
 
-export interface SearchInputProps {
-  // 默认选中值
-  defaultValue?: string | number;
+export type SearchInputItem = {
+  text: string;
+  value: object;
+};
 
-  // 选择器的值（受控模式）
-  value?: string | number;
+export interface SearchInputProps<T = SearchInputItem> {
+  // 选择框样式
+  style?: React.CSSProperties;
+
+  className?: string | string[];
+
+  // 默认输入值
+  defaultValue?: string;
+
+  // 输入值（受控模式）
+  value?: string;
+
+  // 如果为true则返回值为Object对象
+  labelInValue?: boolean;
+
+  // 联想词列表
+  dataList: Array<SearchInputItem | T>;
+
+  // 联想区Item自定义渲染
+  itemRender: (dataItem: T, index: number) => React.ReactNode;
 
   onChange?: (value: string | unknown) => void;
 
@@ -13,40 +32,4 @@ export interface SearchInputProps {
 
   // 下拉框隐藏/显示时触发
   onVisibleChange?: (visible: boolean) => void;
-
-  // 设置 onChange 回调中 value 的格式。默认是string，设置为true时候，value格式为： { label: string, value: string }
-  labelInValue?: boolean;
-
-  style?: React.CSSProperties;
-
-  className?: string | string[];
-
-  popupStyle?: React.CSSProperties;
-
-  popupClassName?: string | string[];
-
-  // 自定义render组件已被选中的内容
-  formatRender?: (value: ReactNode, childList: OptionProps[], text: ReactNode) => ReactNode;
-
-  // 自定义下拉列表弹出层内容
-  dropdownRender?: (menu: ReactNode) => ReactNode;
-
-  children: ReactNode;
-
-  // 是否禁用
-  disabled?: boolean;
-}
-
-export interface OptionProps {
-  style?: CSSProperties;
-  className?: string | string[];
-  disabled?: boolean;
-  value: string | number;
-  children?: ReactNode;
-}
-
-export interface ContextProps {
-  selectedValue: any;
-  selectDisabled: boolean;
-  onOptionClick: (text: string, value: any) => void;
 }

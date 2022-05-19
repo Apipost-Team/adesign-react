@@ -6,6 +6,8 @@ import './index.less';
 const Option = SearchInput.Option;
 
 const SearchInputSamples = () => {
+  const [value, setValue] = useState('');
+
   const data = [
     { value: 'a', text: 'a' },
     { value: 'b', text: 'b' },
@@ -22,15 +24,12 @@ const SearchInputSamples = () => {
     { value: 'f', text: 'f-1' },
     { value: 'g', text: 'g-1' },
   ];
-  const [searchList, setSearchList] = useState([]);
-  const handleChange = (event: any) => {
-    const arr: any = [];
-    data.map((item) => {
-      if (item.value.indexOf(event.target.value) >= 0 && event.target.value) {
-        arr.push(item);
-      }
-    });
-    setSearchList(arr);
+  const [searchList, setSearchList] = useState(data);
+  const handleChange = (value: string) => {
+    setValue(value);
+
+    const newList = data.filter((d) => d.text.indexOf(value) !== -1 || value === '');
+    setSearchList(newList);
   };
 
   return (
@@ -78,20 +77,12 @@ ReactDOM.render(
         <div className="demo">
           <div>
             <SearchInput
-              formatRender={(value, childList, text) => (
-                <>
-                  <span style={{ paddingLeft: '10px' }}>{text}</span>
-                </>
-              )}
+              style={{ width: 300 }}
+              dataList={searchList}
               placeholder="搜索"
+              value={value}
               onChange={handleChange}
-            >
-              {searchList.map((d, index) => (
-                <Option key={d?.value} value={d?.text}>
-                  {d.text}
-                </Option>
-              ))}
-            </SearchInput>
+            />
           </div>
         </div>
       </ExampleItem>

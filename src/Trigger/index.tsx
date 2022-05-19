@@ -19,6 +19,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     this.state = {
       popupVisible: this.props.popupVisible === true,
       popupStyle: {},
+      mergeProps: {},
     };
   }
 
@@ -76,6 +77,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
   componentDidMount() {
     this.updatePopupPosition();
+    const triggers = [].concat(this.props.trigger);
     // 注册页面点击事件
     if (this.props.outsideClose === true) {
       document.body.addEventListener('mousedown', this.onClickOutside, false);
@@ -131,6 +133,11 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     const { placement = 'bottom-start', autoAdjustWidth = false, offset = [0, 0] } = this.props;
 
     const triggerOffset = this.triggerRef?.getBoundingClientRect();
+
+    if (triggerOffset === undefined) {
+      return;
+    }
+
     const popupOffset = this.popupRef?.getBoundingClientRect();
     const popupStyle: PopupStyleProps = {};
 
@@ -181,6 +188,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     const { popup, children, className, trigger = 'click' } = this.props;
 
     const mergeProps: any = {};
+    const triggers = [].concat(trigger);
 
     if (trigger === 'click') {
       mergeProps.onClick = () => {
@@ -192,6 +200,17 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
         this.setPopupVisible(true);
       };
     }
+    if (triggers.includes('focus')) {
+      mergeProps.onFocus = () => {
+        this.setPopupVisible(true);
+      };
+    }
+    if (triggers.includes('input')) {
+      mergeProps.onInput = () => {
+        this.setPopupVisible(true);
+      };
+    }
+
     if (trigger === 'contextmenu') {
       mergeProps.onContextMenu = (e: MouseEvent) => {
         this.setPopupVisible(true);

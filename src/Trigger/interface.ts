@@ -9,7 +9,7 @@ export interface TriggerProps {
   popup?: any;
 
   // 弹出层触发方式
-  trigger: 'click' | 'hover' | 'contextmenu' | 'focus';
+  trigger: 'click' | 'hover' | 'contextmenu' | 'focus' | 'input' | Array<'focus' | 'input'>;
 
   children: ReactNode;
 
@@ -40,7 +40,7 @@ export interface TriggerProps {
   // 点击区域外部关闭
   outsideClose: boolean;
 
-  onVisibleChange: (val: boolean) => void;
+  onVisibleChange?: (val: boolean) => void;
   // 是否禁用
   disabled?: boolean;
   offset?: [x: number, y: number];
