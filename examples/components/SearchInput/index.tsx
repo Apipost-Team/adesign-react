@@ -3,8 +3,6 @@ import SearchInput from '../../../src/SearchInput';
 import ExampleItem from '../_exampleItem';
 import './index.less';
 
-const Option = SearchInput.Option;
-
 const SearchInputSamples = () => {
   const [value, setValue] = useState('');
 
@@ -43,33 +41,21 @@ const SearchInputSamples = () => {
         description="可以利用搜索功能快速查找选项"
         codeContent={`
 import { SearchInput } from 'adesign';
-const { Option } = SearchInput;
 
-class SearchInputSamples extends React.Component {
-  state = {
-    data: [],
-  };
-  handleChange = value => {
-    // 文本框值变化时回调 可更新data
-  };
-  handleSearch = value => {
-    // 文本框值变化时回调
-  };
-  render() {
-    const options = this.state.data.map(d => <Option key={d.value}>{d.text}</Option>);
-    <SearchInput
-      placeholder={this.props.placeholder}
-      onChange={this.handleChange}
-      onSearch={handleSearch}
-    >
-      {options}
-    </Select>
-  }
-}
-
+const [value, setValue] = useState('');
+const [searchList, setSearchList] = useState([{ value: 'a', text: 'a' }]);
+handleChange = value => {
+  // 文本框值变化时回调 可更新searchList
+};
 ReactDOM.render(
   <>
-    <SearchInputSamples placeholder="search input text">
+    <SearchInput
+      style={{ width: 300 }}
+      dataList={searchList}
+      placeholder="搜索"
+      value={value}
+      onChange={handleChange}
+    />
   </>,
   CONTAINER
 );`}
@@ -107,9 +93,21 @@ ReactDOM.render(
               <td>-</td>
             </tr>
             <tr>
-              <td>onSearch</td>
-              <td>文本框值变化时回调</td>
-              <td>function(value: string)</td>
+              <td>style</td>
+              <td>选择框样式</td>
+              <td>object</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>dataList</td>
+              <td>下拉列表</td>
+              <td> object[]</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>value</td>
+              <td>选择框默认选中</td>
+              <td>string</td>
               <td>-</td>
             </tr>
             <tr>
