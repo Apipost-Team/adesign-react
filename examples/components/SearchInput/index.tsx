@@ -116,18 +116,6 @@ ReactDOM.render(
               <td>function(value)</td>
               <td>-</td>
             </tr>
-            {/* <tr>
-              <td>notFoundContent</td>
-              <td>当下拉列表为空时显示的内容</td>
-              <td>ReactNode</td>
-              <td>Not Found</td>
-            </tr> */}
-            {/* <tr>
-              <td>filterOption</td>
-              <td>是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数</td>
-              <td>function(inputValue, option)</td>
-              <td>true</td>
-            </tr> */}
           </tbody>
         </table>
       </div>

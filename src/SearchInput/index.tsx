@@ -109,7 +109,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
       >
         {dataList.map((item: SearchInputItem, index: number) => {
           return (
-            <>
+            <React.Fragment key={index}>
               {typeof itemRender === 'function' ? (
                 itemRender(item, index)
               ) : (
@@ -125,7 +125,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
                   {item.text}
                 </div>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
