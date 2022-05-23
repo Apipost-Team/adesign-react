@@ -43,7 +43,7 @@ const SearchInputSamples = () => {
 import { SearchInput } from 'adesign';
 
 const [value, setValue] = useState('');
-const [searchList, setSearchList] = useState([{ value: 'a', text: 'a' }]);
+const [searchList, setSearchList] = useState([{ value: 'value', text: 'text' }]);
 handleChange = value => {
   // 文本框值变化时回调 可更新searchList
 };
@@ -94,8 +94,8 @@ ReactDOM.render(
             </tr>
             <tr>
               <td>style</td>
-              <td>选择框样式</td>
-              <td>object</td>
+              <td>选择框style 属性</td>
+              <td>CSSProperties</td>
               <td>-</td>
             </tr>
             <tr>
