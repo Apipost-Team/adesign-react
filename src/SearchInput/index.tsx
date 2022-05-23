@@ -29,6 +29,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
   const [value, setValue] = useState<string | undefined>(defaultValue);
 
   const triggerRef = useRef(null);
+  const bottomIndex = useRef(0); // 下拉菜单的底部坐标，键盘控制滚动使用
 
   const mergedValue = 'value' in props ? props.value : value;
 
@@ -68,34 +69,27 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
     if (!triggerRef.current || !triggerRef.current.popupRef) {
       return;
     }
-
+    const popupHeight = triggerRef.current.popupRef.clientHeight; // 弹窗可视区域
+    const opitonHeight = triggerRef.current.triggerRef.clientHeight; // 每条搜索选项的高度
     switch (event.keyCode) {
       case KEY_CODE.UP:
         event.preventDefault();
         setSelectIndex((selectIndex) => {
-          console.log(selectIndex, '-----');
           const updateIndex = selectIndex > 0 ? selectIndex - 1 : 0;
-          // 190 除去boder影响，可视区域高度
-          // if ((bottomIndex - updateIndex + 1) * 32 > 190) {
-          //   triggerRef.current.popupRef.scrollTop -= 32;
-          // }
+          if ((bottomIndex.current - updateIndex + 1) * opitonHeight > popupHeight) {
+            triggerRef.current.popupRef.scrollTop -= opitonHeight;
+          }
           return updateIndex;
         });
         break;
       case KEY_CODE.DOWN:
         setSelectIndex((selectIndex) => {
-          console.log(selectIndex, '-----');
-          if (selectIndex < dataList.length - 1) {
-            return selectIndex + 1;
+          bottomIndex.current =
+            selectIndex >= dataList.length - 1 ? dataList.length - 1 : selectIndex + 1;
+          if (bottomIndex.current * opitonHeight > popupHeight) {
+            triggerRef.current.popupRef.scrollTop += opitonHeight;
           }
-
-          return dataList.length - 1;
-
-          // bottomIndex = selectIndex >= dataList.length - 1 ? dataList.length - 1 : selectIndex + 1;
-          // if (bottomIndex * 32 > 190) {
-          //   triggerRef.current.popupRef.scrollTop += 32;
-          // }
-          // return bottomIndex;
+          return bottomIndex.current;
         });
         break;
       case KEY_CODE.ENTER:
@@ -107,10 +101,12 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
         break;
     }
   };
-
   const getPopup = () => {
     return (
-      <div>
+      <div
+        style={{ display: dataList.length > 0 ? '' : 'none' }}
+        onMouseLeave={handleClearSelectIndex}
+      >
         {dataList.map((item: SearchInputItem, index: number) => {
           return (
             <>
@@ -121,7 +117,6 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
                   key={index}
                   onClick={handleSelectItem.bind(null, item, index)}
                   onMouseEnter={handleSetSelectIndex.bind(null, index)}
-                  onMouseLeave={handleClearSelectIndex}
                   className={cn({
                     'select-option': true,
                     selected: index === selectIndex,
