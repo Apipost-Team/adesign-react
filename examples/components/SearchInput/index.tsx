@@ -22,11 +22,11 @@ const SearchInputSamples = () => {
     { value: 'f', text: 'f-1' },
     { value: 'g', text: 'g-1' },
   ];
-  const [searchList, setSearchList] = useState(data);
+  const [searchList, setSearchList] = useState([]);
   const handleChange = (value: string) => {
     setValue(value);
 
-    const newList = data.filter((d) => d.text.indexOf(value) !== -1 || value === '');
+    const newList = value === '' ? [] : data.filter((d) => d.text.indexOf(value) !== -1);
     setSearchList(newList);
   };
 
