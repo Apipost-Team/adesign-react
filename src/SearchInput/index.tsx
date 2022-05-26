@@ -29,7 +29,6 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
   const [value, setValue] = useState<string | undefined>(defaultValue);
 
   const triggerRef = useRef(null);
-  const bottomIndex = useRef(0); // 下拉菜单的底部坐标，键盘控制滚动使用
 
   const mergedValue = 'value' in props ? props.value : value;
 
@@ -54,12 +53,14 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
   };
 
   const handleClearSelectIndex = () => {
+    console.error(triggerRef?.current)
     if (selectIndex !== -1) {
       setSelectIndex(-1);
     }
   };
 
   const handleBlur = () => {
+    handleClearSelectIndex()
     setTimeout(() => {
       triggerRef?.current?.setPopupVisible(false);
     }, 200);
@@ -70,26 +71,38 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
       return;
     }
     const popupHeight = triggerRef.current.popupRef.clientHeight; // 弹窗可视区域
-    const opitonHeight = triggerRef.current.triggerRef.clientHeight; // 每条搜索选项的高度
     switch (event.keyCode) {
       case KEY_CODE.UP:
         event.preventDefault();
         setSelectIndex((selectIndex) => {
           const updateIndex = selectIndex > 0 ? selectIndex - 1 : 0;
-          if ((bottomIndex.current - updateIndex + 1) * opitonHeight > popupHeight) {
-            triggerRef.current.popupRef.scrollTop -= opitonHeight;
+          const opitonHeight = triggerRef.current.popupRef?.children[updateIndex]?.clientHeight || 0; // 每条搜索选项的高度
+          if (triggerRef.current.popupRef.children[updateIndex]?.offsetTop - triggerRef.current.popupRef?.scrollTop < 0) {
+            if (triggerRef.current.popupRef.scrollTop % opitonHeight > 0) {
+              triggerRef.current.popupRef.scrollTop -= (triggerRef.current.popupRef.scrollTop % opitonHeight);
+            } else {
+              triggerRef.current.popupRef.scrollTop -= opitonHeight;
+            }
           }
           return updateIndex;
         });
         break;
       case KEY_CODE.DOWN:
         setSelectIndex((selectIndex) => {
-          bottomIndex.current =
+          const updateIndex =
             selectIndex >= dataList.length - 1 ? dataList.length - 1 : selectIndex + 1;
-          if (bottomIndex.current * opitonHeight > popupHeight) {
-            triggerRef.current.popupRef.scrollTop += opitonHeight;
+          const opitonHeight = triggerRef.current.popupRef?.children[updateIndex]?.clientHeight || 0; // 每条搜索选项的高度
+          if (triggerRef.current.popupRef.children[updateIndex]?.offsetTop - popupHeight >= 0) {
+            if (triggerRef.current.popupRef.scrollTop > triggerRef.current.popupRef.children[updateIndex]?.offsetTop - popupHeight) {
+              if (triggerRef.current.popupRef.scrollTop % opitonHeight > 0) {
+                triggerRef.current.popupRef.scrollTop += opitonHeight - (triggerRef.current.popupRef.scrollTop % opitonHeight);
+              }
+            } else {
+              triggerRef.current.popupRef.scrollTop += opitonHeight;
+
+            }
           }
-          return bottomIndex.current;
+          return updateIndex;
         });
         break;
       case KEY_CODE.ENTER:
@@ -105,7 +118,6 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
     return (
       <div
         style={{ display: dataList.length > 0 ? '' : 'none' }}
-        onMouseLeave={handleClearSelectIndex}
       >
         {dataList.map((item: SearchInputItem, index: number) => {
           return (
@@ -113,18 +125,18 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>((props,
               {typeof itemRender === 'function' ? (
                 itemRender(item, index)
               ) : (
-                <div
-                  key={index}
-                  onClick={handleSelectItem.bind(null, item, index)}
-                  onMouseEnter={handleSetSelectIndex.bind(null, index)}
-                  className={cn({
-                    'select-option': true,
-                    selected: index === selectIndex,
-                  })}
-                >
-                  {item.text}
-                </div>
-              )}
+                  <div
+                    key={index}
+                    onClick={handleSelectItem.bind(null, item, index)}
+                    onMouseEnter={handleSetSelectIndex.bind(null, index)}
+                    className={cn({
+                      'select-option': true,
+                      selected: index === selectIndex,
+                    })}
+                  >
+                    {item.text}
+                  </div>
+                )}
             </React.Fragment>
           );
         })}

@@ -21,6 +21,11 @@ const SearchInputSamples = () => {
     { value: 'e', text: 'e-1' },
     { value: 'f', text: 'f-1' },
     { value: 'g', text: 'g-1' },
+    { value: 'a', text: 'a-1' },
+    { value: 'b', text: 'b-1' },
+    { value: 'c', text: 'c-1' },
+    { value: 'd', text: 'd-1' },
+    { value: 'e', text: 'e-1' },
   ];
   const [searchList, setSearchList] = useState([]);
   const handleChange = (value: string) => {
