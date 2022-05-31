@@ -37,7 +37,8 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
   onClickOutside = (event: any) => {
     if (
       (this.props.trigger !== 'click' && this.props.trigger !== 'contextmenu') ||
-      this.state.popupVisible === false
+      this.state.popupVisible === false ||
+      this.props.outsideClose !== true
     ) {
       return;
     }
@@ -77,7 +78,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
   componentDidMount() {
     this.updatePopupPosition();
     // 注册页面点击事件
-    if (this.props.outsideClose === true) {
+    if (this.props.trigger === 'click') {
       document.body.addEventListener('mousedown', this.onClickOutside, false);
     }
 
@@ -91,7 +92,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
   }
 
   componentWillUnmount() {
-    if (this.props.outsideClose === true) {
+    if (this.props.trigger === 'click') {
       document.body.removeEventListener('mousedown', this.onClickOutside, false);
     }
 
