@@ -23,7 +23,7 @@ export interface TabsProps<T> {
   className?: string | string[];
   defaultActiveId?: string;
   activeId?: string;
-  activeIndex: number;
+  activeIndex?: number;
   draggable?: boolean;
   showAdd?: boolean;
   showScrollBtns?: boolean;
@@ -37,7 +37,7 @@ export interface TabsProps<T> {
   onAddTab?: (id: string) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
   renderTabPanel?: (tabsList: Array<T>, tabParams: RenderProps) => React.ReactNode;
-  itemWidth: number;
+  itemWidth?: number;
 }
 
 export interface TabsContextProps {
