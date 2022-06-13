@@ -42,6 +42,7 @@ const Tree = (props: TreeProps, ref: any) => {
     className, // 数组件class名称
     enableVirtualList = false, // 是否开启虚拟列表
     nodeSort = undefined, // 节点排序
+    rootFilter, // 过滤顶级节点
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [flattenNodes, setFlattenNodes] = useState([]);
@@ -101,7 +102,7 @@ const Tree = (props: TreeProps, ref: any) => {
     if (Array.isArray(expandedKeys) === false) {
       return;
     }
-    const treeData = arrayToTreeObject(dataList, fieldNames);
+    const treeData = arrayToTreeObject(dataList, fieldNames, rootFilter);
     const node = flattenTreeData(treeData, expandedKeys, fieldNames, nodeSort);
     setCachedTree(treeData);
     setFlattenNodes(node);

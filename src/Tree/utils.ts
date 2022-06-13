@@ -1,5 +1,6 @@
 import _omit from 'lodash/omit';
 import isArray from 'lodash/isArray';
+import isFunction from 'lodash/isFunction';
 
 export const fillFieldNames = (fieldNames) => {
   const { title = 'title', _title, key = 'key', children = 'children' } = fieldNames || {};
@@ -89,7 +90,8 @@ export const flattenTreeData = (treeNodeList, expandedKeys = [], fieldNames, nod
 // Array转树形结构对象
 export const arrayToTreeObject = (
   data?: any[],
-  param = { key: 'target_id', parent: 'parent_id' }
+  param = { key: 'target_id', parent: 'parent_id' },
+  filter
 ) => {
   const treeData: any = {};
   const rootData = [];
@@ -108,10 +110,15 @@ export const arrayToTreeObject = (
   for (let i = 0; i < data.length; i++) {
     const itemKey = data[i][param.key];
     const item = treeData[itemKey];
+
     const parent = treeData[item.parent];
     if (parent === undefined) {
       // parent未定义说明被放在了根节点下
-      rootData.push(item);
+      if (isFunction(filter)) {
+        filter(item) && rootData.push(item);
+      } else {
+        rootData.push(item);
+      }
     } else {
       if (parent.children === undefined) {
         parent.children = [];
@@ -119,7 +126,7 @@ export const arrayToTreeObject = (
       parent.children.push(item);
     }
   }
-
+  console.log(rootData, '--------');
   return rootData;
 };
 
