@@ -49,10 +49,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   const onOptionClick = (text: string, value: any) => {
     if (labelInValue === true) {
       setSelectValue(value);
-      onChange?.({ text, value: mergedValue });
+      onChange?.({ text, value });
     } else {
       setSelectValue(value);
-      onChange?.(mergedValue);
+      onChange?.(value);
     }
     triggerRef?.current?.setPopupVisible(false);
   };
