@@ -4,6 +4,9 @@ export interface InputNumberProps {
   style?: CSSProperties;
   className?: string | string[];
 
+  // 默认值
+  defaultValue?: number;
+
   /**
    * @zh 输入框的值
    */
