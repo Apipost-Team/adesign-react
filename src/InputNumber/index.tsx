@@ -105,13 +105,13 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
           <div style={{ flex: 1, height: '100%' }}>
             {modetype === 'input' ? (
               <Input
-                value={`${value}`}
+                value={`${mergedValue}`}
                 disabled={disabled}
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
               />
             ) : (
-              <div>{`${value}`}</div>
+              <div>{`${mergedValue}`}</div>
             )}
           </div>
           <div onClick={handleChangeValue.bind(null, 'add')} className="apipost-input-number-step">
@@ -128,7 +128,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
             className="cur_pointer column_before"
           />
           <Input
-            value={`${value}`}
+            value={`${mergedValue}`}
             disabled={disabled}
             onBlur={handleInputBlur}
             onChange={handleInputChange}
