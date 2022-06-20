@@ -37,6 +37,12 @@ export interface InputProps
   disabled?: boolean;
 
   /**
+   * @zh 是否无边框
+   * @defaultValue true
+   */
+  bordered?: boolean;
+
+  /**
    * @zh 输入框错误状态
    */
   error?: boolean;
