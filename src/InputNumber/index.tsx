@@ -30,7 +30,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
 
   const handleInputChange = (newVal: string) => {
     if (isNaN(parseInt(newVal))) {
-      setValue(newVal);
+      setValue(parseInt(newVal, 10));
       return;
     }
 
@@ -51,7 +51,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
   };
 
   const handleChangeValue = (types = 'add') => {
-    let result: number = mergedValue;
+    let result: any = mergedValue;
     if (types === 'add') {
       result += 1;
     } else {
@@ -69,7 +69,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
     }
   };
 
-  const handleInputBlur = (e) => {
+  const handleInputBlur = (e: any) => {
     const val = e.target.value;
     const validValue = parseInt(val);
     if (isNaN(validValue)) {

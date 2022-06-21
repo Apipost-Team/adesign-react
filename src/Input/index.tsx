@@ -29,7 +29,7 @@ export const Input: React.FC<InputProps> = (props) => {
   const [inputValue, setInputValue] = useState(value || '');
 
   useEffect(() => {
-    setInputValue(value);
+    setInputValue(value || '');
   }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 

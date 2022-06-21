@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { CSSProperties, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import { Omit } from '../util/utils';
 

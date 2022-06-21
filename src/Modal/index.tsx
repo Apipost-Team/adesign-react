@@ -53,7 +53,6 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     setTimeout(() => {
       if (
         e.keyCode === 27 &&
-        onCancel &&
         escToExit &&
         modalRef?.current?.getAttribute('data-uuid') === uuid
       ) {

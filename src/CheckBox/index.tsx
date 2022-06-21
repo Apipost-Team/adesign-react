@@ -17,7 +17,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
     ...restProps
   } = props;
 
-  const [_checked, setChecked] = useState<CheckStatus>(defaultChecked);
+  const [_checked, setChecked] = useState<CheckStatus>(defaultChecked || CheckStatus.UNCHECK);
 
   const mergeChecked = 'checked' in props ? checked : _checked;
 
