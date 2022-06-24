@@ -265,7 +265,13 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
             <div className="apipost-tabs-content">{activedContent}</div>
           </>
         ) : (
-          renderTabPanel(tabsList, { headerTabItems, addButton, scrollButtons, handleMouseWeel })
+          renderTabPanel(tabsList, {
+            headerTabItems,
+            addButton,
+            scrollButtons,
+            handleMouseWeel,
+            activedContent,
+          })
         )}
       </Provider>
     </div>

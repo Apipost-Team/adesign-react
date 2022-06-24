@@ -16,6 +16,7 @@ export interface RenderProps {
   addButton?: React.ReactNode;
   scrollButtons?: React.ReactNode;
   handleMouseWeel?: (ev: MouseEvent) => void;
+  activedContent?: React.ReactNode;
 }
 
 export interface TabsProps<T> {

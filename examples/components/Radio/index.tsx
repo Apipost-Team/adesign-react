@@ -1,8 +1,10 @@
 import React from 'react';
 import Radio from '../../../src/Radio';
-import RadioGroup from '../../../src/Radio/Group';
+// import RadioGroup from '../../../src/Radio/Group';
 import './index.less';
 import ExampleItem from '../_exampleItem';
+
+const RadioGroup = Radio.Group;
 
 const RadioSamples = () => {
   return (

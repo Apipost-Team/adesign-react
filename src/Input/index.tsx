@@ -3,11 +3,12 @@ import cn from 'classnames';
 import { InputProps } from './interface';
 import Textarea from './Textarea';
 import './index.less';
-import Iconcancel from '../assets/cancel.svg'
+import Iconcancel from '../assets/cancel.svg';
 
 export const Input: React.FC<InputProps> = (props) => {
   const {
     value,
+    type,
     onChange,
     className,
     style,
@@ -16,6 +17,7 @@ export const Input: React.FC<InputProps> = (props) => {
     beforeFix = null,
     afterFix = null,
     disabled = false,
+    bordered = true,
     error,
     onClear,
     onBlur = () => undefined,
@@ -28,9 +30,9 @@ export const Input: React.FC<InputProps> = (props) => {
   const isComposition = useRef(false);
   const [inputValue, setInputValue] = useState(value || '');
 
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
+  // useEffect(() => {
+  //   setInputValue(value);
+  // }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -70,6 +72,7 @@ export const Input: React.FC<InputProps> = (props) => {
     'apipost-input-inner-wrapper-error': error,
     'apipost-input-inner-wrapper-disabled': disabled,
     [`apipost-input-inner-wrapper-${size}`]: true,
+    'apipost-input-inner-wrapper-border': bordered,
   });
 
   const handleFocus = (e: any) => {
@@ -88,7 +91,7 @@ export const Input: React.FC<InputProps> = (props) => {
   };
 
   const inputProps = {
-    value: compositionValue || inputValue || '',
+    value: compositionValue || inputValue || value || '',
   };
 
   return (
@@ -99,10 +102,11 @@ export const Input: React.FC<InputProps> = (props) => {
     >
       {beforeFix !== undefined && beforeFix}
       <input
-        className="apipost-input"
         spellCheck="false"
+        className="apipost-input"
         placeholder={placeholder}
         style={{ ...restStyles }}
+        type={type}
         // value={compositionValue !== '' ? compositionValue : inputValue !== '' ? inputValue : ''}
         onChange={handleChange}
         onFocus={handleFocus}

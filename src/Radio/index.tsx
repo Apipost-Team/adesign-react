@@ -1,10 +1,11 @@
 import React, { useState, useContext, PropsWithChildren, useEffect } from 'react';
 import classNames from 'classnames';
 import { RadioContext } from './RadioContext';
+import Group from './Group';
 import './index.less';
 import { RadioProps } from './interface';
 
-const InternalRadio: React.FC<RadioProps> = (props) => {
+function Radio(props: RadioProps) {
   const { className, value, children, style, onChange = () => {}, ...restProps } = props;
 
   const [radioCheckbox, setRadioCheckBox] = useState(false);
@@ -56,14 +57,14 @@ const InternalRadio: React.FC<RadioProps> = (props) => {
       {children !== undefined ? <span className="apipost-radio-children">{children}</span> : null}
     </label>
   );
-};
+}
 
-const Radio = InternalRadio;
 // const Radio = React.forwardRef<unknown, RadioProps>(InternalRadio);
 
 Radio.displayName = 'Radio';
 Radio.defaultProps = {
   checked: false,
 };
+Radio.Group = Group;
 
 export default Radio;

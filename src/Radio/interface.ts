@@ -34,6 +34,7 @@ export interface RadioGroupProps {
 
 export interface RadioProps {
   style?: CSSProperties;
+  children: string;
   className?: string | string[] | CSSProperties;
 
   /**
