@@ -40,9 +40,8 @@ export const Input: React.FC<InputProps> = (props) => {
     if (!isComposition.current) {
       if (onChange) {
         onChange(newValue, e);
-        return;
       }
-      setInputValue(newValue);
+      !value && setInputValue(newValue);
     } else {
       setCompositionValue(newValue);
     }
@@ -54,9 +53,8 @@ export const Input: React.FC<InputProps> = (props) => {
       setCompositionValue(undefined);
       if (onChange) {
         onChange(e.currentTarget.value, e);
-        return;
       }
-      setInputValue(e.currentTarget.value);
+      !value && setInputValue(e.currentTarget.value);
     } else {
       isComposition.current = true;
     }
@@ -91,7 +89,7 @@ export const Input: React.FC<InputProps> = (props) => {
   };
 
   const inputProps = {
-    value: compositionValue || inputValue || value || '',
+    value: compositionValue || value || inputValue || '',
   };
 
   return (
