@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
+import { isBoolean, isUndefined } from 'lodash';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
@@ -115,7 +116,7 @@ const Tree = (props: TreeProps, ref: any) => {
   */
   const handleExpandItem = (nodeKeys, nodeIndex) => {
     let expandKeyData = {};
-    if (typeof nodeKeys === 'boolean') {
+    if (isBoolean(nodeKeys)) {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
     } else {
       const newExpandKeyData = {};
@@ -128,12 +129,11 @@ const Tree = (props: TreeProps, ref: any) => {
       nodeKeys.forEach((nodeKey) => {
         expandKeyData[nodeKey] = true;
       });
-    } else if (expandKeyData[nodeKeys] === undefined) {
+    } else if (!isBoolean(nodeKeys) && isUndefined(expandKeyData[nodeKeys])) {
       expandKeyData[nodeKeys] = true;
     } else {
       expandKeyData = omit(expandKeyData, nodeKeys);
     }
-
     const expandKeyArr = Object.keys(expandKeyData);
     setExpandedKeys(expandKeyArr);
     const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort);
