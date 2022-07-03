@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
-import { isBoolean, isUndefined } from 'lodash';
+import { isBoolean, isNumber, isUndefined } from 'lodash';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
@@ -112,9 +112,9 @@ const Tree = (props: TreeProps, ref: any) => {
   /*
      展开或闭合节点
     nodeKeys: sring 节点展开闭合/Array 要展开的节点
-    callBack 回调
+    scrollNodeKey 被滚动到的节点key
   */
-  const handleExpandItem = (nodeKeys, nodeIndex) => {
+  const handleExpandItem = (nodeKeys, scrollNodeKey) => {
     let expandKeyData = {};
     if (isBoolean(nodeKeys)) {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
@@ -139,7 +139,12 @@ const Tree = (props: TreeProps, ref: any) => {
     const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort);
     setFlattenNodes(nodes);
     onExpandKeysChange(expandKeyArr);
-    setScrollToIndex(nodeIndex);
+
+    // 滚动节点到指定位置
+    const scrollIndex = nodes.findIndex((item) => item.key === scrollNodeKey);
+    if (!isUndefined(scrollNodeKey) && scrollIndex !== -1) {
+      setScrollToIndex(scrollIndex);
+    }
   };
 
   const handleRightClick = (e, nodeData) => {

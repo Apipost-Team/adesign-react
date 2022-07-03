@@ -1,8 +1,8 @@
 {
   "name": "adesign-react",
-  "version": "0.0.93",
+  "version": "0.0.95",
   "description": "ADesign Component for React",
-  "main": "src/index.ts",
+  "main": "libs/index.js",
   "files": [
     "libs",
     "icons"
