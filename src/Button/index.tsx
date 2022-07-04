@@ -34,9 +34,9 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
 
   return (
     <div {...restProps} ref={ref} className={btnclassName} onClick={handleClick} style={style}>
-      {preFix !== undefined && <>{preFix}&nbsp;</>}
-      {children}
-      {afterFix !== undefined && <>{afterFix}&nbsp;</>}
+      <React.Fragment key="prefix"> {preFix !== undefined && <>{preFix}</>}</React.Fragment>
+      <React.Fragment key="children">{children}</React.Fragment>
+      <React.Fragment key="afterFix">{afterFix !== undefined && <>{afterFix}</>}</React.Fragment>
     </div>
   );
 });
