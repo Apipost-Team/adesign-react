@@ -68,18 +68,20 @@ const TreeNode = (props) => {
   );
   const nodeTitle = <div className={`${nodePerfixCls}-title`}>{props.title}</div>;
 
+  const nodeProperties = {
+    style,
+    className: classNames({
+      [nodePerfixCls]: true,
+      'tree-node-selected': selectedKeys.includes(props.nodeKey),
+    }),
+    onClick: handleNodeClick,
+    onContextMenu: handleContextMenu,
+  };
+
   return (
     <>
       {typeof render !== 'function' ? (
-        <div
-          style={style}
-          className={classNames({
-            [nodePerfixCls]: true,
-            'tree-node-selected': selectedKeys.includes(props.nodeKey),
-          })}
-          onClick={handleNodeClick}
-          onContextMenu={handleContextMenu}
-        >
+        <div {...nodeProperties}>
           {indent}
           {nodeTitle}
           {checkbox}
@@ -88,15 +90,10 @@ const TreeNode = (props) => {
         React.cloneElement(
           render(props, {
             indent,
-            checkbox,
             nodeTitle,
-            selected: selectedKeys.includes(props.nodeKey),
+            checkbox,
           }),
-          {
-            style,
-            onClick: handleNodeClick,
-            onContextMenu: handleContextMenu,
-          }
+          nodeProperties
         )
       )}
     </>
