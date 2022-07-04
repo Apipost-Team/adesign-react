@@ -1,7 +1,6 @@
 import React, { PureComponent, ReactElement, PropsWithChildren, CSSProperties } from 'react';
 import ReactDom from 'react-dom';
 import cn from 'classnames';
-import ResizeObserver from 'resize-observer-polyfill';
 import { TriggerProps, TriggerState, PopupStyleProps } from './interface';
 import { addEvent, removeEvent, getScrollElements } from '../util/dom';
 
@@ -209,6 +208,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
       ref: (val: any) => {
         this.triggerRef = val;
       },
+      key: 'popup-children',
     });
     const portal = React.cloneElement(popup, {
       ref: (val: any) => {
