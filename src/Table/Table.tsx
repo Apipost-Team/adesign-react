@@ -71,9 +71,9 @@ const Table: React.FC<TableProps> = (props) => {
             <>{renderRow(data, renderRowItem)}</>
           ) : (
             <tbody>
-              {data.map((rowData, index) => (
-                <>{renderRowItem(rowData, index)}</>
-              ))}
+              {data.map((rowData, index) =>
+                React.cloneElement(<>{renderRowItem(rowData, index)}</>, { key: index })
+              )}
             </tbody>
           )}
         </table>

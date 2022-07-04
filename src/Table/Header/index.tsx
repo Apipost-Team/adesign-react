@@ -35,7 +35,12 @@ const TableRow: React.FC<RowProps> = (props) => {
       <tr className="apipost-table-th">
         {renderSelection(rowSelection)}
         {columns?.map((colItem, colIndex) => (
-          <TableColumn className="api-post-table-td-border" colItem={colItem} colIndex={colIndex} />
+          <TableColumn
+            className="api-post-table-td-border"
+            key={colIndex}
+            colItem={colItem}
+            colIndex={colIndex}
+          />
         ))}
       </tr>
     </thead>
