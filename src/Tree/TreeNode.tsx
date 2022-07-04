@@ -85,15 +85,19 @@ const TreeNode = (props) => {
           {checkbox}
         </div>
       ) : (
-        render(props, {
-          indent,
-          checkbox,
-          nodeTitle,
-          style,
-          selected: selectedKeys.includes(props.nodeKey),
-          onClick: handleNodeClick,
-          onContextMenu: handleContextMenu,
-        })
+        React.cloneElement(
+          render(props, {
+            indent,
+            checkbox,
+            nodeTitle,
+            selected: selectedKeys.includes(props.nodeKey),
+          }),
+          {
+            style,
+            onClick: handleNodeClick,
+            onContextMenu: handleContextMenu,
+          }
+        )
       )}
     </>
   );
