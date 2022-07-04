@@ -138,8 +138,10 @@ const Tree = (props: TreeProps, ref: any) => {
 
   const handleRightClick = (e, nodeData) => {
     const data = flattenNodes.filter((node) => selectedKeys.includes(node.key));
-    if (data.length > 1) {
-      onRightClick(e, data);
+
+    if (Array.isArray(data) && data.length > 1) {
+      const multiData = data.map((d) => d?.data);
+      onRightClick(e, multiData);
     } else {
       onRightClick(e, nodeData);
     }
