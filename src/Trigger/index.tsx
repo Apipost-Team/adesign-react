@@ -1,7 +1,6 @@
 import React, { PureComponent, ReactElement, PropsWithChildren, CSSProperties } from 'react';
 import ReactDom from 'react-dom';
 import cn from 'classnames';
-import ResizeObserver from 'resize-observer-polyfill';
 import { TriggerProps, TriggerState, PopupStyleProps } from './interface';
 import { addEvent, removeEvent, getScrollElements } from '../util/dom';
 
@@ -226,8 +225,12 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
     return (
       <React.Fragment>
-        {childrenComponent}
-        {this.state.popupVisible && ReactDom.createPortal(portal, document.body)}
+        <React.Fragment key="child">{childrenComponent}</React.Fragment>
+        {this.state.popupVisible && (
+          <React.Fragment key="portal">
+            {ReactDom.createPortal(portal, document.body)}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }
