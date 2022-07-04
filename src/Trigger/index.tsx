@@ -208,7 +208,6 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
       ref: (val: any) => {
         this.triggerRef = val;
       },
-      key: 'popup-children',
     });
     const portal = React.cloneElement(popup, {
       ref: (val: any) => {
@@ -226,8 +225,12 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
     return (
       <React.Fragment>
-        {childrenComponent}
-        {this.state.popupVisible && ReactDom.createPortal(portal, document.body)}
+        <React.Fragment key="child">{childrenComponent}</React.Fragment>
+        {this.state.popupVisible && (
+          <React.Fragment key="portal">
+            {ReactDom.createPortal(portal, document.body)}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }
