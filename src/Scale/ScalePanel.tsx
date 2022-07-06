@@ -25,24 +25,20 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
     height: 0,
   });
 
-  const resizeObserver = new ResizeObserver((entries) => {
-    for (const entry of entries) {
-      const { width, height } = entry.contentRect;
-      setPanelOffset({
-        width,
-        height,
-      });
-    }
-  });
-
   useEffect(() => {
-    resizeObserver.observe(panelRef.current);
-
-    return () => {
-      if (panelRef.current) {
-        panelRef.current?.disconnect();
-        panelRef.current = null;
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        setPanelOffset({
+          width,
+          height,
+        });
       }
+    });
+
+    resizeObserver.observe(panelRef.current);
+    return () => {
+      resizeObserver.disconnect();
     };
   }, []);
 
