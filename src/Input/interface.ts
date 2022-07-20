@@ -172,4 +172,9 @@ export interface TextareaProps
    * @zh 键盘事件的回调
    */
   onKeyDown?: (e: any) => void;
+
+  /**
+   * @zh 自动计算高度
+   */
+  autoHeight?: boolean;
 }

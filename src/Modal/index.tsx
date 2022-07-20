@@ -86,8 +86,16 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
             <div
               className={cn({ [`${PERFIXNAME}-wrapper`]: true }, className)}
               style={{ ...style, zIndex: zIndex + 1 }}
+              onClick={() => {
+                maskClosable && onCancel();
+              }}
             >
-              <div className={cn({ [`${PERFIXNAME}-container`]: true })}>
+              <div
+                className={cn({ [`${PERFIXNAME}-container`]: true })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 {title !== null && (
                   <div className={cn({ [`${PERFIXNAME}-header`]: true }, headerClassName)}>
                     {title}
