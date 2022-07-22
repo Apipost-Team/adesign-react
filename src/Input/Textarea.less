@@ -6,7 +6,8 @@
   border-radius: 4px;
   overflow-y: hidden;
   background-color: #F4F4F4;
-  border: 1px solid #E9E9E9;
+  border: solid #E9E9E9;
+  border-width: 0;
   color: #666666;
   font-size: 12px;
   font-family: "PingFang SC";
@@ -16,6 +17,10 @@
   left: 0;
   overflow: auto;
 
+  &-border {
+    border-width: 1px;
+  }
+
   &:focus {
     border-color: #409eff;
     background-color: #ffffff;
@@ -24,13 +29,6 @@
   &-wrapper {
     width: 100%;
     position: relative;
-  }
-
-
-  /* Opera/IE 8+ */
-  &:focus {
-    border-right-width: 1px !important;
-    outline: 0;
   }
 
   &::-webkit-input-placeholder {
