@@ -28,11 +28,15 @@ export const Input: React.FC<InputProps> = (props) => {
   } = props;
 
   const isComposition = useRef(false);
+<<<<<<< Updated upstream
   // const [inputValue, setInputValue] = useState(value || '');
+=======
+  const [inputValue, setInputValue] = useState('');
+>>>>>>> Stashed changes
 
-  // useEffect(() => {
-  //   setInputValue(value);
-  // }, [value]);
+  useEffect(() => {
+    setInputValue(value || '');
+  }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -88,9 +92,15 @@ export const Input: React.FC<InputProps> = (props) => {
     onClear && onClear();
   };
 
+<<<<<<< Updated upstream
   // const inputProps = {
   //   value: compositionValue || value || inputValue || '',
   // };
+=======
+  const inputProps = {
+    value: compositionValue || inputValue || '',
+  };
+>>>>>>> Stashed changes
 
   return (
     <span
