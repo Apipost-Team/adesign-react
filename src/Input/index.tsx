@@ -28,11 +28,12 @@ export const Input: React.FC<InputProps> = (props) => {
   } = props;
 
   const isComposition = useRef(false);
-  const [inputValue, setInputValue] = useState(value || '');
 
-  // useEffect(() => {
-  //   setInputValue(value);
-  // }, [value]);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    setInputValue(value || '');
+  }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -89,7 +90,7 @@ export const Input: React.FC<InputProps> = (props) => {
   };
 
   const inputProps = {
-    value: compositionValue || value || inputValue || '',
+    value: compositionValue || inputValue || '',
   };
 
   return (
