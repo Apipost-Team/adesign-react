@@ -126,7 +126,6 @@ export const arrayToTreeObject = (
       parent.children.push(item);
     }
   }
-  console.log(rootData, '--------');
   return rootData;
 };
 

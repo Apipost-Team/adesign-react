@@ -29,7 +29,7 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
   return (
     <div style={headerStyle} className={cn('apipost-collapse-item', headerClassName)}>
       <div className="collapse-header" onClick={handleToggleVisible}>
-        {header}
+        <>{header}</>
         <SvgRight
           className={cn('collapse-arrow', {
             arrowdown: isCollapse,

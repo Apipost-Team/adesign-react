@@ -37,11 +37,10 @@ export default class ResizeObserverComponent extends React.Component<ResizeProps
 
   destroyResizeObserver = () => {
     this.resizeObserver && this.resizeObserver.disconnect();
-    this.resizeObserver = null;
+    // this.resizeObserver = null;
   };
 
   render() {
     return this.props.children;
   }
 }
-

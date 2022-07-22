@@ -81,12 +81,7 @@ if (!el) {
   document.body.append(el);
 }
 
-ReactDOM.render(
-  <div>
-    <ShowContainer />
-  </div>,
-  el
-);
+ReactDOM.render(<ShowContainer />, el);
 
 const ModalShow = (props: ShowProps, pos: any, modalRef: any) => {
   add(props, pos, modalRef);

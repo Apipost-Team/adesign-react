@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
+import { isBoolean, isUndefined } from 'lodash';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
@@ -19,7 +19,7 @@ const Tree = (props: TreeProps, ref: any) => {
     showLine = false,
     enableCheck = false,
     checkboxReadOnly = false, // 所有的勾选框是否只读
-    isExpandAllKeys = true,
+    // isExpandAllKeys = true,
     defaultExpandKeys = undefined, // 默认展开节点
     onExpandKeysChange = () => undefined,
     defaultCheckedKeys, // 默认选中节点
@@ -45,8 +45,6 @@ const Tree = (props: TreeProps, ref: any) => {
     rootFilter, // 过滤顶级节点
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [flattenNodes, setFlattenNodes] = useState([]);
-  const [cachedTree, setCachedTree] = useState({});
   const [scrollToIndex, setScrollToIndex] = useState(0);
 
   const { mergeCheckedKeys, halfCheckedKeys, handleCheckNode, handleCheckAll } = useCheck({
@@ -60,10 +58,10 @@ const Tree = (props: TreeProps, ref: any) => {
   });
 
   useEffect(() => {
-    if (defaultExpandKeys !== undefined && isEqual(defaultExpandKeys, expandedKeys) === false) {
+    if (Array.isArray(defaultExpandKeys)) {
       setExpandedKeys(defaultExpandKeys);
     }
-  }, [defaultExpandKeys, dataList]);
+  }, [defaultExpandKeys]);
 
   // 批量展开/折叠
   const prepareExpandKeys = (expand, datalist) => {
@@ -88,34 +86,26 @@ const Tree = (props: TreeProps, ref: any) => {
     return expandKeys;
   };
 
-  // 默认展开节点//暂时只支持是否全部展示
-  useEffect(() => {
-    if (expandedKeys !== null || dataList?.length === 0) {
-      // 仅第一次生效
-      return;
-    }
-    const keysObj = prepareExpandKeys(isExpandAllKeys, dataList);
-    setExpandedKeys(Object.keys(keysObj));
-  }, [isExpandAllKeys, dataList]);
+  // 树形菜单对象
+  const cachedTree = useMemo(() => {
+    return arrayToTreeObject(dataList, fieldNames, rootFilter);
+  }, [dataList, fieldNames, rootFilter]);
 
-  useEffect(() => {
-    if (Array.isArray(expandedKeys) === false) {
-      return;
-    }
-    const treeData = arrayToTreeObject(dataList, fieldNames, rootFilter);
-    const node = flattenTreeData(treeData, expandedKeys, fieldNames, nodeSort);
-    setCachedTree(treeData);
-    setFlattenNodes(node);
-  }, [dataList]);
+  // 被展开菜单节点
+  const flattenNodes = useMemo(() => {
+    return Array.isArray(expandedKeys) === false
+      ? []
+      : flattenTreeData(cachedTree, expandedKeys, fieldNames, nodeSort);
+  }, [cachedTree, expandedKeys, fieldNames, nodeSort]);
 
   /*
      展开或闭合节点
     nodeKeys: sring 节点展开闭合/Array 要展开的节点
-    callBack 回调
+    scrollNodeKey 被滚动到的节点key
   */
-  const handleExpandItem = (nodeKeys, nodeIndex) => {
+  const handleExpandItem = (nodeKeys, scrollNodeKey) => {
     let expandKeyData = {};
-    if (typeof nodeKeys === 'boolean') {
+    if (isBoolean(nodeKeys)) {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
     } else {
       const newExpandKeyData = {};
@@ -125,27 +115,33 @@ const Tree = (props: TreeProps, ref: any) => {
       expandKeyData = newExpandKeyData;
     }
     if (Array.isArray(nodeKeys)) {
-      nodeKeys.forEach((nodeKey) => {
+      nodeKeys?.forEach((nodeKey) => {
         expandKeyData[nodeKey] = true;
       });
-    } else if (expandKeyData[nodeKeys] === undefined) {
+    } else if (!isBoolean(nodeKeys) && isUndefined(expandKeyData[nodeKeys])) {
       expandKeyData[nodeKeys] = true;
     } else {
       expandKeyData = omit(expandKeyData, nodeKeys);
     }
-
     const expandKeyArr = Object.keys(expandKeyData);
     setExpandedKeys(expandKeyArr);
-    const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort);
-    setFlattenNodes(nodes);
     onExpandKeysChange(expandKeyArr);
-    setScrollToIndex(nodeIndex);
+
+    const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort);
+
+    // 滚动节点到指定位置
+    const scrollIndex = nodes.findIndex((item) => item.key === scrollNodeKey);
+    if (!isUndefined(scrollNodeKey) && scrollIndex !== -1) {
+      setScrollToIndex(scrollIndex);
+    }
   };
 
   const handleRightClick = (e, nodeData) => {
     const data = flattenNodes.filter((node) => selectedKeys.includes(node.key));
-    if (data.length > 1) {
-      onRightClick(e, data);
+
+    if (Array.isArray(data) && data.length > 1) {
+      const multiData = data.map((d) => d?.data);
+      onRightClick(e, multiData);
     } else {
       onRightClick(e, nodeData);
     }
