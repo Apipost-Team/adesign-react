@@ -28,11 +28,8 @@ export const Input: React.FC<InputProps> = (props) => {
   } = props;
 
   const isComposition = useRef(false);
-<<<<<<< Updated upstream
-  // const [inputValue, setInputValue] = useState(value || '');
-=======
+
   const [inputValue, setInputValue] = useState('');
->>>>>>> Stashed changes
 
   useEffect(() => {
     setInputValue(value || '');
@@ -45,7 +42,7 @@ export const Input: React.FC<InputProps> = (props) => {
       if (onChange) {
         onChange(newValue, e);
       }
-      // setInputValue(newValue);
+      setInputValue(newValue);
     } else {
       setCompositionValue(newValue);
     }
@@ -58,7 +55,7 @@ export const Input: React.FC<InputProps> = (props) => {
       if (onChange) {
         onChange(e.currentTarget.value, e);
       }
-      // setInputValue(e.currentTarget.value);
+      setInputValue(e.currentTarget.value);
     } else {
       isComposition.current = true;
     }
@@ -88,19 +85,13 @@ export const Input: React.FC<InputProps> = (props) => {
 
   const handleClear = () => {
     onChange && onChange('', inputEl.current);
-    // setInputValue('');
+    setInputValue('');
     onClear && onClear();
   };
 
-<<<<<<< Updated upstream
-  // const inputProps = {
-  //   value: compositionValue || value || inputValue || '',
-  // };
-=======
   const inputProps = {
     value: compositionValue || inputValue || '',
   };
->>>>>>> Stashed changes
 
   return (
     <span
@@ -115,7 +106,7 @@ export const Input: React.FC<InputProps> = (props) => {
         placeholder={placeholder}
         style={{ ...restStyles }}
         type={type}
-        value={compositionValue !== '' ? compositionValue : value !== '' ? value : ''}
+        // value={compositionValue !== '' ? compositionValue : value !== '' ? value : ''}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -126,7 +117,7 @@ export const Input: React.FC<InputProps> = (props) => {
         onCompositionUpdate={handleComposition}
         onCompositionEnd={handleComposition}
         onKeyDown={onKeyDown}
-        // {...inputProps}
+        {...inputProps}
       />
       {afterFix !== undefined && React.cloneElement(<>{afterFix}</>, { key: 'afterFix' })}
       {allowClear && (
