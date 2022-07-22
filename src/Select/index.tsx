@@ -27,6 +27,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     dropdownRender,
     children,
     disabled = false,
+    size = 'middle',
     ...restProps
   } = props;
 
@@ -90,6 +91,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
           className={cn(PERFIX, className, {
             disabled: disabled === true,
             unselect: mergedValue === undefined,
+            [`${PERFIX}-${size}`]: true,
           })}
         >
           <div className={`${PERFIX}-view`}>

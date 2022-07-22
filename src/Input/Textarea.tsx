@@ -19,6 +19,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     height = 80,
     lineHeight = 20,
     autoFocus = false,
+    bordered = true,
     onChange,
     onPressEnter,
     onBlur = () => {},
@@ -77,6 +78,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   const textareaClassNames = classnames(
     {
       'apipost-textarea': true,
+      'apipost-textarea-border': bordered,
     },
     className
   );

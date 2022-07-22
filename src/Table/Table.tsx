@@ -20,6 +20,7 @@ const Table: React.FC<TableProps> = (props) => {
     layouts,
     showBorder = false,
     rowKey,
+    hasPadding = true,
     onLayoutsChange = () => undefined,
     renderRow = () => undefined,
   } = props;
@@ -61,6 +62,7 @@ const Table: React.FC<TableProps> = (props) => {
           ref={refTable}
           className={cn({
             'apipost-table': true,
+            'apipost-table-haspadding': hasPadding,
             'apipost-table-border': showBorder === true,
           })}
         >

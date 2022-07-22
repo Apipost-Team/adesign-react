@@ -25,6 +25,11 @@ export interface SelectProps {
 
   popupClassName?: string | string[];
 
+  /**
+   * @zh 输入框大小
+   */
+  size?: 'mini' | 'small' | 'middle' | 'large';
+
   // 自定义render组件已被选中的内容
   formatRender?: (value: ReactNode, childList: OptionProps[], text: ReactNode) => ReactNode;
 

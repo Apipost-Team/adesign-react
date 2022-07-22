@@ -26,6 +26,9 @@ export interface ColumnProps {
   // 当前行索引
   rowIndex: number;
 
+  // 单元格是否有上下左右pandding
+  hasPadding: boolean;
+
   // 当单元格内容为空时，显示占位符，优先级低于 render。
   placeholder?: string;
 
