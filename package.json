@@ -1,6 +1,6 @@
 {
   "name": "adesign-react",
-  "version": "0.0.95",
+  "version": "0.0.115",
   "description": "ADesign Component for React",
   "main": "libs/index.js",
   "files": [
@@ -19,6 +19,7 @@
     "test": "cross-env NODE_ENV=development webpack --config scripts/test.js",
     "build": "webpack --config scripts/build.js",
     "build:lib": "vite build",
+    "publish": "npm version patch && vite build && npm publish",
     "svgmap": "node scripts/svgmap.js"
   },
   "dependencies": {
