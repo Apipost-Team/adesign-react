@@ -68,26 +68,26 @@ const useCheck = (props) => {
     });
     const rootStatus = getNodeStatus(treeDatas);
 
-    // step3//便利全部节点，如果有children，并且被选中，则勾选
-    for (const dataItem of dataList) {
-      const ckdItem = treeDatas[dataItem[fieldNames.key]];
+    // // step3//便利全部节点，如果有children，并且被选中，则勾选
+    // for (const dataItem of dataList) {
+    //   const ckdItem = treeDatas[dataItem[fieldNames.key]];
 
-      // 如果当前节点未勾选且子存在子节点
-      if (ckdItem.checked === CheckStatus.UNCHECK && !isUndefined(ckdItem.children)) {
-        const childList = Object.values(ckdItem.children);
-        let ckdCount = 0;
-        childList.forEach((item) => {
-          if (item.checked === CheckStatus.CHECKED) {
-            ckdCount++;
-          }
-        });
-        if (childList.length > 0 && ckdCount < childList.length) {
-          ckdItem.checked = CheckStatus.HALFCHECK;
-        } else if (childList.length > 0 && ckdCount === childList.length) {
-          ckdItem.checked = CheckStatus.CHECKED;
-        }
-      }
-    }
+    //   // 如果当前节点未勾选且子存在子节点
+    //   if (ckdItem.checked === CheckStatus.UNCHECK && !isUndefined(ckdItem.children)) {
+    //     const childList = Object.values(ckdItem.children);
+    //     let ckdCount = 0;
+    //     childList.forEach((item) => {
+    //       if (item.checked === CheckStatus.CHECKED) {
+    //         ckdCount++;
+    //       }
+    //     });
+    //     if (childList.length > 0 && ckdCount < childList.length) {
+    //       ckdItem.checked = CheckStatus.HALFCHECK;
+    //     } else if (childList.length > 0 && ckdCount === childList.length) {
+    //       ckdItem.checked = CheckStatus.CHECKED;
+    //     }
+    //   }
+    // }
 
     setCheckedDatas(treeDatas);
     onCheckAll(rootStatus);
