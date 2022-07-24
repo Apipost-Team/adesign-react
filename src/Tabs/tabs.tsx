@@ -25,6 +25,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     onRemoveTab,
     renderTabPanel,
     itemWidth = 150,
+    elementCache = true,
     ...restProps
   } = props;
 
@@ -262,7 +263,23 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
               {showAdd && addButton}
               {showScrollBtns && scrollButtons}
             </div>
-            <div className="apipost-tabs-content">{activedContent}</div>
+            {elementCache === false ? (
+              <div className="apipost-tabs-content">{activedContent}</div>
+            ) : (
+              <>
+                {tabsList.map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: item?.props?.id !== mergedActiveId ? 'none' : undefined,
+                    }}
+                    className="apipost-tabs-content"
+                  >
+                    {item.props.children}
+                  </div>
+                ))}
+              </>
+            )}
           </>
         ) : (
           renderTabPanel(tabsList, {
