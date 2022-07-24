@@ -322,6 +322,15 @@ const handleRemoveTab = (id: string) => {
               <td>-</td>
             </tr>
             <tr>
+              <td>elementCache</td>
+              <td>是否缓存Dom内容信息</td>
+              <td>boolean</td>
+              <td>true</td>
+            </tr>
+
+
+
+            <tr>
               <td>onChange</td>
               <td>切换标签回调方法</td>
               <td>(activeId: string, tabpan: TabPanProps) => void</td>

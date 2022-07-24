@@ -29,6 +29,7 @@ export interface TabsProps<T> {
   showAdd?: boolean;
   showScrollBtns?: boolean;
   children?: any;
+  elementCache?: boolean;
   /**
    * @zh 标签页类型  默认样式 default ｜ 选项卡样式 card
    * @defaultValue default
