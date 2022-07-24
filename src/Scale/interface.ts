@@ -22,6 +22,12 @@ export interface ScalePanelProps {
   layouts?: Layouts;
   defaultLayouts: Layouts;
   onLayoutsChange?: (layouts: Layouts, panelOffset: PanelOffset) => void;
+
+  // 拖动时是否实时渲染
+  realTimeRender?: boolean;
+
+  // 是否允许拖动到外面
+  enableOverflow?: boolean;
 }
 
 export interface ScaleItemProps {
@@ -41,6 +47,8 @@ export interface ScaleItemProps {
   scaling?: boolean;
   onScaling?: (val: boolean) => void;
   panelOffset?: PanelOffset;
+  realTimeRender?: boolean;
+  enableOverflow?: boolean;
 }
 
 export type ScaleData = {
