@@ -20,7 +20,7 @@
     "test": "cross-env NODE_ENV=development webpack --config scripts/test.js",
     "build": "webpack --config scripts/build.js",
     "build:lib": "vite build",
-    "publish": "npm version patch && vite build && npm publish",
+    "update:npm": "npm version patch && vite build && npm publish",
     "svgmap": "node scripts/svgmap.js"
   },
   "dependencies": {
