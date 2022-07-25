@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 import cn from 'classnames';
 import omit from 'lodash/omit';
-import cloneDeep from 'lodash/cloneDeep';
+import { isNull, isUndefined } from 'lodash';
 import SplitBar from './SplitBar';
 import { ScaleItemProps, Layout, ScaleData, Layouts } from './interface';
 
@@ -32,11 +33,34 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
     defaultLayout: null,
   });
 
+  const mergedItemRef = isNull(refForward) ? useRef(null) : refForward;
+
+  const refItemOffset = useRef(null);
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        refItemOffset.current = {
+          width,
+          height,
+        };
+      }
+    });
+    if (!isUndefined(mergedItemRef?.current)) {
+      resizeObserver.observe(mergedItemRef?.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [refForward]);
+
   const [barLayout, setBarLayout] = useState({ x: 0, y: 0 });
 
   const excuteUpdateLayout = (pageX, pageY) => {
     const newLayout = { ...layout };
-    const { width: preWidth = 0, height: preHeight = 0 } = scaleData.defaultLayout || {};
+    const { width: preWidth = 0, height: preHeight = 0 } =
+      realTimeRender === true ? scaleData.defaultLayout || {} : refItemOffset.current;
 
     if (direction === 'horizontal') {
       const scaledX = pageX - scaleData.startX;
@@ -49,7 +73,8 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
         newLayout.width = maxWidth;
       }
       const layoutsWidth = getLayoutsWidths({ ...layouts, [index]: scaleData.defaultLayout });
-      if (scaledX > parentWidth - layoutsWidth) {
+      if (scaledX > parentWidth - layoutsWidth && enableOverflow === false) {
+        // 不允许拖动到外面
         newLayout.width = preWidth + parentWidth - layoutsWidth;
       }
     } else if (direction === 'vertical') {
@@ -92,16 +117,20 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
 
   const getBarTransStyle = () => {
     if (scaleData.enable && direction === 'horizontal') {
-      return `translateX(${barLayout.x}px)`;
+      return `translateX(${barLayout.x + 10}px)`;
     }
     if (scaleData.enable && direction === 'vertical') {
-      return `translateY(${barLayout.y}px)`;
+      return `translateY(${barLayout.y + 10}px)`;
     }
   };
 
   let itemStyle = { ...layout };
   if (layout?.flex === 1) {
-    itemStyle = omit(layout, ['width', 'height']);
+    if (direction === 'horizontal') {
+      itemStyle = omit(layout, ['height']);
+    } else {
+      itemStyle = omit(layout, ['width']);
+    }
   } else {
     itemStyle = omit(layout, ['flex']);
   }
@@ -166,7 +195,7 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
   }, [scaleData.enable]);
 
   return (
-    <div ref={refForward} style={itemStyle} className={cn('scale-item', className)}>
+    <div ref={mergedItemRef} style={itemStyle} className={cn('scale-item', className)}>
       <div className="scale-item-content">{children}</div>
       {enableScale && (
         <SplitBar

@@ -12,6 +12,7 @@ export interface TabPanProps {
 }
 
 export interface RenderProps {
+  tabsList?: any;
   headerTabItems?: React.ReactNode;
   addButton?: React.ReactNode;
   scrollButtons?: React.ReactNode;
@@ -38,8 +39,11 @@ export interface TabsProps<T> {
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
   onAddTab?: (id: string) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
-  renderTabPanel?: (tabsList: Array<T>, tabParams: RenderProps) => React.ReactNode;
+  headerRender?: (tabParams: RenderProps) => React.ReactNode;
   itemWidth?: number;
+
+  // tabs header是否开启滚轮滚动
+  headerAutoScroll: boolean;
 }
 
 export interface TabsContextProps {

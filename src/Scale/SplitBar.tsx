@@ -60,7 +60,9 @@ const SplitBar: React.FC<SplitBarProps> = (props) => {
       style={{ ...props.style, ...splitStyles() }}
       className={cn('split-item', className)}
       onMouseDown={handleMouseDown}
-    ></div>
+    >
+      <div className="split-bar"></div>
+    </div>
   );
 };
 

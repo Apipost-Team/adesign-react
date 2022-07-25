@@ -3,7 +3,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import cn from 'classnames';
 import ScaleItem from './ScaleItem';
 import './index.less';
-import { ScalePanelProps, Layouts, Layout, PanelOffset } from './interface';
+import { ScalePanelProps, Layouts, Layout } from './interface';
 import { isFunction, isObject } from 'lodash';
 
 const ScalePanel: React.FC<ScalePanelProps> = (props) => {
@@ -21,23 +21,19 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
   const scaleChildren: React.ReactNode = [].concat(children);
   const [_layouts, setLayouts] = useState<Layouts>(defaultLayouts); // 页面内容渲染信息
   const panelRef = useRef<HTMLDivElement | null>(null);
-  const [panelOffset, setPanelOffset] = useState<PanelOffset>({
-    width: 0,
-    height: 0,
-  });
+
+  const refPanelOffset = useRef(null);
 
   const mergedLayout = isObject(props?.layouts) ? props.layouts : _layouts;
-
-  // const mergedLayout=
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
-        setPanelOffset({
+        refPanelOffset.current = {
           width,
           height,
-        });
+        };
       }
     });
 
@@ -47,28 +43,13 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const newLayouts = layouts !== undefined ? layouts : { ..._layouts };
-  //   if (isUndefined(children)) {
-  //     return;
-  //   }
-
-  //   scaleChildren?.forEach((item: React.ReactNode, index: number) => {
-  //     newLayouts[index] = {
-  //       nodeProps: pick(item.props, ['minWidth', 'maxWidth', 'minHeight', 'maxHeight']),
-  //       ...newLayouts[index],
-  //     };
-  //   });
-  //   setLayouts(newLayouts);
-  // }, [layouts]);
-
   const handleLayoutChange = (newlayout: Layout, index: number) => {
     const newLayouts = {
       ...mergedLayout,
       [index]: newlayout,
     };
     if (isFunction(props?.onLayoutsChange)) {
-      onLayoutsChange(newLayouts, panelOffset);
+      onLayoutsChange(newLayouts, refPanelOffset.current);
     }
     setLayouts(newLayouts);
   };
@@ -88,7 +69,7 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
               key={index}
               realTimeRender={realTimeRender}
               enableOverflow={enableOverflow}
-              panelOffset={panelOffset}
+              panelOffset={refPanelOffset.current}
               layouts={mergedLayout}
               onLayoutChange={handleLayoutChange}
               direction={direction}

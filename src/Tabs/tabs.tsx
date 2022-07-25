@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useImperativeHandle, useRef } 
 import cn from 'classnames';
 import _throttle from 'lodash/throttle';
 import _debounce from 'lodash/debounce';
+import isFunction from 'lodash/isFunction';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
@@ -23,9 +24,10 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     onChange,
     onAddTab = () => undefined,
     onRemoveTab,
-    renderTabPanel,
-    itemWidth = 150,
+    headerRender,
+    itemWidth,
     elementCache = true,
+    headerAutoScroll = false,
     ...restProps
   } = props;
 
@@ -54,6 +56,10 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
 
   const handleMouseWeel = useCallback(
     _throttle((e) => {
+      if (!headerAutoScroll) {
+        return;
+      }
+
       // e.preventDefault();
       // e.stopPropagation();
       setEnableTransition(false);
@@ -256,40 +262,40 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
           itemWidth,
         }}
       >
-        {typeof renderTabPanel !== 'function' ? (
-          <>
-            <div onWheel={handleMouseWeel} className="apipost-tabs-header">
-              {headerTabItems}
-              {showAdd && addButton}
-              {showScrollBtns && scrollButtons}
-            </div>
-            {elementCache === false ? (
-              <div className="apipost-tabs-content">{activedContent}</div>
-            ) : (
-              <>
-                {tabsList.map((item, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: item?.props?.id !== mergedActiveId ? 'none' : undefined,
-                    }}
-                    className="apipost-tabs-content"
-                  >
-                    {item.props.children}
-                  </div>
-                ))}
-              </>
-            )}
-          </>
-        ) : (
-          renderTabPanel(tabsList, {
+        {isFunction(headerRender) ? (
+          headerRender({
+            tabsList,
             headerTabItems,
             addButton,
             scrollButtons,
             handleMouseWeel,
             activedContent,
           })
+        ) : (
+          <div onWheel={handleMouseWeel} className="apipost-tabs-header">
+            {headerTabItems}
+            {showAdd && addButton}
+            {showScrollBtns && scrollButtons}
+          </div>
         )}
+        <div className="apipost-tabs-content">
+          {elementCache !== true ? (
+            activedContent
+          ) : (
+            <>
+              {tabsList.map((item, index) => (
+                <div
+                  key={index}
+                  className={cn('tab-content-item', {
+                    active: item?.props?.id === mergedActiveId,
+                  })}
+                >
+                  {item.props.children}
+                </div>
+              ))}
+            </>
+          )}
+        </div>
       </Provider>
     </div>
   );

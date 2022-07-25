@@ -20,30 +20,28 @@
 
   .split-item{
     height: 100%;
-    width: 2px;
+    width: 20px;
     flex-shrink: 0;
     z-index: 99;
     overflow: visible;
     position:absolute;
-    background-color: #cccccc;
+  //  background-color: rgba(0,0,0,0.2);
     cursor: col-resize;
+    transform: translateX(10px);
     &>.split-bar{
-      width: 4px;
-      height: 50px;
+      width: 2px;
+      height: 100%;
       position:absolute;
       box-sizing: border-box;
       z-index:100 ;
-      top: 50%;
-      left:-1px;
-      transform: translateY(-25px);
-      background-color: #cccccc;
-      border-radius: 10px;
+      top: 0;
+      left:calc(50% - 1px);
+      //transform: translateX(20px);
+      background-color: rgba(0,0,0,0.05);
     }
     &.scaling, &:hover{
-      background: #3A86FF;
       &>.split-bar{
-        background: #FFFFFF;
-        border: 1px solid #3A86FF;
+        background:  #3A86FF;
       }
     }
   }
@@ -58,9 +56,8 @@
     // transition-duration: 0.1s;
     // transition-timing-function: ease-in;
     & .scale-item-content{
-      flex: 1;
-      width: 0;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -68,19 +65,26 @@
   &.vertical{
     flex-direction: column;
 
+
+    &>.scale-item{
+      width: 100% !important;
+    }
+
+
+
     &>.scale-item>.split-item{
-      height: 2px;
+      height: 20px;
       width: 100%;
       cursor:row-resize;
-      .split-bar{
-        width: 50px;
-        height: 4px;
-        left: 50%;
-        transform: translateX(-25px);
-        top: -1px;
+      transform: translateY(10px);
+      &>.split-bar{
+        width: 100%;
+        height: 2px;
+        left:0;
+        top: calc(50% - 1px);
       }
 
-      & .scale-item-content{
+      &>.scale-item-content{
         flex: 1;
         width: 100%;
         height: 0;
@@ -88,10 +92,8 @@
       }
 
       &.scaling, &:hover{
-        background: #3A86FF;
         &>.split-bar{
-          background: #FFFFFF;
-          border: 1px solid #3A86FF;
+          background: #3A86FF;
         }
       }
     }
