@@ -117,10 +117,10 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
 
   const getBarTransStyle = () => {
     if (scaleData.enable && direction === 'horizontal') {
-      return `translateX(${barLayout.x + 10}px)`;
+      return `translateX(${barLayout.x}px)`;
     }
     if (scaleData.enable && direction === 'vertical') {
-      return `translateY(${barLayout.y + 10}px)`;
+      return `translateY(${barLayout.y}px)`;
     }
   };
 
@@ -206,6 +206,7 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
           onScaling={handleScaling}
           scaleData={scaleData}
           barLocation={barLocation}
+          direction={direction}
         />
       )}
     </div>

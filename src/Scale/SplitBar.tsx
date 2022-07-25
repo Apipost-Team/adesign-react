@@ -8,6 +8,7 @@ const SplitBar: React.FC<SplitBarProps> = (props) => {
     className,
     barLocation,
     scaleData,
+    direction,
   } = props;
 
   const preRef = useRef(null);
@@ -45,13 +46,27 @@ const SplitBar: React.FC<SplitBarProps> = (props) => {
 
   const splitStyles = () => {
     const splitStyle: React.CSSProperties = {};
-    if (barLocation === 'start') {
-      splitStyle.top = '0px';
-      splitStyle.left = '0px';
+
+    // 'horizontal' | 'vertical';
+    if (direction === 'horizontal') {
+      if (barLocation === 'start') {
+        splitStyle.left = '-10px';
+      } else {
+        splitStyle.right = '-10px';
+      }
+    } else if (barLocation === 'start') {
+      splitStyle.top = '-10px';
     } else {
-      splitStyle.bottom = '0px';
-      splitStyle.right = '0px';
+      splitStyle.bottom = '-10px';
     }
+
+    // if (barLocation === 'start') {
+    //   splitStyle.top = '0px';
+    //   splitStyle.left = '0px';
+    // } else {
+    //   splitStyle.bottom = '0px';
+    //   splitStyle.right = '0px';
+    // }
     return splitStyle;
   };
 
