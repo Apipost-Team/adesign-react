@@ -75,7 +75,7 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
       const layoutsWidth = getLayoutsWidths({ ...layouts, [index]: scaleData.defaultLayout });
       if (scaledX > parentWidth - layoutsWidth && enableOverflow === false) {
         // 不允许拖动到外面
-        newLayout.width = preWidth + parentWidth - layoutsWidth;
+        //  newLayout.width = preWidth + parentWidth - layoutsWidth;
       }
     } else if (direction === 'vertical') {
       const scaledY = pageY - scaleData.startY;
@@ -90,7 +90,7 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
       const layoutsHeight = getLayoutsHeights({ ...layouts, [index]: scaleData.defaultLayout });
       if (scaledY > parentHeight - layoutsHeight && enableOverflow === false) {
         // 不允许拖动到外面
-        newLayout.height = preHeight + parentHeight - layoutsHeight;
+        // newLayout.height = preHeight + parentHeight - layoutsHeight;
       }
     }
 
