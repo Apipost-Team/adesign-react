@@ -3,7 +3,7 @@ import cn from 'classnames';
 import _throttle from 'lodash/throttle';
 import _debounce from 'lodash/debounce';
 import isFunction from 'lodash/isFunction';
-import { isArguments, isArray, isUndefined } from 'lodash';
+import { isArray, isUndefined } from 'lodash';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
@@ -26,6 +26,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     onAddTab = () => undefined,
     onRemoveTab,
     headerRender,
+    contentRender,
     itemWidth,
     elementCache = true,
     headerAutoScroll = false,
@@ -313,16 +314,23 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
               {(!isArray(tabsList) || tabsList.length == 0) && !isUndefined(emptyContent) && (
                 <>{emptyContent}</>
               )}
-              {tabsList.map((item, index) => (
-                <div
-                  key={index}
-                  className={cn('tab-content-item', {
-                    active: item?.props?.id === mergedActiveId,
-                  })}
-                >
-                  {item.props.children}
-                </div>
-              ))}
+
+              {isFunction(contentRender) ? (
+                contentRender({ tabsList, activeId: mergedActiveId })
+              ) : (
+                <>
+                  {tabsList.map((item, index) => (
+                    <div
+                      key={index}
+                      className={cn('tab-content-item', {
+                        active: item?.props?.id === mergedActiveId,
+                      })}
+                    >
+                      {item.props.children}
+                    </div>
+                  ))}
+                </>
+              )}
             </>
           )}
         </div>

@@ -40,7 +40,12 @@ export interface TabsProps<T> {
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
   onAddTab?: (id: string) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
+
+  // tab头自定义渲染
   headerRender?: (tabParams: RenderProps) => React.ReactNode;
+
+  // tab内容自定义渲染
+  contentRender?: (tabParams: RenderProps) => React.ReactNode;
   itemWidth?: number;
 
   // tabs header是否开启滚轮滚动
