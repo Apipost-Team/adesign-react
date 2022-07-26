@@ -11,4 +11,5 @@ export interface DropdownProps {
   className?: string | string[];
   content: React.ReactElement;
   children: React.ReactElement;
+  offset: [x: number, y: number];
 }
