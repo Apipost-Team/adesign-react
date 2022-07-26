@@ -16,8 +16,9 @@ export interface RenderProps {
   headerTabItems?: React.ReactNode;
   addButton?: React.ReactNode;
   scrollButtons?: React.ReactNode;
-  handleMouseWeel?: (ev: MouseEvent) => void;
+  handleMouseWheel?: (ev: MouseEvent) => void;
   activedContent?: React.ReactNode;
+  renderScrollItems?: (elements: React.ReactNode) => void;
 }
 
 export interface TabsProps<T> {

@@ -40,7 +40,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
   const refHeadOuter = useRef<HTMLDivElement>(null);
   const refTranslateData = useRef<any>(null);
 
-  const handleMouseWeelDone = useCallback(
+  const handleMouseWheelDone = useCallback(
     _debounce(() => {
       setEnableTransition(true);
     }, 100),
@@ -51,10 +51,10 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     refTranslateData.current = {
       translateX,
     };
-    handleMouseWeelDone();
+    handleMouseWheelDone();
   }, [translateX]);
 
-  const handleMouseWeel = useCallback(
+  const handleMouseWheel = useCallback(
     _throttle((e) => {
       if (!headerAutoScroll) {
         return;
@@ -81,6 +81,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
       if (movedWidth > 0) {
         movedWidth = 0;
       }
+
       setTranslateX(movedWidth);
 
       // e.stopPropagation();
@@ -230,6 +231,30 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
       </div>
     </div>
   );
+
+  const renderScrollItems = (tabsItemList) => {
+    return (
+      <div
+        className={cn({
+          'tabs-content': true,
+          [`tabs-content_${type}`]: true,
+        })}
+        ref={refHeadOuter}
+      >
+        <div
+          className={cn({
+            enableTransition: enableTransition === true,
+          })}
+          style={{
+            transform: `translate3d(${translateX}px,0,0)`,
+          }}
+        >
+          {tabsItemList}
+        </div>
+      </div>
+    );
+  };
+
   const scrollButtons: React.ReactNode = (
     <div className="scroll-buttons">
       <div className="scroll-btn " onClick={handleMoveLeft}>
@@ -266,14 +291,14 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
           headerRender({
             tabsList,
             headerTabItems,
+            renderScrollItems,
             addButton,
             scrollButtons,
-            handleMouseWeel,
-            activedContent,
+            handleMouseWheel,
           })
         ) : (
-          <div onWheel={handleMouseWeel} className="apipost-tabs-header">
-            {headerTabItems}
+          <div onWheel={handleMouseWheel} className="apipost-tabs-header">
+            {renderScrollItems(tabsList)}
             {showAdd && addButton}
             {showScrollBtns && scrollButtons}
           </div>
