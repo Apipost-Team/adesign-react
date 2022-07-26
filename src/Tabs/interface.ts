@@ -45,6 +45,9 @@ export interface TabsProps<T> {
 
   // tabs header是否开启滚轮滚动
   headerAutoScroll: boolean;
+
+  // tab item为空时自定义渲染内容
+  emptyContent?: React.ReactNode;
 }
 
 export interface TabsContextProps {

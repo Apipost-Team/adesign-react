@@ -3,6 +3,7 @@ import cn from 'classnames';
 import _throttle from 'lodash/throttle';
 import _debounce from 'lodash/debounce';
 import isFunction from 'lodash/isFunction';
+import { isArguments, isArray, isUndefined } from 'lodash';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
@@ -28,6 +29,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     itemWidth,
     elementCache = true,
     headerAutoScroll = false,
+    emptyContent,
     ...restProps
   } = props;
 
@@ -308,6 +310,9 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
             activedContent
           ) : (
             <>
+              {(!isArray(tabsList) || tabsList.length == 0) && !isUndefined(emptyContent) && (
+                <>{emptyContent}</>
+              )}
               {tabsList.map((item, index) => (
                 <div
                   key={index}
