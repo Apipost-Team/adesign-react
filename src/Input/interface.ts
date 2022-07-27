@@ -63,6 +63,11 @@ export interface InputProps
   allowClear?: boolean;
 
   /**
+   * @zh 强制使用外部传入value渲染
+   */
+  forceUseValue?: boolean;
+
+  /**
    * @zh 值改变时的回调
    */
   onChange?: (value: string, e: React.FormEvent<HTMLInputElement>) => void;
