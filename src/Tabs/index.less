@@ -1,6 +1,7 @@
 .apipost-tabs {
   position: relative;
-
+  flex-direction: column;
+  display: flex;
   &-header {
     width: 100%;
     display: flex;
@@ -71,44 +72,6 @@
           }
         }
       }
-
-      &_card {
-        // border-bottom: 1px solid #e4e7ed;
-        position: relative;
-        &::before {
-          content: '';
-          width: 100%;
-          height: 1px;
-          background: #e4e7ed;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-        }
-        > div {
-          border: 1px solid #e4e7ed;
-          border-radius: 5px 5px 0 0;
-          border-bottom: none;
-          // margin-bottom: -1px;
-        }
-        .tabs-item {
-          padding: 0 20px;
-          height: 40px;
-          box-sizing: border-box;
-          line-height: 40px;
-          font-size: 14px;
-          color: #303133;
-          position: relative;
-          border-bottom: 1px solid transparent;
-          &:not(:first-child) {
-            border-left: 1px solid #e4e7ed;
-          }
-          &.active {
-            color: #409eff;
-            border-bottom: 1px solid #fff;
-          }
-        }
-      }
-
     }
 
     & .add-button {
@@ -152,9 +115,23 @@
   }
 
   &-content {
-    padding: 10px 0;
+    flex: 1;
+    height: 0;
     font-size: 12px;
     text-align: left;
+
+    &>.tab-content-item{
+      height:100%;
+      width:100%;
+      display: none;
+      overflow: auto;
+
+      &.active{
+        display: block;
+      }
+     // background-color: red;
+    }
+
   }
 
 }

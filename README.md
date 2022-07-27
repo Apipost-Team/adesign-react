@@ -13,6 +13,8 @@
 
 ADesign 适配桌面端的组件库，适合在 React 16.x 技术栈项目中使用。
 
+[![Package Quality](https://packagequality.com/shield/adesign-react.svg)](https://packagequality.com/#?package=adesign-react)
+
 # 🎉 特性
 
 - 适配桌面端交互

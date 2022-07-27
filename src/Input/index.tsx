@@ -59,7 +59,7 @@ export const Input: React.FC<InputProps> = (props) => {
       if (onChange) {
         onChange(e.currentTarget.value, e);
       }
-      !value && setInputValue(e.currentTarget.value);
+      setInputValue(e.currentTarget.value);
     } else {
       isComposition.current = true;
     }
@@ -114,7 +114,7 @@ export const Input: React.FC<InputProps> = (props) => {
       className={cn(className, wrapperClassnames)}
       style={{ width, height, border, borderRadius }}
     >
-      {beforeFix !== undefined && beforeFix}
+      {beforeFix !== undefined && React.cloneElement(<>{beforeFix}</>, { key: 'beforeFix' })}
       <input
         spellCheck="false"
         className="apipost-input"
@@ -134,7 +134,7 @@ export const Input: React.FC<InputProps> = (props) => {
         onCompositionEnd={handleComposition}
         onKeyDown={onKeyDown}
       />
-      {afterFix !== undefined && afterFix}
+      {afterFix !== undefined && React.cloneElement(<>{afterFix}</>, { key: 'afterFix' })}
       {allowClear && (
         <span onClick={handleClear} className="apipost-input-inner-clear">
           <Iconcancel />

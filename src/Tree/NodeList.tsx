@@ -1,4 +1,4 @@
-import React, { useState, useContext, useImperativeHandle, useEffect } from 'react';
+import React, { useContext, useImperativeHandle } from 'react';
 import { List as VirtualList, AutoSizer } from 'react-virtualized';
 import TreeNode from './TreeNode';
 import TreeContext from './TreeContext';
@@ -15,26 +15,10 @@ const NodeList = (props, ref) => {
     handleCheckAll,
     checkStatus,
     fieldNames,
-    expandedKeys,
     enableVirtualList,
     scrollToIndex,
     setScrollToIndex,
   } = useContext(TreeContext);
-
-  const [scrollKey, setScrollKey] = useState(null);
-
-  useEffect(() => {
-    if (scrollKey !== null) {
-      const nodeIndex = data.findIndex((d) => d.key === scrollKey);
-      if (nodeIndex !== -1) {
-        setScrollToIndex(nodeIndex);
-        // const baseOffsetTop = listRef.offsetTop;
-        // const targetOffsetTop = listRef.childNodes[nodeIndex].offsetTop;
-        // listRef.parentNode.scroll(0, targetOffsetTop - baseOffsetTop);
-      }
-      // setScrollKey(null);
-    }
-  }, [expandedKeys]);
 
   const handleScrollTo = (key, checkedKey = true) => {
     const treeDatas = {};
@@ -51,9 +35,9 @@ const NodeList = (props, ref) => {
       ckdList.push(parentNode[fieldNames.key]);
       parentNode = treeDatas[parentNode[fieldNames.parent]];
     }
-    setScrollKey(key);
+
     if (checkedKey === true) {
-      handleExpandItem(ckdList);
+      handleExpandItem(ckdList, key);
     }
   };
 
@@ -94,6 +78,7 @@ const NodeList = (props, ref) => {
               rowRenderer={virtualRender}
               overscanRowCount={10}
               scrollToIndex={scrollToIndex}
+              onScroll={setScrollToIndex.bind(null, undefined)}
             />
           )}
         </AutoSizer>

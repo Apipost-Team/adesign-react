@@ -41,8 +41,8 @@ const TabPan: React.FC<TabPanProps> = (props) => {
       onClick={handleChange}
       className={tempClassName}
     >
-      {title}
-      {removable && <TabRemove className="item-close" onClick={handleRemove} />}
+      <React.Fragment key="tabTitle">{title}</React.Fragment>
+      {removable && <TabRemove key="tabBtn" className="item-close" onClick={handleRemove} />}
     </div>
   );
 };

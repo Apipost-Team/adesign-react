@@ -12,11 +12,13 @@ export interface TabPanProps {
 }
 
 export interface RenderProps {
+  tabsList?: any;
   headerTabItems?: React.ReactNode;
   addButton?: React.ReactNode;
   scrollButtons?: React.ReactNode;
-  handleMouseWeel?: (ev: MouseEvent) => void;
+  handleMouseWheel?: (ev: MouseEvent) => void;
   activedContent?: React.ReactNode;
+  renderScrollItems?: (elements: React.ReactNode) => void;
 }
 
 export interface TabsProps<T> {
@@ -29,6 +31,7 @@ export interface TabsProps<T> {
   showAdd?: boolean;
   showScrollBtns?: boolean;
   children?: any;
+  elementCache?: boolean;
   /**
    * @zh 标签页类型  默认样式 default ｜ 选项卡样式 card
    * @defaultValue default
@@ -37,8 +40,19 @@ export interface TabsProps<T> {
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
   onAddTab?: (id: string) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
-  renderTabPanel?: (tabsList: Array<T>, tabParams: RenderProps) => React.ReactNode;
+
+  // tab头自定义渲染
+  headerRender?: (tabParams: RenderProps) => React.ReactNode;
+
+  // tab内容自定义渲染
+  contentRender?: (tabParams: RenderProps) => React.ReactNode;
   itemWidth?: number;
+
+  // tabs header是否开启滚轮滚动
+  headerAutoScroll: boolean;
+
+  // tab item为空时自定义渲染内容
+  emptyContent?: React.ReactNode;
 }
 
 export interface TabsContextProps {

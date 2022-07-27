@@ -13,6 +13,7 @@ import Button from '../Button';
 import TabCloseSvg from '../assets/tabpan-close.svg';
 import { ConfirmProps, ModalProps } from './interface';
 import Confirm from './Confirm';
+import Show from './Show';
 import './index.less';
 
 const PERFIXNAME = 'apipost-modal';
@@ -85,8 +86,16 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
             <div
               className={cn({ [`${PERFIXNAME}-wrapper`]: true }, className)}
               style={{ ...style, zIndex: zIndex + 1 }}
+              onClick={() => {
+                maskClosable && onCancel();
+              }}
             >
-              <div className={cn({ [`${PERFIXNAME}-container`]: true })}>
+              <div
+                className={cn({ [`${PERFIXNAME}-container`]: true })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 {title !== null && (
                   <div className={cn({ [`${PERFIXNAME}-header`]: true }, headerClassName)}>
                     {title}
@@ -123,11 +132,13 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
 
 export interface ModalComponent extends ForwardRefExoticComponent<PropsWithChildren<ModalProps>> {
   confirm: (props: ConfirmProps) => void;
+  Show: (props: any) => void;
 }
 
 const ExportedModalComponent: ModalComponent = forwardRef(Modal) as ModalComponent;
 ExportedModalComponent.displayName = 'Modal';
 
 ExportedModalComponent.confirm = Confirm;
+ExportedModalComponent.Show = Show;
 
 export default ExportedModalComponent;

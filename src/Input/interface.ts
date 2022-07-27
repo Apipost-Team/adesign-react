@@ -156,6 +156,12 @@ export interface TextareaProps
   readonly?: boolean;
 
   /**
+   * @zh 是否无边框
+   * @defaultValue true
+   */
+  bordered?: boolean;
+
+  /**
    * @zh 值改变时的回调
    */
   onChange?: (value?: string, e?: any) => void;
@@ -177,4 +183,9 @@ export interface TextareaProps
    * @zh 键盘事件的回调
    */
   onKeyDown?: (e: any) => void;
+
+  /**
+   * @zh 自动计算高度
+   */
+  autoHeight?: boolean;
 }

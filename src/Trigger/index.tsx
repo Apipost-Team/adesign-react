@@ -1,7 +1,6 @@
 import React, { PureComponent, ReactElement, PropsWithChildren, CSSProperties } from 'react';
 import ReactDom from 'react-dom';
 import cn from 'classnames';
-import ResizeObserver from 'resize-observer-polyfill';
 import { TriggerProps, TriggerState, PopupStyleProps } from './interface';
 import { addEvent, removeEvent, getScrollElements } from '../util/dom';
 
@@ -110,6 +109,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
       return;
     }
     const { onVisibleChange = (val) => undefined } = this.props;
+
     this.setState(
       {
         popupVisible: val,
@@ -133,7 +133,11 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
     const triggerOffset = this.triggerRef?.getBoundingClientRect();
     const popupOffset = this.popupRef?.getBoundingClientRect();
+    const winOffset = document.body.getBoundingClientRect();
     const popupStyle: PopupStyleProps = {};
+
+    const winWidth = winOffset.width;
+    const winHeight = winOffset.height;
 
     if (autoAdjustWidth === true) {
       popupOffset.width = triggerOffset.width;
@@ -148,13 +152,13 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     }
     if (['bottom', 'top'].includes(placement)) {
       const midLeft = triggerOffset.left + triggerOffset.width / 2;
-      popupStyle.left = midLeft - popupOffset.width / 2;
+      popupStyle.left = midLeft - popupOffset.width / 2 + offset[0];
     }
     if (['top-start', 'bottom-start'].includes(placement)) {
-      popupStyle.left = triggerOffset.left;
+      popupStyle.left = triggerOffset.left - offset[0];
     }
     if (['top-end', 'bottom-end'].includes(placement)) {
-      popupStyle.left = triggerOffset.left + triggerOffset.width - popupOffset.width;
+      popupStyle.left = triggerOffset.left + triggerOffset.width - popupOffset.width + offset[0];
     }
     if (['left-start', 'left', 'left-end'].includes(placement)) {
       popupStyle.left = triggerOffset.left - popupOffset.width - offset[0];
@@ -163,15 +167,22 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
       popupStyle.left = triggerOffset.left + triggerOffset.width + offset[0];
     }
     if (['left-start', 'right-start'].includes(placement)) {
-      popupStyle.top = triggerOffset.top;
+      popupStyle.top = triggerOffset.top - offset[0];
     }
     if (['left', 'right'].includes(placement)) {
       const midTop = triggerOffset.top + triggerOffset.height / 2;
-      popupStyle.top = midTop - popupOffset.height / 2;
+      popupStyle.top = midTop - popupOffset.height / 2 + offset[1];
     }
     if (['left-end', 'right-end'].includes(placement)) {
-      popupStyle.top = triggerOffset.top + triggerOffset.height - popupOffset.height;
+      popupStyle.top = triggerOffset.top + triggerOffset.height - popupOffset.height - offset[1];
     }
+
+    // 底部空间不足时往上展开
+    if (popupOffset.height + popupStyle.top > winHeight) {
+      popupStyle.top = triggerOffset.top - popupOffset.height - offset[1];
+    }
+
+    // debugger;
 
     this.setState({
       popupStyle,
@@ -226,8 +237,12 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
     return (
       <React.Fragment>
-        {childrenComponent}
-        {this.state.popupVisible && ReactDom.createPortal(portal, document.body)}
+        <React.Fragment key="child">{childrenComponent}</React.Fragment>
+        {this.state.popupVisible && (
+          <React.Fragment key="portal">
+            {ReactDom.createPortal(portal, document.body)}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

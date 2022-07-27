@@ -12,17 +12,16 @@
   .apipost-table-th {
     border-bottom: 1px solid #ebeef5;
     & td{
-      padding: 12px 0;
       font-weight: normal;
       color: #909399;
       background-color: #f2f3f5;
       position: relative;
       .apipost-table-cell{
-        display: block;
-        padding: 0 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        // 单元格内部数据应全部展示，如有需要自定义render实现次
+        // display: block;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
       }
 
     }
@@ -34,18 +33,24 @@
 
   .apipost-table-td{
     box-sizing: border-box;
-    padding: 12px 0;
     vertical-align: middle;
     position: relative;
     word-break: break-all;
     color: #606266;
     font-size: 14px;
     .apipost-table-cell{
-      display: block;
-      padding: 0 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // display: block;
+      // white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+    }
+  }
+  &-haspadding {
+    & td{
+      padding: 12px 0;
+      .apipost-table-cell{
+        padding: 0 10px;
+      }
     }
   }
 
@@ -66,7 +71,7 @@
   .td-scale{
     position: absolute;
     top: 0;
-    z-index: 99;
+    z-index: 101;
     width: 4px;
     height: 100%;
     cursor: col-resize;

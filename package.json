@@ -1,6 +1,6 @@
 {
   "name": "adesign-react",
-  "version": "0.0.93",
+  "version": "0.0.131",
   "description": "ADesign Component for React",
   "main": "libs/index.js",
   "files": [
@@ -15,10 +15,12 @@
     "url": "https://github.com/Apipost-Team/adesign-react"
   },
   "scripts": {
+    "debug": "cross-env NODE_ENV=development webpack-dev-server --config scripts/debug.js",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config scripts/start.js",
     "test": "cross-env NODE_ENV=development webpack --config scripts/test.js",
     "build": "webpack --config scripts/build.js",
     "build:lib": "vite build",
+    "update:npm": "npm version patch && vite build && npm publish",
     "svgmap": "node scripts/svgmap.js"
   },
   "dependencies": {

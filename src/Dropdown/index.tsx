@@ -15,6 +15,7 @@ const DropDown = React.forwardRef<HTMLDivElement, DropdownProps>((props, ref) =>
     outsideClose = true,
     onVisibleChange = () => undefined,
     content,
+    offset = [0, 0],
     children,
   } = props;
 
@@ -24,13 +25,13 @@ const DropDown = React.forwardRef<HTMLDivElement, DropdownProps>((props, ref) =>
     }
     return content;
   };
-
   return (
     <>
       <Trigger
         ref={ref}
         style={style}
         placement={placement}
+        offset={offset}
         outsideClose={outsideClose}
         popup={getPopup()}
         trigger={trigger}
