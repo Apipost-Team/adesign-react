@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useImperativeHandle, useRef } from 'react';
 import cn from 'classnames';
 import _throttle from 'lodash/throttle';
-import _debounce from 'lodash/debounce';
 import isFunction from 'lodash/isFunction';
 import { isArray, isUndefined } from 'lodash';
 import TabsContext from './context';
@@ -34,7 +33,6 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     ...restProps
   } = props;
 
-  const [enableTransition, setEnableTransition] = useState(true); // 是否开启动画效果
   const [activeTabId, setActiveTabId] = useState(defaultActiveId);
   const [translateX, setTranslateX] = useState(0);
 
@@ -43,18 +41,11 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
   const refHeadOuter = useRef<HTMLDivElement>(null);
   const refTranslateData = useRef<any>(null);
 
-  const handleMouseWheelDone = useCallback(
-    _debounce(() => {
-      setEnableTransition(true);
-    }, 100),
-    []
-  );
-
   useEffect(() => {
     refTranslateData.current = {
       translateX,
     };
-    handleMouseWheelDone();
+    //  handleMouseWheelDone();
   }, [translateX]);
 
   const handleMouseWheel = useCallback(
@@ -65,7 +56,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
 
       // e.preventDefault();
       // e.stopPropagation();
-      setEnableTransition(false);
+      //  setEnableTransition(false);
       const moveStepX = e.nativeEvent.deltaY;
       let movedWidth = 0;
       if (e.nativeEvent.deltaY > 0) {
@@ -223,9 +214,6 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
       ref={refHeadOuter}
     >
       <div
-        className={cn({
-          enableTransition: enableTransition === true,
-        })}
         style={{
           transform: `translate3d(${translateX}px,0,0)`,
         }}
@@ -245,9 +233,6 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
         ref={refHeadOuter}
       >
         <div
-          className={cn({
-            enableTransition: enableTransition === true,
-          })}
           style={{
             transform: `translate3d(${translateX}px,0,0)`,
           }}
