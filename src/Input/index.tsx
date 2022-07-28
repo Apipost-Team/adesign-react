@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { isUndefined } from 'lodash';
 import cn from 'classnames';
 import { InputProps } from './interface';
 import Textarea from './Textarea';
@@ -7,6 +8,7 @@ import Iconcancel from '../assets/cancel.svg';
 
 export const Input: React.FC<InputProps> = (props) => {
   const {
+    defaultValue,
     value,
     type,
     onChange,
@@ -25,24 +27,26 @@ export const Input: React.FC<InputProps> = (props) => {
     onKeyDown = () => undefined,
     readonly = false,
     allowClear,
+    forceUseValue = false,
   } = props;
 
   const isComposition = useRef(false);
-
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(defaultValue || '');
 
   useEffect(() => {
-    setInputValue(value || '');
+    if (!isUndefined(value)) {
+      setInputValue(value || '');
+    }
   }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     if (!isComposition.current) {
+      setInputValue(newValue);
       if (onChange) {
         onChange(newValue, e);
       }
-      setInputValue(newValue);
     } else {
       setCompositionValue(newValue);
     }
@@ -89,10 +93,21 @@ export const Input: React.FC<InputProps> = (props) => {
     onClear && onClear();
   };
 
-  const inputProps = {
-    value: compositionValue || inputValue || '',
+  // const inputProps = {
+  //   value: compositionValue || inputValue || '',
+  // };
+  const getInputValue = () => {
+    if (compositionValue) {
+      return compositionValue;
+    }
+    if (!isUndefined(inputValue) && !forceUseValue) {
+      return inputValue;
+    }
+    if (!isUndefined(value)) {
+      return value;
+    }
+    return '';
   };
-
   return (
     <span
       ref={inputEl}
@@ -106,6 +121,7 @@ export const Input: React.FC<InputProps> = (props) => {
         placeholder={placeholder}
         style={{ ...restStyles }}
         type={type}
+        value={getInputValue()}
         // value={compositionValue !== '' ? compositionValue : value !== '' ? value : ''}
         onChange={handleChange}
         onFocus={handleFocus}
@@ -117,7 +133,6 @@ export const Input: React.FC<InputProps> = (props) => {
         onCompositionUpdate={handleComposition}
         onCompositionEnd={handleComposition}
         onKeyDown={onKeyDown}
-        {...inputProps}
       />
       {afterFix !== undefined && React.cloneElement(<>{afterFix}</>, { key: 'afterFix' })}
       {allowClear && (
