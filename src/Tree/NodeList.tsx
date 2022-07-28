@@ -1,5 +1,6 @@
 import React, { useContext, useImperativeHandle } from 'react';
 import { List as VirtualList, AutoSizer } from 'react-virtualized';
+import { isObject, isString, isUndefined } from 'lodash';
 import TreeNode from './TreeNode';
 import TreeContext from './TreeContext';
 
@@ -20,22 +21,35 @@ const NodeList = (props, ref) => {
     setScrollToIndex,
   } = useContext(TreeContext);
 
-  const handleScrollTo = (key, checkedKey = true) => {
-    const treeDatas = {};
+  const handleScrollTo = (key: string, checkedKey = true) => {
     if (dataList.length === 0) {
       return;
     }
-    dataList.forEach((item) => {
+    if (!isString(fieldNames?.parent) || !isString(fieldNames.key)) {
+      return;
+    }
+    const nodeKey: string = fieldNames.key;
+    const parentKey: string = fieldNames?.parent;
+
+    const treeDatas: { [id: string]: any } = {};
+    dataList.forEach((item: any) => {
       treeDatas[item[fieldNames.key]] = item;
     });
+
     const ckdList = [key];
-
-    let parentNode = treeDatas[treeDatas[key][fieldNames.parent]];
-    while (parentNode !== undefined) {
-      ckdList.push(parentNode[fieldNames.key]);
-      parentNode = treeDatas[parentNode[fieldNames.parent]];
-    }
-
+    const targetItem = treeDatas[key];
+    const findParentNodes = (parentNode: any) => {
+      if (isUndefined(parentNode)) {
+        return;
+      }
+      if (ckdList.indexOf(parentNode?.[nodeKey]) !== -1) {
+        return;
+      }
+      ckdList.push(parentNode[nodeKey]);
+      const newParent = treeDatas[parentNode[parentKey]];
+      findParentNodes(newParent);
+    };
+    findParentNodes(treeDatas[targetItem[parentKey]]);
     if (checkedKey === true) {
       handleExpandItem(ckdList, key);
     }
