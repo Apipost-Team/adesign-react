@@ -28,6 +28,7 @@ export const Input: React.FC<InputProps> = (props) => {
     readonly = false,
     allowClear,
     forceUseValue = false,
+    ...restProps
   } = props;
 
   const isComposition = useRef(false);
@@ -133,6 +134,7 @@ export const Input: React.FC<InputProps> = (props) => {
         onCompositionUpdate={handleComposition}
         onCompositionEnd={handleComposition}
         onKeyDown={onKeyDown}
+        {...restProps}
       />
       {afterFix !== undefined && React.cloneElement(<>{afterFix}</>, { key: 'afterFix' })}
       {allowClear && (
