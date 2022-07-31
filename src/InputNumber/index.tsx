@@ -18,7 +18,7 @@ const SUBTRACT = 'subtract';
 export const InputNumber: React.FC<InputNumberProps> = (props) => {
   const {
     defaultValue = 0,
-    min = 100000,
+    min = 0,
     max = Number.MAX_SAFE_INTEGER,
     onChange,
     disabled,
@@ -105,6 +105,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
           <div style={{ flex: 1, height: '100%' }}>
             {modetype === 'input' ? (
               <Input
+                forceUseValue
                 value={`${mergedValue}`}
                 disabled={disabled}
                 onBlur={handleInputBlur}
