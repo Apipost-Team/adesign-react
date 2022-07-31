@@ -24,6 +24,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
     disabled,
     modetype = 'input',
     type = 'row',
+    ...restProps
   } = props;
   const [value, setValue] = useState(defaultValue);
   const mergedValue = 'value' in props ? props.value : value;
@@ -110,6 +111,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
                 disabled={disabled}
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
+                {...restProps}
               />
             ) : (
               <div>{`${mergedValue}`}</div>
@@ -129,10 +131,12 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
             className="cur_pointer column_before"
           />
           <Input
+            forceUseValue
             value={`${mergedValue}`}
             disabled={disabled}
             onBlur={handleInputBlur}
             onChange={handleInputChange}
+            {...restProps}
           />
           <InputDownSvg
             onClick={handleChangeValue.bind(null, 'subtract')}
