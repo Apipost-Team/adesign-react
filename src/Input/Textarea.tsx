@@ -21,9 +21,9 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     autoFocus = false,
     bordered = true,
     onChange,
-    onPressEnter,
     onBlur = () => {},
     autoHeight = true,
+    ...restProps
   } = props;
 
   const textareaRef: any = useRef<HTMLTextAreaElement>();
@@ -70,11 +70,11 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     height,
   };
 
-  const onKeyDownchange = (e: any) => {
-    if (e.keyCode === 13 && onPressEnter) {
-      onPressEnter(e);
-    }
-  };
+  // const onKeyDownchange = (e: any) => {
+  //   if (e.keyCode === 13 && onPressEnter) {
+  //     onPressEnter(e);
+  //   }
+  // };
   const textareaClassNames = classnames(
     {
       'apipost-textarea': true,
@@ -123,7 +123,6 @@ const Textarea: React.FC<TextareaProps> = (props) => {
       }}
       autoheight
       onBlur={handleBlur}
-      onKeyDown={(e) => onKeyDownchange(e)}
       value={textareaValue}
       onChange={(e) => {
         setTextareaValue(e.target.value);
@@ -133,6 +132,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
         }
       }}
       onInput={AutoHeight}
+      {...restProps}
     >
       {textareaValue}
     </textarea>
