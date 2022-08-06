@@ -14,6 +14,7 @@ const NodeList = (props, ref) => {
   const {
     handleExpandItem,
     handleCheckAll,
+    handleCheckNode,
     checkStatus,
     fieldNames,
     enableVirtualList,
@@ -58,6 +59,7 @@ const NodeList = (props, ref) => {
   useImperativeHandle(ref, () => ({
     scrollTo: handleScrollTo,
     handleExpandItem,
+    handleCheckNode,
     handleCheckAll,
     checkStatus,
   }));
