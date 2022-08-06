@@ -21,7 +21,9 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
 
   const mergeChecked = 'checked' in props ? checked : _checked;
 
-  const handleOnChange = () => {
+  const handleOnChange = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (disabled || readOnly) {
       return;
     }
