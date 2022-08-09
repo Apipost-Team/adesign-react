@@ -24,7 +24,22 @@ export interface SelectProps {
   popupStyle?: React.CSSProperties;
 
   popupClassName?: string | string[];
-  placement: string;
+  placement:
+    | 'auto'
+    | 'auto-start'
+    | 'auto-end'
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
   autoAdjustWidth: boolean;
 
   /**
