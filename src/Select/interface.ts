@@ -24,6 +24,8 @@ export interface SelectProps {
   popupStyle?: React.CSSProperties;
 
   popupClassName?: string | string[];
+  placement: string;
+  autoAdjustWidth: boolean;
 
   /**
    * @zh 输入框大小
