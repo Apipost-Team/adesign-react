@@ -71,6 +71,12 @@ export interface DrawerProps {
    */
   closable?: boolean;
 
+  /**
+   * @zh 定位方式是否为fixed
+   * @defaultValue true
+   */
+  fixed?: boolean;
+
   onClose?: (e?: any) => void;
 
   /**
