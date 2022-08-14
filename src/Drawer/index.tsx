@@ -25,6 +25,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     maskClosable = true,
     closable = true,
     fixed = true,
+    getContainer,
     onOk,
     onCancel,
   } = props;
@@ -52,67 +53,76 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     }
   }, [visible]);
 
+  const drawerDom = (
+    <>
+      {!!mask && (
+        <div
+          className="apipost-drawer-mask"
+          onClick={() => {
+            maskClosable ? onCancel && onCancel() : null;
+          }}
+        ></div>
+      )}
+      <div
+        className={cn(
+          {
+            'apipost-drawer': true,
+            [`apipost-drawer-${placement}`]: true,
+          },
+          className
+        )}
+        style={{
+          position: fixed ? 'fixed' : 'absolute',
+          top: placement === 'left' || placement === 'right' ? 0 : undefined,
+          left: placement === 'top' || placement === 'bottom' ? 0 : undefined,
+          bottom: placement === 'bottom' ? 0 : undefined,
+          height: placement === 'top' || placement === 'bottom' ? height : '100%',
+          width: placement === 'top' || placement === 'bottom' ? '100%' : width,
+          ...drawerStyle,
+          ...style,
+        }}
+      >
+        {title !== null && (
+          <div className={cn({ 'apipost-drawer-header': true })} style={headerStyle}>
+            {title}
+          </div>
+        )}
+        {closable && (
+          <div onClick={onCancel} className="apipost-drawer-close">
+            <TabCloseSvg />
+          </div>
+        )}
+        <div className="apipost-drawer-content">{children}</div>
+        {footer !== null && (
+          <div className={cn({ 'apipost-drawer-footer': true })} style={footerStyle}>
+            {!footer ? (
+              <div>
+                <Button onClick={onOk} type="primary">
+                  {okText}
+                </Button>
+                <Button onClick={onCancel}>{cancelText}</Button>
+              </div>
+            ) : (
+              footer
+            )}
+          </div>
+        )}
+      </div>
+    </>
+  );
+
   return (
     <>
-      {visible &&
-        ReactDOM.createPortal(
-          <>
-            {!!mask && (
-              <div
-                className="apipost-drawer-mask"
-                onClick={() => {
-                  maskClosable ? onCancel && onCancel() : null;
-                }}
-              ></div>
-            )}
-            <div
-              className={cn(
-                {
-                  'apipost-drawer': true,
-                  [`apipost-drawer-${placement}`]: true,
-                },
-                className
+      {visible && (
+        <>
+          {getContainer === false
+            ? drawerDom
+            : ReactDOM.createPortal(
+                drawerDom,
+                getContainer || (document.querySelector('body') as HTMLElement)
               )}
-              style={{
-                position: fixed ? 'fixed' : 'absolute',
-                top: placement === 'left' || placement === 'right' ? 0 : undefined,
-                left: placement === 'top' || placement === 'bottom' ? 0 : undefined,
-                bottom: placement === 'bottom' ? 0 : undefined,
-                height: placement === 'top' || placement === 'bottom' ? height : '100%',
-                width: placement === 'top' || placement === 'bottom' ? '100%' : width,
-                ...drawerStyle,
-                ...style,
-              }}
-            >
-              {title !== null && (
-                <div className={cn({ 'apipost-drawer-header': true })} style={headerStyle}>
-                  {title}
-                </div>
-              )}
-              {closable && (
-                <div onClick={onCancel} className="apipost-drawer-close">
-                  <TabCloseSvg />
-                </div>
-              )}
-              <div className="apipost-drawer-content">{children}</div>
-              {footer !== null && (
-                <div className={cn({ 'apipost-drawer-footer': true })} style={footerStyle}>
-                  {!footer ? (
-                    <div>
-                      <Button onClick={onOk} type="primary">
-                        {okText}
-                      </Button>
-                      <Button onClick={onCancel}>{cancelText}</Button>
-                    </div>
-                  ) : (
-                    footer
-                  )}
-                </div>
-              )}
-            </div>
-          </>,
-          document.querySelector('body') as HTMLElement
-        )}
+        </>
+      )}
     </>
   );
 };
