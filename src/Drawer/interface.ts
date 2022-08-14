@@ -77,6 +77,11 @@ export interface DrawerProps {
    */
   fixed?: boolean;
 
+  /**
+   * @zh 指定挂载节点
+   */
+  getContainer?: any;
+
   onClose?: (e?: any) => void;
 
   /**
