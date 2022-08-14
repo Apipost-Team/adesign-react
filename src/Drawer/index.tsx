@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState, CSSProperties } from 'react';
+import ReactDOM from 'react-dom';
 import cn from 'classnames';
 import { Button } from '../Button';
 import TabCloseSvg from '../assets/tabpan-close.svg';
@@ -53,63 +54,65 @@ const Drawer: React.FC<DrawerProps> = (props) => {
 
   return (
     <>
-      {visible && (
-        <>
-          {!!mask && (
+      {visible &&
+        ReactDOM.createPortal(
+          <>
+            {!!mask && (
+              <div
+                className="apipost-drawer-mask"
+                onClick={() => {
+                  maskClosable ? onCancel && onCancel() : null;
+                }}
+              ></div>
+            )}
             <div
-              className="apipost-drawer-mask"
-              onClick={() => {
-                maskClosable ? onCancel && onCancel() : null;
+              className={cn(
+                {
+                  'apipost-drawer': true,
+                  [`apipost-drawer-${placement}`]: true,
+                },
+                className
+              )}
+              style={{
+                position: fixed ? 'fixed' : 'absolute',
+                top: placement === 'left' || placement === 'right' ? 0 : undefined,
+                left: placement === 'top' || placement === 'bottom' ? 0 : undefined,
+                bottom: placement === 'bottom' ? 0 : undefined,
+                height: placement === 'top' || placement === 'bottom' ? height : '100%',
+                width: placement === 'top' || placement === 'bottom' ? '100%' : width,
+                ...drawerStyle,
+                ...style,
               }}
-            ></div>
-          )}
-          <div
-            className={cn(
-              {
-                'apipost-drawer': true,
-                [`apipost-drawer-${placement}`]: true,
-              },
-              className
-            )}
-            style={{
-              position: fixed ? 'fixed' : 'absolute',
-              top: placement === 'left' || placement === 'right' ? 0 : undefined,
-              left: placement === 'top' || placement === 'bottom' ? 0 : undefined,
-              bottom: placement === 'bottom' ? 0 : undefined,
-              height: placement === 'top' || placement === 'bottom' ? height : '100%',
-              width: placement === 'top' || placement === 'bottom' ? '100%' : width,
-              ...drawerStyle,
-              ...style,
-            }}
-          >
-            {title !== null && (
-              <div className={cn({ 'apipost-drawer-header': true })} style={headerStyle}>
-                {title}
-              </div>
-            )}
-            {closable && (
-              <div onClick={onCancel} className="apipost-drawer-close">
-                <TabCloseSvg />
-              </div>
-            )}
-            <div className="apipost-drawer-content">{children}</div>
-            {footer !== null && (
-              <div className={cn({ 'apipost-drawer-footer': true })} style={footerStyle}>
-                {!footer ? (
-                  <div>
-                    <Button onClick={onOk} type="primary">
-                      {okText}
-                    </Button>
-                    <Button onClick={onCancel}>{cancelText}</Button>
-                  </div>
-                ) : (
-                  footer
-                )}
-              </div>
-            )}
-          </div>
-        </>
-      )}
+            >
+              {title !== null && (
+                <div className={cn({ 'apipost-drawer-header': true })} style={headerStyle}>
+                  {title}
+                </div>
+              )}
+              {closable && (
+                <div onClick={onCancel} className="apipost-drawer-close">
+                  <TabCloseSvg />
+                </div>
+              )}
+              <div className="apipost-drawer-content">{children}</div>
+              {footer !== null && (
+                <div className={cn({ 'apipost-drawer-footer': true })} style={footerStyle}>
+                  {!footer ? (
+                    <div>
+                      <Button onClick={onOk} type="primary">
+                        {okText}
+                      </Button>
+                      <Button onClick={onCancel}>{cancelText}</Button>
+                    </div>
+                  ) : (
+                    footer
+                  )}
+                </div>
+              )}
+            </div>
+          </>,
+          document.querySelector('body') as HTMLElement
+        )}
     </>
   );
 };
