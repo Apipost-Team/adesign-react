@@ -23,6 +23,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     mask = true,
     maskClosable = true,
     closable = true,
+    fixed = true,
     onOk,
     onCancel,
   } = props;
@@ -71,7 +72,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
               className
             )}
             style={{
-              position: 'absolute',
+              position: fixed ? 'fixed' : 'absolute',
               top: placement === 'left' || placement === 'right' ? 0 : undefined,
               left: placement === 'top' || placement === 'bottom' ? 0 : undefined,
               bottom: placement === 'bottom' ? 0 : undefined,
