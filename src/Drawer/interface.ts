@@ -71,6 +71,17 @@ export interface DrawerProps {
    */
   closable?: boolean;
 
+  /**
+   * @zh 定位方式是否为fixed
+   * @defaultValue true
+   */
+  fixed?: boolean;
+
+  /**
+   * @zh 指定挂载节点
+   */
+  getContainer?: any;
+
   onClose?: (e?: any) => void;
 
   /**

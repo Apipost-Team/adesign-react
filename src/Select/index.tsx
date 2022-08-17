@@ -27,6 +27,8 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     dropdownRender,
     children,
     disabled = false,
+    placement = 'bottom-start',
+    autoAdjustWidth = true,
     size = 'middle',
     ...restProps
   } = props;
@@ -75,10 +77,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     >
       <Trigger
         ref={triggerRef}
-        autoAdjustWidth
+        autoAdjustWidth={autoAdjustWidth}
         disabled={disabled}
         style={popupStyle}
-        placement="bottom-start"
+        placement={placement}
         outsideClose
         popup={getPopup()}
         trigger="click"

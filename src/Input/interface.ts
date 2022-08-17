@@ -9,7 +9,7 @@ export interface InputProps
   /**
    * @zh 输入框的值
    */
-  value?: string;
+  value?: string | number;
 
   /**
    * @zh 输入框大小
