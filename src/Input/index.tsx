@@ -118,7 +118,7 @@ export const Input: React.FC<InputProps> = (props) => {
       {beforeFix !== undefined && React.cloneElement(<>{beforeFix}</>, { key: 'beforeFix' })}
       <input
         spellCheck="false"
-        className="apipost-input"
+        className="apipost-input mousetrap"
         placeholder={placeholder}
         style={{ ...restStyles }}
         type={type}
