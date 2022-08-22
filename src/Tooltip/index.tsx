@@ -35,6 +35,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
 
   const getPopup = () => {
     if (
+      content === undefined ||
       typeof content === 'string' ||
       content.type === undefined ||
       content.type.toString() === React.Fragment.toString()
