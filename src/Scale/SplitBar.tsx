@@ -50,14 +50,14 @@ const SplitBar: React.FC<SplitBarProps> = (props) => {
     // 'horizontal' | 'vertical';
     if (direction === 'horizontal') {
       if (barLocation === 'start') {
-        splitStyle.left = '-10px';
+        splitStyle.left = '-7px';
       } else {
-        splitStyle.right = '-10px';
+        splitStyle.right = '-7px';
       }
     } else if (barLocation === 'start') {
-      splitStyle.top = '-10px';
+      splitStyle.top = '-7px';
     } else {
-      splitStyle.bottom = '-10px';
+      splitStyle.bottom = '-7px';
     }
 
     // if (barLocation === 'start') {
