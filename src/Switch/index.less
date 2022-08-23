@@ -26,17 +26,17 @@
         overflow: hidden;
         transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s ;
     }
+    & .cycle{
+      left: 0;
+    }
     &.checked{
       background-color: #287EFF;
       & .cycle{
+        left: auto;
         right: 0;
       }
-    }
-    &:not(&.checked){
-      & .cycle{
-        left: 0;
-      }
-    }
+    } 
+
 
     &.small{
       width:24px;
