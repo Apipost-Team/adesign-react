@@ -265,6 +265,12 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     handleMoveRight,
   }));
 
+  useEffect(() => {
+    if (tabsList?.length === 0) {
+      setTranslateX(0);
+    }
+  }, [tabsList?.length]);
+
   return (
     <div style={style} ref={rootRef} {...restProps} className={cn('apipost-tabs', className)}>
       <Provider
