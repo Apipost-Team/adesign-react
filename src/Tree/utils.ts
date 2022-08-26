@@ -1,6 +1,7 @@
 import _omit from 'lodash/omit';
 import isArray from 'lodash/isArray';
 import isFunction from 'lodash/isFunction';
+import { isEmpty, isUndefined } from 'lodash';
 
 export const fillFieldNames = (fieldNames) => {
   const { title = 'title', _title, key = 'key', children = 'children' } = fieldNames || {};
@@ -23,7 +24,13 @@ export const getKey = (key, pos) => {
 
 const getNodeLevel = (node) => (node === null ? 0 : getNodeLevel(node.parent) + 1);
 
-export const flattenTreeData = (treeNodeList, expandedKeys = [], fieldNames, nodeSort) => {
+export const flattenTreeData = (
+  treeNodeList,
+  expandedKeys = [],
+  fieldNames,
+  nodeSort,
+  checkLeafNode
+) => {
   const {
     _title: fieldTitles,
     key: fieldKey,
@@ -60,7 +67,9 @@ export const flattenTreeData = (treeNodeList, expandedKeys = [], fieldNames, nod
         children: [],
         data: treeNode,
         isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
-        isLeaf: treeNode.children === undefined || treeNode.children?.length === 0,
+        isLeaf: isFunction(checkLeafNode)
+          ? checkLeafNode(treeNode)
+          : isUndefined(treeNode?.children) || isEmpty(treeNode?.children),
         level: getNodeLevel(parent),
         show: [...(parent ? parent.show : []), true],
       };

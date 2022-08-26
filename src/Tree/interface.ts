@@ -131,6 +131,8 @@ export interface TreeProps {
    * @zh 节点排序
    */
   nodeSort?: any;
+
+  checkLeafNode: (nodeItem: any) => boolean;
 }
 
 export interface treeContextProps {

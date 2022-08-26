@@ -1,6 +1,6 @@
 import React, { useContext, useImperativeHandle } from 'react';
 import { List as VirtualList, AutoSizer } from 'react-virtualized';
-import { isObject, isString, isUndefined } from 'lodash';
+import { isString, isUndefined } from 'lodash';
 import TreeNode from './TreeNode';
 import TreeContext from './TreeContext';
 
@@ -78,8 +78,7 @@ const NodeList = (props, ref) => {
     );
   };
 
-  const virtualRender = ({ key, index, style }) =>
-    renderNodeItem(data[index], index, { key, style });
+  const virtualRender = ({ key, index, style }) => renderNodeItem(data[index], index, { style });
 
   return (
     <>

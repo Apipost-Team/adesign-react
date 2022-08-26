@@ -43,6 +43,7 @@ const Tree = (props: TreeProps, ref: any) => {
     enableVirtualList = false, // 是否开启虚拟列表
     nodeSort = undefined, // 节点排序
     rootFilter, // 过滤顶级节点
+    checkLeafNode, // 检查当前节点是否叶子结点
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [scrollToIndex, setScrollToIndex] = useState(0);
@@ -95,7 +96,7 @@ const Tree = (props: TreeProps, ref: any) => {
   const flattenNodes = useMemo(() => {
     return Array.isArray(expandedKeys) === false
       ? []
-      : flattenTreeData(cachedTree, expandedKeys, fieldNames, nodeSort);
+      : flattenTreeData(cachedTree, expandedKeys, fieldNames, nodeSort, checkLeafNode);
   }, [cachedTree, expandedKeys, fieldNames, nodeSort]);
 
   /*
@@ -127,7 +128,7 @@ const Tree = (props: TreeProps, ref: any) => {
     setExpandedKeys(expandKeyArr);
     onExpandKeysChange(expandKeyArr);
 
-    const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort);
+    const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort, checkLeafNode);
 
     // 滚动节点到指定位置
     const scrollIndex = nodes.findIndex((item) => item.key === scrollNodeKey);
