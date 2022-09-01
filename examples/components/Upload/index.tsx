@@ -23,11 +23,18 @@ CONTAINER)`}
       >
         <div>
         <Upload></Upload>
-        {/* <Upload autoUpload action='https://console-api.apipost.cn/api/project/import_project'
+        {/* <Upload autoUpload action='https://v7-test.apipost.cn/api/oss/push_files'
           headers={{
-            "token": "5409507ab0bb9c7ebfff3eee38653982d7279eca"
-          }
-          }></Upload> */}
+            "token": "cec401ad6222b69e44c0fa33a39006b826d2bcae"
+          }}
+          showFilesList={false}
+          name="files"
+          data={{
+            oss_type: 1
+          }}
+          uploadSuccess={(res: any) => {
+            console.log(res)
+          }}></Upload> */}
         </div>
       </ExampleItem>
 

@@ -80,7 +80,7 @@ export interface UploaderProps {
   /**
    * @zh 文件列表修改回调函数
    */
-  onChange?: (files?: UploadItem[], fileList?: UploadItem[]) => void;
+  onChange?: (files?: UploadItem[] | any, fileList?: UploadItem[] | any) => void;
   /**
    * @zh 上传文件地址
    */
@@ -103,6 +103,11 @@ export interface UploaderProps {
    * @zh 上传是否带Cookie
    */
   withCookies?: boolean;
+
+  /**
+   * @zh 单文件上传成功后处理方法
+   */
+  uploadSuccess?: (res: any) => void;
 
   /**
    * @zh 通过覆盖默认的上传行为，可以自定义自己的上传实现
