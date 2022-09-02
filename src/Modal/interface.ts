@@ -17,6 +17,11 @@ export interface ModalProps {
   maskClosable?: boolean;
 
   /**
+   * @zh showTopClosable
+   */
+  showTopClosable?: boolean;
+
+  /**
    * 弹框body类名
    */
   bodyClassName?: string | string[];

@@ -35,6 +35,7 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     okText = '确认',
     cancelText = '取消',
     escToExit = true,
+    showTopClosable = true,
     onOk,
     onCancel = () => undefined,
   } = props;
@@ -101,9 +102,11 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
                     {title}
                   </div>
                 )}
-                <div onClick={onCancel} className={`${PERFIXNAME}-close`}>
-                  <TabCloseSvg />
-                </div>
+                {showTopClosable && (
+                  <div onClick={onCancel} className={`${PERFIXNAME}-close`}>
+                    <TabCloseSvg />
+                  </div>
+                )}
                 <div className={cn({ [`${PERFIXNAME}-body`]: true }, bodyClassName)}>
                   {children}
                 </div>
