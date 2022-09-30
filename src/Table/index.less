@@ -46,11 +46,16 @@
       // text-overflow: ellipsis;
     }
 
+    .apipost-table-filters-select>svg {
+      fill: #ff6c37;
+    }
+
     .apipost-table-filters {
       display: inline-block;
       margin-left: 5px;
       float: right;
       padding-right: 10px;
+
       .apipost-table-filters-down {
         z-index: 999;
         background-color: #ffffffcc;
@@ -60,13 +65,16 @@
         position: absolute;
         padding: 12px;
         border-radius: 5px;
-        top: calc(100% + 2px);
+        width: 100%;
+        max-width: 300px;
 
         .apipost-table-filters-down-item {
           height: 30px;
           line-height: 30px;
           padding: 0 10px;
           cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }
@@ -76,6 +84,7 @@
       position: relative;
       top: -3px;
       margin-right: 10px;
+
       .apipost-table-sort-down {
         position: absolute;
         top: 12px;

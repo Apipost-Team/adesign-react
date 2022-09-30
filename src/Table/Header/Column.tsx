@@ -30,6 +30,7 @@ const Column = (props) => {
   }); // 组件布局
   const [sortDirections, setSortDirections] = useState('init');
   const [filtersShow, setFiltersShow] = useState(false);
+  const [filtersSelect, setFiltersSelect] = useState(false);
   useEffect(() => {
     if (defaultLayout !== undefined) {
       setLayout(defaultLayout);
@@ -110,7 +111,7 @@ const Column = (props) => {
         //   <DownSvg width={12} />
         // </Dropdown>
         <span
-          className="apipost-table-filters"
+          className={`apipost-table-filters ${filtersSelect ? 'apipost-table-filters-select' : ''}`}
           onClick={(e) => {
             e.stopPropagation();
             setFiltersShow(!filtersShow);
@@ -126,11 +127,12 @@ const Column = (props) => {
                     className="apipost-table-filters-down-item"
                     onClick={() => {
                       setFiltersShow(false);
-                      console.log(i.value);
-                      // refDropdown.current?.setPopupVisible(false);
                       if (isFunction(colItem?.onFilter)) {
+                        setFiltersSelect(true);
                         setTableData(
-                          tableData.filter((item: any) => colItem.onFilter(i.value, item))
+                          tableData.filter((item: any) =>
+                            colItem.onFilter(i?.key || index, i.value, item)
+                          )
                         );
                       }
                     }}
@@ -143,6 +145,7 @@ const Column = (props) => {
                 className="apipost-table-filters-down-item"
                 onClick={() => {
                   setTableData(data);
+                  setFiltersSelect(false);
                 }}
               >
                 <Button type="warning" size="mini">
