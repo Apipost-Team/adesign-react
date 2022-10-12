@@ -28,12 +28,14 @@ const TableRow: React.FC<RowProps> = (props) => {
   };
 
   return (
-    <tr className="apipost-table-tr" {...restProps}>
-      {rowSelection !== undefined && renderSelection(rowSelection, rowKey)}
-      {columns?.map((colItem, colIndex) => (
-        <TableColumn key={colIndex} {...colItem} rowIndex={rowIndex} rowData={rowData} />
-      ))}
-    </tr>
+    <>
+      <tr className="apipost-table-tr" {...restProps}>
+        {rowSelection !== undefined && renderSelection(rowSelection, rowKey)}
+        {columns?.map((colItem, colIndex) => (
+          <TableColumn key={colIndex} {...colItem} rowIndex={rowIndex} rowData={rowData} />
+        ))}
+      </tr>
+    </>
   );
 };
 
