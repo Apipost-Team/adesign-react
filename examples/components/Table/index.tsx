@@ -5,7 +5,7 @@ import './index.less';
 import ExampleItem from '../_exampleItem';
 import Input from '../../../src/Input';
 import InputNumber from '../../../src/InputNumber';
-import { data, columns, columnsResizeAble } from './constant';
+import { data, columns, columnsResizeAble, columnsHeaderFulter } from './constant';
 
 const TableSamples = () => {
   const [list, setList] = useState([...data]);
@@ -445,6 +445,97 @@ import Table from "../../src/Table";
               `}
       >
         <Table showBorder columns={columnsForEdit} data={list} />
+      </ExampleItem>
+
+      <ExampleItem
+        title="表头带筛选功能"
+        codeContent={`import React, { useState } from 'react';
+import Table from "../../src/Table";
+
+
+        const [list, setList] = useState([...data]);
+
+        const handleChange = (rowData: any, rowIndex: number, newVal: any) => {
+          const newList = [...list];
+          newList[rowIndex] = {
+            ...rowData,
+            ...newVal,
+          };
+          setList([...newList]);
+        };
+
+
+        const data = [
+          {
+            key: '1',
+            name: 'Jane Doe',
+            salary: 23000,
+            address: '32 Park Road, London',
+            email: 'jane.doe@example.com',
+          },
+          {
+            key: '2',
+            name: 'Alisa Ross',
+            salary: 25000,
+            address: '35 Park Road, London',
+            email: 'alisa.ross@example.com',
+          },
+          {
+            key: '3',
+            name: 'Kevin Sandra',
+            salary: 22000,
+            address: '31 Park Road, London',
+            email: 'kevin.sandra@example.com',
+          },
+          {
+            key: '4',
+            name: 'Ed Hellen',
+            salary: 17000,
+            address: '42 Park Road, London',
+            email: 'ed.hellen@example.com',
+          },
+          {
+            key: '5',
+            name: 'William Smith',
+            salary: 27000,
+            address: '62 Park Road, London',
+            email: 'william.smith@example.com',
+          },
+        ];
+
+        const columns = [
+          {
+            title: 'Name',
+            dataIndex: 'name',
+            filters: [
+              { key: '1', value: 'Jane Doe' },
+              { key: '2', value: 'Alisa Ross' },
+              { key: '3', value: 'Kevin Sandra' },
+            ],
+            onFilter: (key, value, item) => item.name === value,
+          },
+          {
+            title: 'Salary',
+            dataIndex: 'salary',
+          },
+          {
+            title: 'Address',
+            dataIndex: 'address',
+          },
+          {
+            title: 'Email',
+            dataIndex: 'email',
+          },
+        ];
+
+
+        ReactDOM.render(
+          <Table showBorder columns={columns} data={data} />,
+        CONTAINER)
+
+              `}
+      >
+        <Table showBorder columns={columnsHeaderFulter} data={list} />
       </ExampleItem>
 
       <div className="titles">

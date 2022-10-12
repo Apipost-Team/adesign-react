@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { cloneDeep, isArray, isFunction } from 'lodash';
+import ReactDom from 'react-dom';
 import SplitBar from '../SplitBar';
 import Context from '../Context';
 import {
@@ -30,13 +31,31 @@ const Column = (props) => {
   }); // 组件布局
   const [sortDirections, setSortDirections] = useState('init');
   const [filtersShow, setFiltersShow] = useState(false);
-  const [filtersSelect, setFiltersSelect] = useState(false);
+  const [filtersSelect, setFiltersSelect] = useState(undefined);
   useEffect(() => {
     if (defaultLayout !== undefined) {
       setLayout(defaultLayout);
     }
   }, [defaultLayout]);
-
+  const onClickOutside = (event) => {
+    if (refDropdown === null || refDropdown.current === null) {
+      return;
+    }
+    // 点击区域外部关闭
+    const eleTrigger = ReactDom.findDOMNode(refDropdown.current);
+    // const elePopup = ReactDom.findDOMNode(this.popupRef);
+    const isInsideClick = [eleTrigger].some((ref) => ref?.contains(event?.target)) || false;
+    if (isInsideClick !== true) {
+      setFiltersShow(false);
+    }
+  };
+  useEffect(() => {
+    // 注册页面点击事件
+    document.body.addEventListener('mousedown', onClickOutside, false);
+    return () => {
+      document.body.removeEventListener('mousedown', onClickOutside, false);
+    };
+  }, []);
   const onLayoutChange = (newLayout) => {
     if (newLayout.width < 30) {
       newLayout.width = 30;
@@ -111,7 +130,10 @@ const Column = (props) => {
         //   <DownSvg width={12} />
         // </Dropdown>
         <span
-          className={`apipost-table-filters ${filtersSelect ? 'apipost-table-filters-select' : ''}`}
+          ref={refDropdown}
+          className={`apipost-table-filters ${
+            filtersSelect !== undefined ? 'apipost-table-filters-select' : ''
+          }`}
           onClick={(e) => {
             e.stopPropagation();
             setFiltersShow(!filtersShow);
@@ -124,13 +146,15 @@ const Column = (props) => {
                 return (
                   <div
                     key={i?.key || index}
-                    className="apipost-table-filters-down-item"
+                    className={`apipost-table-filters-down-item ${
+                      filtersSelect === (i?.key || index) ? 'filters-down-item-active' : ''
+                    }`}
                     onClick={() => {
                       setFiltersShow(false);
                       if (isFunction(colItem?.onFilter)) {
-                        setFiltersSelect(true);
+                        setFiltersSelect(i?.key || index);
                         setTableData(
-                          tableData.filter((item: any) =>
+                          data.filter((item: any) =>
                             colItem.onFilter(i?.key || index, i.value, item)
                           )
                         );
@@ -145,7 +169,7 @@ const Column = (props) => {
                 className="apipost-table-filters-down-item"
                 onClick={() => {
                   setTableData(data);
-                  setFiltersSelect(false);
+                  setFiltersSelect(undefined);
                 }}
               >
                 <Button type="warning" size="mini">

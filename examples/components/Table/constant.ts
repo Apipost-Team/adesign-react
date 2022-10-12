@@ -80,4 +80,29 @@ export const columnsResizeAble = [
   },
 ];
 
-export default { data, columns, columnsResizeAble };
+export const columnsHeaderFulter = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    filters: [
+      { key: '1', value: 'Jane Doe' },
+      { key: '2', value: 'Alisa Ross' },
+      { key: '3', value: 'Kevin Sandra' },
+    ],
+    onFilter: (key, value, item) => item.name === value,
+  },
+  {
+    title: 'Salary',
+    dataIndex: 'salary',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+  },
+];
+
+export default { data, columns, columnsResizeAble, columnsHeaderFulter };
