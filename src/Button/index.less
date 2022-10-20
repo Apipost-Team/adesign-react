@@ -1,3 +1,5 @@
+@max-btn-width:400px;
+
 .apipost-btn {
   display: inline-flex;
   align-items: center;
@@ -155,10 +157,12 @@
     cursor: not-allowed;
   }
 
+
   &-mini {
     padding: 0 11px;
     font-size: 12px;
     height: 24px;
+    width: ~ '@{max-btn-width}';
     &-round {
       padding: 0;
       width: 24px;

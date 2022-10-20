@@ -12,6 +12,29 @@ const devConfig = {
     filename: '[name]-[contenthash:4].js',
     publicPath: '',
   },
+  module: {
+    rules: [
+      {
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'adesign-blue-6': '#f85959',
+              },
+              javascriptEnabled: true,
+            },
+          },
+        ],
+      },
+    ],
+  },
   mode: 'development',
   devServer: {
     static: {

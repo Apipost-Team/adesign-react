@@ -15,11 +15,14 @@ import { ConfirmProps, ModalProps } from './interface';
 import Confirm from './Confirm';
 import Show from './Show';
 import './index.less';
+import { ConfigContext } from '../ConfigProvider';
 
 const PERFIXNAME = 'apipost-modal';
 // const Modal: React.FC<ModalProps> = (props) => {
 // const Modal = (props) => {
 function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
+  const { locale } = React.useContext(ConfigContext);
+
   const {
     style,
     className,
@@ -32,8 +35,8 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     footer,
     footerClassName = '',
     visible,
-    okText = '确认',
-    cancelText = '取消',
+    okText = locale?.Modal.okText,
+    cancelText = locale?.Modal.cancelText,
     escToExit = true,
     showTopClosable = true,
     onOk,

@@ -5,6 +5,9 @@ export interface ApipostButtonProps {
   className?: string | string[] | CSSProperties;
   children?: ReactNode;
 
+  // 前置className
+  prefixCls?: string;
+
   /**
    * @zh button前置自定义icon
    */

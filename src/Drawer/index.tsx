@@ -4,9 +4,11 @@ import cn from 'classnames';
 import { Button } from '../Button';
 import TabCloseSvg from '../assets/tabpan-close.svg';
 import { DrawerProps } from './interface';
+import { ConfigContext } from '../ConfigProvider';
 import './index.less';
 
 const Drawer: React.FC<DrawerProps> = (props) => {
+  const { locale } = React.useContext(ConfigContext);
   const {
     visible,
     style,
@@ -16,8 +18,8 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     headerStyle,
     footer,
     footerStyle,
-    okText = '确认',
-    cancelText = '取消',
+    okText = locale?.Drawer.okText,
+    cancelText = locale?.Drawer.cancelText,
     placement = 'right',
     width = 300,
     height = 300,

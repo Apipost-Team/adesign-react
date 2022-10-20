@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { ScalePanel, ScaleItem } from '../src/Scale';
-import ScaleTest from './scaleTest';
+import TestPage from './testPage';
+import ENUS from '../src/locale/en-US';
+import ConfigProvider from '../src/ConfigProvider';
 
-ReactDom.render(<ScaleTest></ScaleTest>, document.getElementById('root'));
+ReactDom.render(
+  <ConfigProvider locale={ENUS} size="mini" prefixCls="apipost">
+    <TestPage></TestPage>
+  </ConfigProvider>,
+
+  document.getElementById('root')
+);

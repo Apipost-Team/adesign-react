@@ -20,4 +20,6 @@ export interface ConfigProviderProps {
 
   // 全局弹出框挂载的父级节点。
   getPopupContainer?: (node: HTMLElement) => Element;
+
+  children?: React.ReactNode;
 }
