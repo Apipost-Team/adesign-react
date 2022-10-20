@@ -12,32 +12,6 @@ const devConfig = {
     filename: '[name]-[contenthash:4].js',
     publicPath: '',
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       // use: [
-  //       //   {
-  //       //     loader: 'style-loader',
-  //       //   },
-  //       //   {
-  //       //     loader: 'css-loader',
-  //       //   },
-  //       //   {
-  //       //     loader: 'less-loader',
-  //       //     options: {
-  //       //       modifyVars: {
-  //       //         'adesign-blue-6': '#f85959',
-  //       //       },
-  //       //       javascriptEnabled: true,
-  //       //     },
-  //       //   },
-  //       // ],
-
-  //       use: ['style-loader', 'css-loader', 'less-loader'],
-  //       test: /\.(css|less)$/,
-  //     },
-  //   ],
-  // },
   mode: 'development',
   devServer: {
     static: {
@@ -63,7 +37,7 @@ const devConfig = {
     new HtmlWebpackPlugin({
       title: 'ADesign UI组件库 - 开放、极简、共建 - By Apipost FE',
       filename: path.resolve(__dirname, '../dist/index.html'),
-      template: path.resolve(__dirname, '../src/index.html'),
+      template: path.resolve(__dirname, '../public/index.html'),
     }),
   ],
 };
