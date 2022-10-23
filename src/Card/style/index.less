@@ -1,10 +1,12 @@
-.apipost-card {
+@import './varis.less';
 
+
+.apipost-card {
 
   border-radius: 3px;
   padding: 16px 24px;
   position: relative;
-  border-color:#DCDFE6;
+  border-color:@card-color-border;
   border-style: solid;
 
   & .btn-card-close{
@@ -18,8 +20,13 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    &>svg{
+      fill: @close-btn-text-color;
+    }
+
+
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color:@close-btn-background-hover;
     }
   }
 }

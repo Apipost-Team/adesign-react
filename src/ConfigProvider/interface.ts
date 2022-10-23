@@ -10,7 +10,7 @@ export interface ConfigProviderProps {
   theme?: ThemeConfig;
 
   // 配置组件的默认尺寸，只会对支持`size`属性的组件生效。
-  size?: 'mini' | 'small' | 'default' | 'large';
+  size?: 'mini' | 'small' | 'middle' | 'large';
 
   // 全局组件类名前缀
   prefixCls?: string;

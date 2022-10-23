@@ -5,7 +5,7 @@ import { Button } from '../Button';
 import TabCloseSvg from '../assets/tabpan-close.svg';
 import { DrawerProps } from './interface';
 import { ConfigContext } from '../ConfigProvider';
-import './index.less';
+import './style/index.less';
 
 const Drawer: React.FC<DrawerProps> = (props) => {
   const { locale } = React.useContext(ConfigContext);

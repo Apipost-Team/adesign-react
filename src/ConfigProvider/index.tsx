@@ -8,7 +8,7 @@ const defaultProps: ConfigProviderProps = {
   locale: defaultLocale,
   prefixCls: 'apipost',
   getPopupContainer: () => document.body,
-  size: 'default',
+  size: 'middle',
 };
 
 export const ConfigContext = React.createContext<ConfigProviderProps>({

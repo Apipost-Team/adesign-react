@@ -1,7 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
 import { CollapseItemProps } from './interface';
-import './index.less';
 import Context from './Context';
 import SvgRight from '../assets/arrow-right3.svg';
 

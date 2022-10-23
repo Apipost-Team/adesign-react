@@ -43,10 +43,34 @@ export const Menus = [
     elements: <Button />,
   },
   {
+    path: '/card',
+    key: 'card',
+    name: '卡片 Card',
+    elements: <Card />,
+  },
+  {
     path: '/checkbox',
     key: 'checkbox',
     name: '复选框 CheckBox',
     elements: <CheckBox />,
+  },
+  {
+    path: '/collapse',
+    key: 'collapse',
+    name: '折叠面板 Collapse',
+    elements: <Collapse />,
+  },
+  {
+    path: '/drawer',
+    key: 'drawer',
+    name: '抽屉 Drawer',
+    elements: <Drawer />,
+  },
+  {
+    path: '/dropdown',
+    key: 'dropdown',
+    name: '下拉菜单 Dropdown',
+    elements: <Dropdown />,
   },
   {
     path: '/input',
@@ -60,12 +84,7 @@ export const Menus = [
     name: '数字输入框 InputNumber',
     elements: <InputNumber />,
   },
-  {
-    path: '/dropdown',
-    key: 'dropdown',
-    name: '下拉菜单 Dropdown',
-    elements: <Dropdown />,
-  },
+
   {
     path: '/scale',
     key: 'scale',
@@ -102,12 +121,6 @@ export const Menus = [
     key: 'message',
     name: '消息提示 Message',
     elements: <Message />,
-  },
-  {
-    path: '/drawer',
-    key: 'drawer',
-    name: '抽屉 Drawer',
-    elements: <Drawer />,
   },
 
   {
@@ -146,18 +159,7 @@ export const Menus = [
     name: '表格组件 Table',
     elements: <Table />,
   },
-  {
-    path: '/card',
-    key: 'card',
-    name: '卡片 Card',
-    elements: <Card />,
-  },
-  {
-    path: '/collapse',
-    key: 'collapse',
-    name: '折叠面板 Collapse',
-    elements: <Collapse />,
-  },
+
   {
     path: '/progress',
     key: 'progress',

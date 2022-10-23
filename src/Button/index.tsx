@@ -1,9 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
-import './index.less';
 import merge from 'lodash/merge';
 import { ButtonProps } from './interface';
 import { ConfigContext } from '../ConfigProvider';
+import './style/index.less';
 
 export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref) => {
   const globalProps = React.useContext(ConfigContext);
