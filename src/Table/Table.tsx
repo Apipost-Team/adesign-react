@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './index.less';
+import './style/index.less';
 import cn from 'classnames';
 import cloneDeep from 'lodash/cloneDeep';
 import TableRow from './TableRow';
@@ -36,7 +36,7 @@ const Table: React.FC<TableProps> = (props) => {
     newLayout[index] = _ayout;
     onLayoutsChange(newLayout);
   };
-  
+
   if (tableData === undefined) {
     return null;
   }
