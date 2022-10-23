@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import merge from 'lodash/merge';
+import isUndefined from 'lodash/isUndefined';
 import { ButtonProps } from './interface';
 import { ConfigContext } from '../ConfigProvider';
 import './style/index.less';
@@ -9,7 +10,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
   const globalProps = React.useContext(ConfigContext);
 
   const {
-    children = 'default',
+    children = isUndefined(props?.icon) ? 'default' : undefined,
     prefixCls = 'apipost',
     onClick,
     disabled = false,
@@ -30,6 +31,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
     [`${prefixCls}-btn-${shape}`]: shape !== undefined,
     [`${prefixCls}-btn-${size}-${shape}`]: shape !== undefined,
     [`${prefixCls}-btn-disabled`]: disabled,
+    [`${prefixCls}-btn-had-icon`]: props.icon !== undefined,
   };
   const btnclassName = classnames(className, tempClassName);
   const handleClick = (e: any) => {
@@ -40,6 +42,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
 
   return (
     <div {...restProps} ref={ref} className={btnclassName} onClick={handleClick} style={style}>
+      {props.icon}
       <React.Fragment key="prefix"> {preFix !== undefined && <>{preFix}</>}</React.Fragment>
       <React.Fragment key="children">{children}</React.Fragment>
       <React.Fragment key="afterFix">{afterFix !== undefined && <>{afterFix}</>}</React.Fragment>

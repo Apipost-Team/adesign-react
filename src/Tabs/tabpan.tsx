@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import classnames from 'classnames';
 import TabsContext from './context';
 import TabRemove from '../assets/close.svg';
-import './index.less';
+import './style/index.less';
 import { TabPanProps, TabsContextProps } from './interface';
 
 const TabPan: React.FC<TabPanProps> = (props) => {

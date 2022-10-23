@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import cn from 'classnames';
 import ScaleItem from './ScaleItem';
-import './index.less';
+import './style/index.less';
 import { ScalePanelProps, Layouts, Layout } from './interface';
 import { isFunction, isObject } from 'lodash';
 

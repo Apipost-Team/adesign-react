@@ -4,7 +4,7 @@ import { SelectProps, OptionProps } from './interface';
 import SvgArrowDown from '../assets/arrow-down.svg';
 import Trigger from '../Trigger';
 import Option from './Option';
-import './index.less';
+import './style/index.less';
 import Context from './Context';
 import { ConfigContext } from '../ConfigProvider';
 

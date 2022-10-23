@@ -1,3 +1,5 @@
+@import './varis.less';
+
 .apipost-progress {
   position: relative;
   line-height: 1;
@@ -32,7 +34,7 @@
     &-inner {
       height: 100%;
       border-radius: 100px;
-      background-color: #409eff;
+      background-color: @default-color-background;
       position: relative;
       transition: width .6s cubic-bezier(.34,.69,.1,1),
                   background-color .3s cubic-bezier(.34,.69,.1,1);
@@ -62,43 +64,43 @@
       stroke: #e5e6eb;
     }
     &-path {
-      stroke: #409eff;
+      stroke: @default-color-background;
     }
   }
 
   &-is-success {
     .apipost-progress-circle {
       &-path {
-        stroke: #67c23a;
+        stroke:@success-color-background;
       }
     }
     .apipost-progress-line {
       &-inner {
-        background-color: #67c23a;
+        background-color:@success-color-background;
       }
     }
   }
   &-is-warning {
     .apipost-progress-circle {
       &-path {
-        stroke: #e6a23c;
+        stroke:  @warning-color-background;
       }
     }
     .apipost-progress-line {
       &-inner {
-        background-color: #e6a23c;
+        background-color: @warning-color-background;
       }
     }
   }
   &-is-error {
     .apipost-progress-circle {
       &-path {
-        stroke: #f56c6c;
+        stroke:@danger-color-background;
       }
     }
     .apipost-progress-line {
       &-inner {
-        background-color: #f56c6c;
+        background-color: @danger-color-background;
       }
     }
   }

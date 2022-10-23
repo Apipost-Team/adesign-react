@@ -1,3 +1,6 @@
+@import './varis.less';
+
+
 .apipost-switch {
     width:36px;
     height:20px;
@@ -30,12 +33,12 @@
       left: 0;
     }
     &.checked{
-      background-color: #287EFF;
+      background-color:@switch-color-checked;
       & .cycle{
         left: auto;
         right: 0;
       }
-    } 
+    }
 
 
     &.small{
@@ -52,7 +55,7 @@
       cursor: not-allowed;
       background-color: #f2f3f5;
       &.checked{
-        background-color:#94bfff;
+        background-color: @switch-color-checked-disable;
       }
     }
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import cn from 'classnames';
 import Button from '../Button';
 import SvgCloseSvg from '../assets/tabpan-close.svg';
-import './index.less';
+import './style/index.less';
 import { ConfigContext } from '../ConfigProvider';
 import { ConfirmProps } from './interface';
 
@@ -54,9 +54,16 @@ export const ConfirmContainer = () => {
               large,
             })}
           >
-            <div className="svg-close" onClick={handleCancel}>
+            <Button
+              className="svg-close"
+              type="info"
+              size="mini"
+              icon={<SvgCloseSvg />}
+              onClick={handleCancel}
+            />
+            {/* <div className="svg-close" onClick={handleCancel}>
               <SvgCloseSvg />
-            </div>
+            </div> */}
             <div className={`${PERFIX}-container-title`}>{title}</div>
             <div className={`${PERFIX}-container-content`}>{content}</div>
             <div className={`${PERFIX}-container-footer`}>

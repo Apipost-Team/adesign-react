@@ -1,3 +1,5 @@
+@import './varis.less';
+
 .apipost-modal {
 
   &-mask, &-wrapper {
@@ -11,14 +13,14 @@
   }
 
   &-mask {
-    background: rgba(0, 0, 0, 0.5);
+    background: @modal-color-mask;
   }
 
   &-container {
     box-sizing: border-box;
     width: 520px;
     height: auto;
-    background-color: #ffffff;
+    background-color: @modal-color-content;
     position: relative;
     top: 50%;
     left: 50%;
@@ -31,55 +33,12 @@
     flex-direction: column;
     overflow: hidden;
 
-    .tips {
-      margin-top: 24px;
-      padding: 16px;
-      background-color: #F4F4F4;
-      border-radius: 5px;
-      position: relative;
-      overflow: hidden;
-      color: #666666;
-
-      .btnhide {
-        position: absolute;
-        right: 4px;
-        top: 4px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &>svg {
-          fill: #999999;
-        }
-      }
-    }
-
-
   }
 
   &-close {
     position: absolute;
-    width: 24px;
-    height: 24px;
-    right: 24px;
-    top: 12px;
-    z-index: 1026;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 3px;
-    background-color: rgba(0, 0, 0, 0.06);
-    svg {
-      fill: #999999;
-    }
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.06);
-      svg{
-        fill: #2b2b2b;
-      }
-    }
+    right: 10px;
+    top: 15px;
   }
 
   &-header {
@@ -145,7 +104,7 @@
     bottom: 0;
     right: 0;
     z-index: 1100;
-    background-color: vrgba(0, 0, 0, 0.5);
+    background-color:  @modal-color-mask;
   }
   &-container {
     box-sizing: border-box;
@@ -164,21 +123,9 @@
     box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
 
     .svg-close {
-      width: 24px;
-      height: 24px;
-      border-radius: 3px;
-      background-color: #FFFFFF;
       position: absolute;
       right: 10px;
       top: 15px;
-      display: flex;
-      cursor: pointer;
-      justify-content: center;
-      align-items: center;
-      fill: #2b2b2b;
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.06);
-      }
     }
 
     &-title {

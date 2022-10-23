@@ -1,3 +1,5 @@
+@import './varis.less';
+
 
 .apipost-select{
   width: 154px;
@@ -14,7 +16,7 @@
     height: 24px;
     font-size: 12px;
   }
-  
+
   &-small {
     height: 30px;
   }
@@ -51,7 +53,7 @@
     }
   }
   &.popup-open svg{
-    fill: #409eff;
+    fill: @item-color-selected;
     transform: rotate(-180deg) !important;
   }
   &.unselect &-view-text{
@@ -86,7 +88,7 @@
     padding: 0 9px;
     cursor: pointer;
     &.selected{
-      background: #409eff;
+      background: @item-color-selected;
       color: #ffffff;
     }
 

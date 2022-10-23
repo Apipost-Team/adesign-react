@@ -1,3 +1,5 @@
+@import './varis.less';
+
 .apipost-radio-wrapper {
   box-sizing: border-box;
   margin: 0 8px 0 0;
@@ -73,7 +75,7 @@
   }
 
   .apipost-radio-inner-checked {
-    border-color: #409eff;
+    border-color:@radio-color-background;
     transition: all 3s cubic-bezier(.78, .14, .15, .86);
 
     &::after {
@@ -88,7 +90,7 @@
       border-style: solid;
       border-radius: 16px;
       padding: 4px;
-      border-color: #409eff;
+      border-color:@radio-color-background;
       transition: all 3s cubic-bezier(.78, .14, .15, .86);
       content: " ";
     }
@@ -115,8 +117,8 @@
       border: solid #dcdfe6;
       border-width: 1px 1px 1px 0;
       &-checked {
-        background: #409eff;
-        border-color: #409eff;
+        background: @radio-color-background;
+        border-color: @radio-color-background;
         color: #fff;
       }
     }

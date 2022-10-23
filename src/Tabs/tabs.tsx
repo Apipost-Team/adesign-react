@@ -7,7 +7,7 @@ import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
 import ArrowRight from '../assets/arrow-right2.svg';
-import './index.less';
+import './style/index.less';
 import { TabPanProps, TabsProps } from './interface';
 
 const Tabs = (props: TabsProps<any>, rootRef: any) => {

@@ -14,7 +14,7 @@ import TabCloseSvg from '../assets/tabpan-close.svg';
 import { ConfirmProps, ModalProps } from './interface';
 import Confirm from './Confirm';
 import Show from './Show';
-import './index.less';
+import './style/index.less';
 import { ConfigContext } from '../ConfigProvider';
 
 const PERFIXNAME = 'apipost-modal';
@@ -106,9 +106,13 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
                   </div>
                 )}
                 {showTopClosable && (
-                  <div onClick={onCancel} className={`${PERFIXNAME}-close`}>
-                    <TabCloseSvg />
-                  </div>
+                  <Button
+                    className={`${PERFIXNAME}-close`}
+                    type="info"
+                    size="mini"
+                    icon={<TabCloseSvg />}
+                    onClick={onCancel}
+                  />
                 )}
                 <div className={cn({ [`${PERFIXNAME}-body`]: true }, bodyClassName)}>
                   {children}

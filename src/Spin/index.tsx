@@ -3,7 +3,7 @@ import cn from 'classnames';
 import debounce from 'lodash/debounce';
 import LoadingSvg from '../assets/loading.svg';
 import { SpinProps } from './interface';
-import './index.less';
+import './style/index.less';
 
 const prefixCls = 'apipost-spin';
 function Spin(props: SpinProps, ref: any) {

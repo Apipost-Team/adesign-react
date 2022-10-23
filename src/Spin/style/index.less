@@ -1,3 +1,5 @@
+@import './varis.less';
+
 .apipost-spin {
 
   display: inline-block;
@@ -7,14 +9,14 @@
   }
 
   &-icon {
-    color: #287eff;
+    color:@spin-color-background;
     font-size: 16px;
   }
 
   &-tip {
     margin-top: 8px;
     font-weight: 500;
-    color: #287eff;
+    color: @spin-color-background;
   }
 
   &-loading-layer {
@@ -61,6 +63,9 @@
   }
   .apipost-icon-loading {
     animation: apipost-loading-circle 1s linear infinite;
+    svg{
+      fill: @spin-color-background;
+    }
   }
   @keyframes apipost-loading-circle {
     100% {

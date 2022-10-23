@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import ReactDOM, { findDOMNode } from 'react-dom';
-import './index.less';
+import './style/index.less';
 import { ShowProps } from './interface';
 
 const PERFIX = 'apipost-modalshow';

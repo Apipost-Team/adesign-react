@@ -14,6 +14,17 @@
   box-sizing: border-box;
   border-radius: 2px;
 
+  &-had-icon{
+    background-color: red;
+    border:1px solid red;
+    padding: 0 !important;
+    width: 24px;
+    &>svg{
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   &-default {
     color: @btn-default-color-text;
     background-color:@btn-default-color-background;
@@ -50,6 +61,27 @@
       }
     }
   }
+
+  &-info {
+    color: @btn-info-color-text;
+    background-color: @btn-info-color-background;
+    border-color: @btn-info-color-border;
+
+    &:hover,
+    &:focus {
+      background-color: @btn-info-color-background-hover;
+      border-color: @btn-info-color-border-hover;
+      color: @btn-info-color-text-hover;
+    }
+
+    &:active {
+      background-color: @btn-info-color-background-active;
+      border-color: @btn-info-color-border-active;
+      color: @btn-info-color-text-active;
+    }
+  }
+
+
 
   &-primary {
     color: @btn-primary-color-text;
@@ -194,7 +226,7 @@
 
 
   &-mini {
-    padding: 0 11px;
+   // padding: 0 11px;
     font-size: 12px;
     height: 24px;
 
