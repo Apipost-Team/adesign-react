@@ -1,9 +1,11 @@
+@import './varis.less';
+
 .apipost-message-group {
   transition: .3s linear;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.85);
+  color: @message-color-text;
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5715;
@@ -23,9 +25,10 @@
     .apipost-message-content {
       display: inline-block;
       padding: 10px 16px;
-      box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+      box-shadow: 0 3px 6px -4px @message-box-color-shadow;
+      background-color: @message-color-background;
       pointer-events: all;
-      border-radius: 5px;
+      border-radius: 3px;
 
       .apipost-message-icon {
         top: 3px;
@@ -46,27 +49,42 @@
     }
 
     .apipost-message-error {
-      background-color: #fef0f0;
-      border: 1px solid #fde2e2;
-      color:  #F56C6C;
+      //background-color: #fef0f0;
+      border: 1px solid @message-error-border;
+      color:  @message-error-color;
+      svg{
+        fill: @message-error-background;
+      }
     }
 
     .apipost-message-info {
-      background: #edf2fc;
-      border: 1px solid #EBEEF5;
-      color: #909399;
+    //  background: #edf2fc;
+      border: 1px solid @message-info-border;
+      color:@message-info-color;
+      svg{
+        fill: @message-info-background;
+      }
+
     }
 
     .apipost-message-success {
-      background-color: #f0f9eb;
-      border: 1px solid #e1f3d8;
-      color: #67C23A;
+      //background-color: #f0f9eb;
+      border: 1px solid @message-success-border;
+      color:@message-success-color;
+
+      svg{
+        fill: @message-success-background;
+      }
     }
 
     .apipost-message-warning {
-      background-color: #fdf6ec;
-      border: 1px solid #faecd8;
-      color: #E6A23C;
+     // background-color: #fdf6ec;
+      border: 1px solid @message-warning-border;
+      color:@message-warning-color;
+
+      path{
+        fill: @message-warning-background;
+      }
     }
   }
 
@@ -83,7 +101,7 @@
     padding-left: .85rem;
     padding-right: .26rem;
   }
-  
+
   .loading-enter,
   .loading-leave-active {
     opacity: 0;
