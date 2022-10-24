@@ -174,7 +174,7 @@ const Column = (props) => {
                   setFiltersSelect(undefined);
                 }}
               >
-                <Button type="warning" size="mini">
+                <Button type="primary" size="mini">
                   {resetText}
                 </Button>
               </div>
