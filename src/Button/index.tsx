@@ -21,6 +21,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
     className,
     afterFix,
     preFix,
+    icon,
     ...restProps
   } = merge({ size: globalProps.size, prefixCls: globalProps.prefixCls }, props);
 
@@ -42,7 +43,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
 
   return (
     <div {...restProps} ref={ref} className={btnclassName} onClick={handleClick} style={style}>
-      {props.icon}
+      {icon}
       <React.Fragment key="prefix"> {preFix !== undefined && <>{preFix}</>}</React.Fragment>
       <React.Fragment key="children">{children}</React.Fragment>
       <React.Fragment key="afterFix">{afterFix !== undefined && <>{afterFix}</>}</React.Fragment>
