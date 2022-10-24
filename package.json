@@ -22,7 +22,7 @@
     "build:lib": "vite build",
     "update:npm": "npm version patch && vite build && npm publish",
     "svgmap": "node scripts/svgmap.js",
-    "css": "gulp"
+    "css": "gulp --gulpfile ./scripts/gulpfile.js  --cwd ./ "
   },
   "dependencies": {
     "core-js": "^3.9.0",

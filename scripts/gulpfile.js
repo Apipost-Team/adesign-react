@@ -10,23 +10,27 @@ const npmImport = new lessPluginNpmImport({ prefix: '~' });
 const autoprefix = new lessAutoPreFix();
 const lessfn = new lessFunctions();
 
-function defaultTask(cb) {
+function compileGlobalCss(cb) {
   gulp
     .src('src/style/default.less', { allowEmpty: true })
     .pipe(concat('default.css'))
     .pipe(gulpLess())
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('libs/'));
   cb();
 }
 
-// function defaultTask(cb) {
-//   gulp
-//     .src('src/Button/style/index.less', { allowEmpty: true })
-//     .pipe(concat('style.css'))
-//     .pipe(gulpLess())
-//     // .pipe(cssMinify())
-//     .pipe(gulp.dest('dist/'));
-//   cb();
-// }
+function compileComponentCss(cb) {
+  gulp
+    .src('src/**/style/index.less')
+    // .pipe(concat('style.css'))
+    .pipe(gulpLess())
+    // .pipe(cssMinify())
+    .pipe(concat('global.css'))
+    .pipe(cssMinify())
+    .pipe(gulp.dest('libs/'));
+  cb();
+}
 
-exports.default = defaultTask;
+const main = gulp.series(compileComponentCss, compileGlobalCss);
+
+exports.default = main;
