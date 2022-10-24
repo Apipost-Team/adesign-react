@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import cn from 'classnames';
-import { Button } from '../Button';
-import TabCloseSvg from '../assets/tabpan-close.svg';
+import Button from '../Button';
+import SvgClose from '../assets/close.svg';
 import { DrawerProps } from './interface';
 import { ConfigContext } from '../ConfigProvider';
 import './style/index.less';
@@ -90,9 +90,13 @@ const Drawer: React.FC<DrawerProps> = (props) => {
           </div>
         )}
         {closable && (
-          <div onClick={onCancel} className="apipost-drawer-close">
-            <TabCloseSvg />
-          </div>
+          <Button
+            className="apipost-drawer-close"
+            type="info"
+            size="mini"
+            icon={<SvgClose />}
+            onClick={onCancel}
+          />
         )}
         <div className="apipost-drawer-content">{children}</div>
         {footer !== null && (

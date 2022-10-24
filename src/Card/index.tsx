@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 import { CardProps } from './interface';
 import SvgClose from '../assets/close.svg';
+import Button from '../Button';
 import './style/index.less';
 
 const Card: React.FC<CardProps> = (props) => {
@@ -23,14 +24,13 @@ const Card: React.FC<CardProps> = (props) => {
           {extra !== undefined ? (
             extra
           ) : (
-            <span
-              onClick={() => {
-                setVisible(false);
-              }}
+            <Button
               className="btn-card-close"
-            >
-              <SvgClose />
-            </span>
+              type="info"
+              size="mini"
+              icon={<SvgClose />}
+              onClick={setVisible.bind(null, false)}
+            />
           )}
         </div>
       )}
