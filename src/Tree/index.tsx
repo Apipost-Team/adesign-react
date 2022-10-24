@@ -3,7 +3,7 @@ import NodeList from './NodeList';
 import TreeNode from './TreeNode';
 import Indent from './Indent';
 
-import './index.less';
+import './style/index.less';
 
 export { NodeList, TreeNode, Indent };
 
