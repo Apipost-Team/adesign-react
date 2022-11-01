@@ -15,7 +15,7 @@ function compileGlobalCss(cb) {
   for (let i = 0; i < colorList.length; i++) {
     gulp
       .src('src/style/default.less', { allowEmpty: true })
-      .pipe(concat(`color-${colorList[i].name}.css`))
+      .pipe(concat(colorList[i].default ? 'default.css' : `color-${colorList[i].name}.css`))
       .pipe(
         gulpLess({
           modifyVars: {

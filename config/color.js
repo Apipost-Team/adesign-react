@@ -2,6 +2,7 @@ const colorList = [
   {
     color: '#722ed2',
     name: 'purple',
+    default: true,
   },
   {
     color: '#12c2c2',

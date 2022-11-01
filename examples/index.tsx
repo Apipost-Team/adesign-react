@@ -6,7 +6,7 @@ import Menus from './constant';
 import ENUS from '../src/locale/en-US';
 import ConfigProvider from '../src/ConfigProvider';
 import Github from './assets/github.svg';
-import '../libs/color-default.css';
+import '../libs/default.css';
 // import '../dist/style.css';
 
 const Main = (props: any) => {
