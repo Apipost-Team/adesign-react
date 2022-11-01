@@ -16,7 +16,7 @@
   },
   "scripts": {
     "debug": "cross-env NODE_ENV=development webpack-dev-server --config scripts/debug.js",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config scripts/start.js",
+    "start": "npm run css && cross-env NODE_ENV=development webpack-dev-server --config scripts/start.js",
     "test": "cross-env NODE_ENV=development webpack --config scripts/test.js",
     "build": " webpack --config scripts/build.js",
     "build:lib": "vite build",

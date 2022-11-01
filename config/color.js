@@ -1,11 +1,19 @@
 const colorList = [
   {
-    color: '#409EFF',
-    name: 'blue',
+    color: '#722ed2',
+    name: 'purple',
   },
   {
-    color: 'red',
-    name: 'red',
+    color: '#12c2c2',
+    name: 'cyan',
+  },
+  {
+    color: '#faae14',
+    name: 'twilight',
+  },
+  {
+    color: '#1990ff',
+    name: 'blue',
   },
 ];
 

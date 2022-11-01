@@ -15,7 +15,7 @@ function compileGlobalCss(cb) {
   for (let i = 0; i < colorList.length; i++) {
     gulp
       .src('src/style/default.less', { allowEmpty: true })
-      .pipe(concat(`default-${colorList[i].name}.css`))
+      .pipe(concat(`color-${colorList[i].name}.css`))
       .pipe(
         gulpLess({
           modifyVars: {
@@ -23,6 +23,7 @@ function compileGlobalCss(cb) {
           },
         })
       )
+      .pipe(cssMinify())
       .pipe(gulp.dest('libs/'));
   }
 
