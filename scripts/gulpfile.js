@@ -5,17 +5,27 @@ const lessAutoPreFix = require('less-plugin-autoprefix');
 const cssMinify = require('gulp-css-minify');
 const concat = require('gulp-concat');
 const lessFunctions = require('less-plugin-functions');
+const colorList = require('../config/color');
 
 const npmImport = new lessPluginNpmImport({ prefix: '~' });
 const autoprefix = new lessAutoPreFix();
 const lessfn = new lessFunctions();
 
 function compileGlobalCss(cb) {
-  gulp
-    .src('src/style/default.less', { allowEmpty: true })
-    .pipe(concat('default.css'))
-    .pipe(gulpLess())
-    .pipe(gulp.dest('libs/'));
+  for (let i = 0; i < colorList.length; i++) {
+    gulp
+      .src('src/style/default.less', { allowEmpty: true })
+      .pipe(concat(`default-${colorList[i].name}.css`))
+      .pipe(
+        gulpLess({
+          modifyVars: {
+            baseBrandColor: colorList[i].color,
+          },
+        })
+      )
+      .pipe(gulp.dest('libs/'));
+  }
+
   cb();
 }
 
