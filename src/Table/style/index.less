@@ -1,0 +1,163 @@
+@import './varis.less';
+
+.apipost-table-container {}
+
+.apipost-table {
+  table-layout: fixed;
+  display: table;
+  border-collapse: collapse;
+  width: 100%;
+
+
+  .apipost-table-th {
+    border-bottom: 1px solid #ebeef5;
+
+    & td {
+      font-weight: normal;
+      color: #909399;
+      background-color: #f2f3f5;
+      position: relative;
+
+      .apipost-table-cell {
+        // 单元格内部数据应全部展示，如有需要自定义render实现次
+        // display: block;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+      }
+
+    }
+  }
+
+  .apipost-table-tr {
+    border-bottom: 1px solid #ebeef5;
+  }
+
+  .apipost-table-td {
+    box-sizing: border-box;
+    vertical-align: middle;
+    position: relative;
+    word-break: break-all;
+    color: #606266;
+    font-size: 14px;
+
+    .apipost-table-cell {
+      // display: block;
+      // white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+    }
+
+    .apipost-table-filters-select>svg {
+      fill: @table-color-border;
+    }
+
+    .apipost-table-filters {
+      display: inline-block;
+      margin-left: 5px;
+      float: right;
+      padding-right: 10px;
+
+      .apipost-table-filters-down {
+        z-index: 999;
+        background-color: #ffffffcc;
+        border: 1px solid #f2f2f2;
+        box-shadow: 0px 4px 10px #0000001a;
+        backdrop-filter: blur(20px);
+        position: absolute;
+        padding: 12px;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+
+        .apipost-table-filters-down-item {
+          height: 30px;
+          line-height: 30px;
+          padding: 0 10px;
+          cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .apipost-table-sort {
+      float: right;
+      position: relative;
+      top: -3px;
+      margin-right: 10px;
+
+      .apipost-table-sort-down {
+        position: absolute;
+        top: 12px;
+        right: 0;
+      }
+
+      .apipost-table-sort-select {
+        fill: @table-color-border;
+      }
+    }
+  }
+
+  &-haspadding {
+    & td {
+      padding: 12px 0;
+
+      .apipost-table-cell {
+        padding: 0 10px;
+      }
+    }
+  }
+
+
+  .td-mask {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: var(--bgr1);
+  }
+
+  .td-selection {
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .td-scale {
+    position: absolute;
+    top: 0;
+    z-index: 101;
+    width: 4px;
+    height: 100%;
+    cursor: col-resize;
+
+    &.scaling {
+      background-color:@bar-color-background;
+    }
+
+    &:hover {
+      background-color:@bar-color-background;
+    }
+  }
+
+  &.apipost-table-border {
+    border: 1px solid #ebeef5;
+
+    td {
+      border: 1px solid #ebeef5;
+      ;
+    }
+  }
+}
+
+.api-post-cell {
+  // padding: 20px;
+  height: 52px;
+  vertical-align: middle;
+  position: relative;
+  color: var(--fn3);
+  font-weight: 400;
+  font-size: var(--size-12px);
+  text-align: left;
+
+}

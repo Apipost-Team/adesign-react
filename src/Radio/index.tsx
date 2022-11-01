@@ -2,7 +2,7 @@ import React, { useState, useContext, PropsWithChildren, useEffect } from 'react
 import classNames from 'classnames';
 import { RadioContext } from './RadioContext';
 import Group from './Group';
-import './index.less';
+import './style/index.less';
 import { RadioProps } from './interface';
 
 function Radio(props: RadioProps) {

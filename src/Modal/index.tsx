@@ -14,12 +14,15 @@ import TabCloseSvg from '../assets/tabpan-close.svg';
 import { ConfirmProps, ModalProps } from './interface';
 import Confirm from './Confirm';
 import Show from './Show';
-import './index.less';
+import './style/index.less';
+import { ConfigContext } from '../ConfigProvider';
 
 const PERFIXNAME = 'apipost-modal';
 // const Modal: React.FC<ModalProps> = (props) => {
 // const Modal = (props) => {
 function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
+  const { locale } = React.useContext(ConfigContext);
+
   const {
     style,
     className,
@@ -32,8 +35,8 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     footer,
     footerClassName = '',
     visible,
-    okText = '确认',
-    cancelText = '取消',
+    okText = locale?.Modal.okText,
+    cancelText = locale?.Modal.cancelText,
     escToExit = true,
     showTopClosable = true,
     onOk,
@@ -103,9 +106,13 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
                   </div>
                 )}
                 {showTopClosable && (
-                  <div onClick={onCancel} className={`${PERFIXNAME}-close`}>
-                    <TabCloseSvg />
-                  </div>
+                  <Button
+                    className={`${PERFIXNAME}-close`}
+                    type="info"
+                    size="mini"
+                    icon={<TabCloseSvg />}
+                    onClick={onCancel}
+                  />
                 )}
                 <div className={cn({ [`${PERFIXNAME}-body`]: true }, bodyClassName)}>
                   {children}

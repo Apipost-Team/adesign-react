@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import { TextareaProps } from './interface';
 import Union from '../assets/Union.svg';
-import './Textarea.less';
+import './style/index.less';
 
 const Textarea: React.FC<TextareaProps> = (props) => {
   const {
@@ -21,7 +21,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     autoFocus = false,
     bordered = true,
     onChange,
-    onBlur = () => { },
+    onBlur = () => {},
     autoHeight = true,
     ...restProps
   } = props;

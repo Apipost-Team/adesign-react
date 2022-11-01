@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Message from './Message';
-import './index.less';
+import './style/index.less';
 
 let add: (notice: any) => void;
 export const MessageContainer = () => {

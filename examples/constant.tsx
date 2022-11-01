@@ -43,10 +43,34 @@ export const Menus = [
     elements: <Button />,
   },
   {
+    path: '/card',
+    key: 'card',
+    name: '卡片 Card',
+    elements: <Card />,
+  },
+  {
     path: '/checkbox',
     key: 'checkbox',
     name: '复选框 CheckBox',
     elements: <CheckBox />,
+  },
+  {
+    path: '/collapse',
+    key: 'collapse',
+    name: '折叠面板 Collapse',
+    elements: <Collapse />,
+  },
+  {
+    path: '/drawer',
+    key: 'drawer',
+    name: '抽屉 Drawer',
+    elements: <Drawer />,
+  },
+  {
+    path: '/dropdown',
+    key: 'dropdown',
+    name: '下拉菜单 Dropdown',
+    elements: <Dropdown />,
   },
   {
     path: '/input',
@@ -61,22 +85,22 @@ export const Menus = [
     elements: <InputNumber />,
   },
   {
-    path: '/dropdown',
-    key: 'dropdown',
-    name: '下拉菜单 Dropdown',
-    elements: <Dropdown />,
+    path: '/message',
+    key: 'message',
+    name: '消息提示 Message',
+    elements: <Message />,
   },
   {
-    path: '/scale',
-    key: 'scale',
-    name: '拖拽 Scale',
-    elements: <Scale />,
+    path: '/modal',
+    key: 'modal',
+    name: '弹出窗口 Modal',
+    elements: <Modal />,
   },
   {
-    path: '/switch',
-    key: 'switch',
-    name: '开关 Switch',
-    elements: <Switch />,
+    path: '/progress',
+    key: 'progress',
+    name: '进度条 Progress',
+    elements: <Progress />,
   },
   {
     path: '/radio',
@@ -85,31 +109,29 @@ export const Menus = [
     elements: <Radio />,
   },
   {
+    path: '/scale',
+    key: 'scale',
+    name: '拖拽 Scale',
+    elements: <Scale />,
+  },
+  {
     path: '/select',
     key: 'select',
     name: '选择器 Select',
     elements: <Select />,
   },
-
   {
-    path: '/modal',
-    key: 'modal',
-    name: '弹出窗口 Modal',
-    elements: <Modal />,
+    path: '/spin',
+    key: 'spin',
+    name: '加载中 Spin',
+    elements: <Spin />,
   },
   {
-    path: '/message',
-    key: 'message',
-    name: '消息提示 Message',
-    elements: <Message />,
+    path: '/switch',
+    key: 'switch',
+    name: '开关 Switch',
+    elements: <Switch />,
   },
-  {
-    path: '/drawer',
-    key: 'drawer',
-    name: '抽屉 Drawer',
-    elements: <Drawer />,
-  },
-
   {
     path: '/tooltip',
     key: 'tooltip',
@@ -128,12 +150,7 @@ export const Menus = [
     name: '标签页 Tabs',
     elements: <Tabs />,
   },
-  {
-    path: '/spin',
-    key: 'spin',
-    name: '加载中 Spin',
-    elements: <Spin />,
-  },
+
   {
     path: '/upload',
     key: 'upload',
@@ -145,24 +162,6 @@ export const Menus = [
     key: 'table',
     name: '表格组件 Table',
     elements: <Table />,
-  },
-  {
-    path: '/card',
-    key: 'card',
-    name: '卡片 Card',
-    elements: <Card />,
-  },
-  {
-    path: '/collapse',
-    key: 'collapse',
-    name: '折叠面板 Collapse',
-    elements: <Collapse />,
-  },
-  {
-    path: '/progress',
-    key: 'progress',
-    name: '进度条 Progress',
-    elements: <Progress />,
   },
 ];
 

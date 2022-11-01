@@ -4,18 +4,21 @@ import { SelectProps, OptionProps } from './interface';
 import SvgArrowDown from '../assets/arrow-down.svg';
 import Trigger from '../Trigger';
 import Option from './Option';
-import './index.less';
+import './style/index.less';
 import Context from './Context';
+import { ConfigContext } from '../ConfigProvider';
 
 const PERFIX = 'apipost-select';
 
 const { Provider } = Context;
 
 const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
+  const { locale } = React.useContext(ConfigContext);
+
   const {
     defaultValue,
     value,
-    placeholder = '请选择',
+    placeholder = locale?.Select.noData,
     onChange,
     onVisibleChange = () => undefined,
     labelInValue = false,

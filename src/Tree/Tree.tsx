@@ -5,7 +5,7 @@ import { isBoolean, isUndefined } from 'lodash';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
-import './index.less';
+import './style/index.less';
 import useCheck from './hooks/useCheck';
 import { TreeProps } from './interface';
 

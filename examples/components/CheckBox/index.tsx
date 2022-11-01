@@ -25,8 +25,8 @@ ReactDOM.render(
 CONTAINER)`}
       >
         <CheckBox />
-        <CheckBox checked={CheckStatus.HALFCHECK} />
-        <CheckBox checked={CheckStatus.CHECKED} />
+        <CheckBox defaultChecked={CheckStatus.HALFCHECK} />
+        <CheckBox defaultChecked={CheckStatus.CHECKED} />
         <CheckBox disabled />
       </ExampleItem>
 

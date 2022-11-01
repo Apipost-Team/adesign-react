@@ -1,0 +1,142 @@
+@import './varis.less';
+
+.apipost-input {
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  height: 100%;
+  background: none;
+}
+
+.apipost-input-inner-wrapper {
+  outline: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+  transition: color .1s linear, border-color .1s linear, background-color .1s linear;
+  color: @input-default-color-text;
+  border-radius: 2px;
+  border-style: solid;
+  border-color: @input-default-color-border;
+  border-width: 0;
+  height: 42px;
+  font-size: 14px;
+  align-items: center;
+
+  &-border {
+    border-width: 1px;
+  }
+
+  .apipost-input {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &-focus,
+  &:focus {
+    outline: none;
+    border-color: @input-focus-color-border;
+  }
+
+  &-error {
+    outline: none;
+    border-color: @input-error-color-border;
+  }
+
+  &-disabled {
+    background-color: @input-disabled-color-background;
+    border-color: @input-disabled-color-border;
+    color: @input-disabled-color-text;
+    cursor: not-allowed;
+
+    .apipost-input {
+      cursor: not-allowed;
+    }
+  }
+
+  &-mini {
+    height: 24px;
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  &-small {
+    height: 30px;
+  }
+
+  &-middle {
+    height: 36px;
+  }
+}
+
+.apipost-input-inner-clear {
+  cursor: pointer;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+
+  svg {
+    fill: currentColor;
+    color: #666;
+    width: 1em;
+    height: 1em;
+    font-size: 18px;
+  }
+}
+
+
+.apipost-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  padding: 2px 4px;
+  border-radius: 2px;
+  overflow-y: hidden;
+  background-color: @textarea-default-color-background;
+  border: solid @input-default-color-border;
+  border-width: 0;
+  color: @input-default-color-text;
+  font-size: 12px;
+  font-family: "PingFang SC";
+  resize: none;
+  caret-color:  @input-default-color-text;
+  top: 0;
+  left: 0;
+  overflow: auto;
+
+  &-border {
+    border-width: 1px;
+  }
+
+  &:focus {
+    border-color: @input-focus-color-border;
+    background-color: @textarea-focus-color-background
+  }
+
+  &-wrapper {
+    width: 100%;
+    position: relative;
+  }
+
+  &::-webkit-input-placeholder {
+    color: @textarea-default-color-scroll;
+  }
+
+
+  .api-input-clear-icon {
+    position: absolute;
+    top: 0;
+    right: 2px;
+
+    img {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}

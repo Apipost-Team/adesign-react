@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { DropdownProps } from './interface';
 import Trigger from '../Trigger';
-import './index.less';
+import './style/index.less';
 
 const PERFIX = 'apipost-dropdown';
 

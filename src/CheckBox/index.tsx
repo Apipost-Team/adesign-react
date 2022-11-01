@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 import Iconminus from '../assets/minus.svg';
 import Iconcheck from '../assets/check.svg';
-import './index.less';
+import './style/index.less';
 import { CheckBoxProps, CheckStatus } from './interface';
 
 export const CheckBox: React.FC<CheckBoxProps> = (props) => {
@@ -37,7 +37,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
   };
 
   return (
-    <div
+    <span
       {...restProps}
       style={style}
       className={cn(className, {
@@ -51,7 +51,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
     >
       {mergeChecked === CheckStatus.CHECKED && <Iconcheck className="apipost-checkbox-svg" />}
       {mergeChecked === CheckStatus.HALFCHECK && <Iconminus className="apipost-checkbox-svg" />}
-    </div>
+    </span>
   );
 };
 

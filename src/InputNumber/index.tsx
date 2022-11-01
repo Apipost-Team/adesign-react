@@ -7,7 +7,7 @@ import InputDownSvg from '../assets/inputDown.svg';
 import ArrowUp from '../assets/arrowUp.svg';
 import ArrowDown from '../assets/arrowDown.svg';
 import Input from '../Input';
-import './index.less';
+import './style/index.less';
 import { ruleType } from '../util/utils';
 
 import { InputNumberProps } from './interface';

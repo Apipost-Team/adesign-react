@@ -1,0 +1,64 @@
+@import './varis.less';
+
+.apipost-input-number {
+  display: inline-flex;
+  justify-content: space-between;
+  //align-items: center;
+  border-radius: 4px;
+
+  .apipost-input-inner-wrapper {
+    border-radius: 0;
+    height: 40px;
+    display: flex;
+  }
+
+  &-step {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-color: @input-step-color-background;
+    cursor: pointer;
+
+    &:hover {
+      background-color: @input-step-color-background-hover
+    }
+
+    &:active {
+      background-color: @input-step-color-background-active
+    }
+  }
+
+  .column_before,
+  .column_after {
+    position: absolute;
+    right: 0;
+
+    path {
+      fill: @input-step-color-text;
+      &:hover {
+        fill: @input-step-color-background-hover
+      }
+      &:active {
+        fill: @input-step-color-background-active
+      }
+    }
+    cursor: pointer;
+  }
+
+  .column_before {
+    top: 6px;
+    right: 10px;
+    border-radius: 0 0 3px 3px;
+  }
+
+  .column_after {
+    bottom: 6px;
+    right: 10px;
+    border-radius: 3px 3px 0 0;
+
+  }
+
+}

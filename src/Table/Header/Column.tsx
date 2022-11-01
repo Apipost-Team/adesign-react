@@ -11,9 +11,11 @@ import {
 import Tooltip from '../../Tooltip';
 import Dropdown from '../../Dropdown';
 import Button from '../../Button';
+import { ConfigContext } from '../../ConfigProvider';
 
 const Column = (props) => {
-  const { colItem, colIndex } = props;
+  const { locale } = React.useContext(ConfigContext);
+  const { colItem, colIndex, resetText = locale?.Table.resetText } = props;
   const {
     refTable,
     layouts,
@@ -172,8 +174,8 @@ const Column = (props) => {
                   setFiltersSelect(undefined);
                 }}
               >
-                <Button type="warning" size="mini">
-                  重置
+                <Button type="primary" size="mini">
+                  {resetText}
                 </Button>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { isUndefined } from 'lodash';
 import cn from 'classnames';
 import { InputProps } from './interface';
 import Textarea from './Textarea';
-import './index.less';
+import './style/index.less';
 import Iconcancel from '../assets/cancel.svg';
 
 export const Input: React.FC<InputProps> = (props) => {

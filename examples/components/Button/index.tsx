@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '../../../src/Button';
-import './index.less';
+import { Button } from '../../../src/Button';
 import ExampleItem from '../_exampleItem';
+import './index.less';
 
 const ButtonSamples = () => {
   return (

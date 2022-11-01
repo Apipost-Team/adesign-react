@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.less';
+import './colors.less';
 
 const Color = () => {
   return (
@@ -10,49 +11,63 @@ const Color = () => {
       </div>
       <h3>主题色</h3>
       <p>apipost主要颜色是鲜艳友好的蓝色。</p>
-      <div className="demo-color-box" style={{ background: 'rgb(64, 158, 255)' }}>
+      <div className="demo-color-box color-brand-6">
         Brand Color
         <div className="value">#409EFF</div>
-        <div className="bg-color-sub" style={{ background: 'rgb(236, 245, 255)' }}>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(83, 168, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(102, 177, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(121, 187, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(140, 197, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(160, 207, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(179, 216, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(198, 226, 255)' }}></div>
-          <div className="bg-blue-sub-item" style={{ background: 'rgb(217, 236, 255)' }}></div>
+        <div className="bg-color-sub ">
+          <div className="bg-blue-sub-item color-brand-1"></div>
+          <div className="bg-blue-sub-item color-brand-2"></div>
+          <div className="bg-blue-sub-item color-brand-3"></div>
+          <div className="bg-blue-sub-item color-brand-4"></div>
+          <div className="bg-blue-sub-item color-brand-5"></div>
+          <div className="bg-blue-sub-item color-brand-6"></div>
         </div>
       </div>
       <h3>辅助色</h3>
       <p>除了主色外的场景色，需要在不同的场景中使用（例如危险色表示危险的操作）。</p>
       <div className="sub-color-box">
-        <div className="demo-color-box" style={{ background: 'rgb(103, 194, 58)' }}>
+        <div className="demo-color-box color-success-6">
           Success<div className="value">#67C23A</div>
           <div className="bg-color-sub">
-            <div className="bg-color-sub-item" style={{ background: 'rgb(225, 243, 216)' }}></div>
-            <div className="bg-color-sub-item" style={{ background: 'rgb(240, 249, 235)' }}></div>
+            <div className="bg-blue-sub-item color-success-1"></div>
+            <div className="bg-blue-sub-item color-success-2"></div>
+            <div className="bg-blue-sub-item color-success-3"></div>
+            <div className="bg-blue-sub-item color-success-4"></div>
+            <div className="bg-blue-sub-item color-success-5"></div>
+            <div className="bg-blue-sub-item color-success-6"></div>
           </div>
         </div>
-        <div className="demo-color-box" style={{ background: 'rgb(230, 162, 60)' }}>
-          Warning<div className="value">#E6A23C</div>
+        <div className="demo-color-box color-warning-6">
+          Warning<div className="value">#67C23A</div>
           <div className="bg-color-sub">
-            <div className="bg-color-sub-item" style={{ background: 'rgb(250, 236, 216)' }}></div>
-            <div className="bg-color-sub-item" style={{ background: 'rgb(253, 246, 236)' }}></div>
+            <div className="bg-blue-sub-item color-warning-1"></div>
+            <div className="bg-blue-sub-item color-warning-2"></div>
+            <div className="bg-blue-sub-item color-warning-3"></div>
+            <div className="bg-blue-sub-item color-warning-4"></div>
+            <div className="bg-blue-sub-item color-warning-5"></div>
+            <div className="bg-blue-sub-item color-warning-6"></div>
           </div>
         </div>
-        <div className="demo-color-box" style={{ background: 'rgb(245, 108, 108)' }}>
-          Danger<div className="value">#F56C6C</div>
+        <div className="demo-color-box color-danger-6">
+          Danger<div className="value">#67C23A</div>
           <div className="bg-color-sub">
-            <div className="bg-color-sub-item" style={{ background: 'rgb(253, 226, 226)' }}></div>
-            <div className="bg-color-sub-item" style={{ background: 'rgb(254, 240, 240)' }}></div>
+            <div className="bg-blue-sub-item color-danger-1"></div>
+            <div className="bg-blue-sub-item color-danger-2"></div>
+            <div className="bg-blue-sub-item color-danger-3"></div>
+            <div className="bg-blue-sub-item color-danger-4"></div>
+            <div className="bg-blue-sub-item color-danger-5"></div>
+            <div className="bg-blue-sub-item color-danger-6"></div>
           </div>
         </div>
-        <div className="demo-color-box" style={{ background: 'rgb(144, 147, 153)' }}>
-          Info<div className="value">#909399</div>
+        <div className="demo-color-box color-default-6">
+          Info<div className="value">#67C23A</div>
           <div className="bg-color-sub">
-            <div className="bg-color-sub-item" style={{ background: 'rgb(233, 233, 235)' }}></div>
-            <div className="bg-color-sub-item" style={{ background: 'rgb(244, 244, 245)' }}></div>
+            <div className="bg-blue-sub-item color-default-1"></div>
+            <div className="bg-blue-sub-item color-default-2"></div>
+            <div className="bg-blue-sub-item color-default-3"></div>
+            <div className="bg-blue-sub-item color-default-4"></div>
+            <div className="bg-blue-sub-item color-default-5"></div>
+            <div className="bg-blue-sub-item color-default-6"></div>
           </div>
         </div>
       </div>

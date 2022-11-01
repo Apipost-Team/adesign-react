@@ -3,8 +3,11 @@ import ReactDom from 'react-dom';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import './index.less';
 import Menus from './constant';
-
+import ENUS from '../src/locale/en-US';
+import ConfigProvider from '../src/ConfigProvider';
 import Github from './assets/github.svg';
+import '../libs/default.css';
+// import '../dist/style.css';
 
 const Main = (props: any) => {
   const location = useLocation();
@@ -77,7 +80,9 @@ const Main = (props: any) => {
 
 ReactDom.render(
   <BrowserRouter>
-    <Main />
+    <ConfigProvider locale={ENUS} size="middle">
+      <Main />
+    </ConfigProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );
