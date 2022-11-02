@@ -24,7 +24,7 @@ function compileGlobalCss(cb) {
         })
       )
       .pipe(cssMinify())
-      .pipe(gulp.dest('libs/'));
+      .pipe(gulp.dest('themes/'));
   }
 
   cb();

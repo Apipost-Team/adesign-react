@@ -5,7 +5,8 @@
   "main": "libs/index.js",
   "files": [
     "libs",
-    "icons"
+    "icons",
+    "themes"
   ],
   "directories": {
     "example": "examples"

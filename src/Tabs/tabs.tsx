@@ -263,6 +263,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
   useImperativeHandle(rootRef, () => ({
     handleMoveLeft,
     handleMoveRight,
+    handleMouseWheel,
   }));
 
   useEffect(() => {

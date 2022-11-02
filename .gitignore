@@ -9,4 +9,4 @@ package-lock.json
 yarn.lock
 /dist/*
 /libs
-
+/themes

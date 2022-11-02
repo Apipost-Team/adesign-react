@@ -20,6 +20,11 @@ const brandColorList = [
     title: '天蓝色',
     name: 'blue',
   },
+  {
+    color: 'red',
+    title: '红色',
+    name: 'red',
+  },
 ];
 
 module.exports = brandColorList;
