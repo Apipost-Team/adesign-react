@@ -10,7 +10,11 @@ module.exports = {
       },
       {
         use: ['style-loader', 'css-loader', 'less-loader'],
-        test: /\.(css|less)$/,
+        test: /\.(less)$/,
+      },
+      {
+        use: ['file-loader'],
+        test: /\.(css)$/,
       },
       {
         test: /\.svg$/,

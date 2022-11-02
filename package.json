@@ -17,9 +17,9 @@
   "scripts": {
     "debug": "cross-env NODE_ENV=development webpack-dev-server --config scripts/debug.js",
     "start": "npm run css && cross-env NODE_ENV=development webpack-dev-server --config scripts/start.js",
-    "test": "cross-env NODE_ENV=development webpack --config scripts/test.js",
-    "build": " webpack --config scripts/build.js",
-    "build:lib": "vite build",
+    "test": "npm run css && cross-env NODE_ENV=development webpack --config scripts/test.js",
+    "build": "npm run css &&  webpack --config scripts/build.js",
+    "build:lib": "npm run css &&  vite build",
     "update:npm": "npm version patch && vite build && npm publish",
     "svgmap": "node scripts/svgmap.js",
     "css": "gulp --gulpfile ./scripts/gulpfile.js  --cwd ./ "
@@ -68,6 +68,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-tsdoc": "^0.2.14",
     "eslint-plugin-typescript": "^0.14.0",
+    "file-loader": "^6.2.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
