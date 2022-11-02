@@ -4,18 +4,21 @@ import { SelectProps, OptionProps } from './interface';
 import SvgArrowDown from '../assets/arrow-down.svg';
 import Trigger from '../Trigger';
 import Option from './Option';
-import './index.less';
+import './style/index.less';
 import Context from './Context';
+import { ConfigContext } from '../ConfigProvider';
 
 const PERFIX = 'apipost-select';
 
 const { Provider } = Context;
 
 const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
+  const { locale } = React.useContext(ConfigContext);
+
   const {
     defaultValue,
     value,
-    placeholder = '请选择',
+    placeholder = locale?.Select.noData,
     onChange,
     onVisibleChange = () => undefined,
     labelInValue = false,
@@ -27,6 +30,9 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     dropdownRender,
     children,
     disabled = false,
+    placement = 'bottom-start',
+    autoAdjustWidth = true,
+    size = 'middle',
     ...restProps
   } = props;
 
@@ -49,10 +55,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   const onOptionClick = (text: string, value: any) => {
     if (labelInValue === true) {
       setSelectValue(value);
-      onChange?.({ text, value: mergedValue });
+      onChange?.({ text, value });
     } else {
       setSelectValue(value);
-      onChange?.(mergedValue);
+      onChange?.(value);
     }
     triggerRef?.current?.setPopupVisible(false);
   };
@@ -74,10 +80,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     >
       <Trigger
         ref={triggerRef}
-        autoAdjustWidth
+        autoAdjustWidth={autoAdjustWidth}
         disabled={disabled}
         style={popupStyle}
-        placement="bottom-start"
+        placement={placement}
         outsideClose
         popup={getPopup()}
         trigger="click"
@@ -90,6 +96,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
           className={cn(PERFIX, className, {
             disabled: disabled === true,
             unselect: mergedValue === undefined,
+            [`${PERFIX}-${size}`]: true,
           })}
         >
           <div className={`${PERFIX}-view`}>

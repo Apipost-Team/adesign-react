@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { CollapseProps } from './interface';
-import './index.less';
+import './style/index.less';
 import Context from './Context';
 
 const { Provider } = Context;

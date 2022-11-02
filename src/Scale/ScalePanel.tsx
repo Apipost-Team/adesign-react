@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import pick from 'lodash/pick';
 import cn from 'classnames';
 import ScaleItem from './ScaleItem';
-import './index.less';
-import { ScalePanelProps, Layouts, Layout, PanelOffset } from './interface';
+import './style/index.less';
+import { ScalePanelProps, Layouts, Layout } from './interface';
+import { isFunction, isObject } from 'lodash';
 
 const ScalePanel: React.FC<ScalePanelProps> = (props) => {
   const {
@@ -13,59 +13,46 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
     className = undefined,
     direction = 'horizontal', // 排序方式  horizontal / vertical
     defaultLayouts = {},
-    layouts,
     onLayoutsChange = (layout: Layouts) => undefined,
+    realTimeRender = false,
+    enableOverflow = false,
   } = props;
 
-  const [_layouts, setLayouts] = useState<Layouts>(defaultLayouts);
-  const [scaling, setScaling] = useState<boolean>(false); // 是否正在调整中
+  const scaleChildren: React.ReactNode = [].concat(children);
+  const [_layouts, setLayouts] = useState<Layouts>(defaultLayouts); // 页面内容渲染信息
   const panelRef = useRef<HTMLDivElement | null>(null);
-  const [panelOffset, setPanelOffset] = useState<PanelOffset>({
-    width: 0,
-    height: 0,
-  });
 
-  const resizeObserver = new ResizeObserver((entries) => {
-    for (const entry of entries) {
-      const { width, height } = entry.contentRect;
-      setPanelOffset({
-        width,
-        height,
-      });
-    }
-  });
+  const refPanelOffset = useRef(null);
+
+  const mergedLayout = isObject(props?.layouts) ? props.layouts : _layouts;
 
   useEffect(() => {
-    resizeObserver.observe(panelRef.current);
-
-    return () => {
-      if (panelRef.current) {
-        panelRef.current?.disconnect();
-        panelRef.current = null;
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        refPanelOffset.current = {
+          width,
+          height,
+        };
       }
+    });
+
+    resizeObserver.observe(panelRef.current);
+    return () => {
+      resizeObserver.disconnect();
     };
   }, []);
 
-  useEffect(() => {
-    const newLayouts = layouts !== undefined ? layouts : { ..._layouts };
-    children?.forEach((item: React.ReactNode, index: number) => {
-      newLayouts[index] = {
-        nodeProps: pick(item.props, ['minWidth', 'maxWidth', 'minHeight', 'maxHeight']),
-        ...newLayouts[index],
-      };
-    });
-    setLayouts(newLayouts);
-  }, [layouts]);
-
   const handleLayoutChange = (newlayout: Layout, index: number) => {
-    setLayouts({
-      ..._layouts,
+    const newLayouts = {
+      ...mergedLayout,
       [index]: newlayout,
-    });
-    onLayoutsChange(_layouts, panelOffset);
+    };
+    if (isFunction(props?.onLayoutsChange)) {
+      onLayoutsChange(newLayouts, refPanelOffset.current);
+    }
+    setLayouts(newLayouts);
   };
-
-  // console.log(mergedLayouts);
 
   return (
     <div
@@ -73,21 +60,22 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
       className={cn(className, {
         'apipost-scale': true,
         [direction]: true,
-        scaling,
       })}
       style={style}
     >
-      {Array.isArray(children)
-        ? children.map((d, index) => (
+      {Array.isArray(scaleChildren)
+        ? scaleChildren.map((d, index) => (
             <ScaleItem
               key={index}
-              panelOffset={panelOffset}
-              layouts={_layouts}
+              realTimeRender={realTimeRender}
+              enableOverflow={enableOverflow}
+              panelOffset={refPanelOffset.current}
+              layouts={mergedLayout}
               onLayoutChange={handleLayoutChange}
-              onScaling={setScaling}
               direction={direction}
               index={index}
               {...d.props}
+              ref={d.ref}
             />
           ))
         : children}

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import LineProgress from './LineProgress';
 import CircleProgress from './CircleProgress';
 import { ProgressProps } from './interface';
-import './index.less';
+import './style/index.less';
 
 const prefixCls = 'apipost-progress';
 

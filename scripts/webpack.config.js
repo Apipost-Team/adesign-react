@@ -10,7 +10,11 @@ module.exports = {
       },
       {
         use: ['style-loader', 'css-loader', 'less-loader'],
-        test: /\.(css|less)$/,
+        test: /\.(less)$/,
+      },
+      {
+        use: ['file-loader'],
+        test: /\.(css)$/,
       },
       {
         test: /\.svg$/,
@@ -26,7 +30,6 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.ico', '.less', '.css', '.svg'],
     alias: {
       '@': path.resolve(__dirname, '../src'),
-      '@Assets': path.resolve(__dirname, '../src/assets'),
       // '@c': paths.src + '/components',
       // '@m': paths.src + '/model',
       // '@s': paths.src + '/services',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useLayoutEffect, useImperativeHandle } from 'react';
 import ReactDOM, { findDOMNode } from 'react-dom';
-import './index.less';
+import './style/index.less';
 import { ShowProps } from './interface';
 
 const PERFIX = 'apipost-modalshow';
@@ -81,12 +81,7 @@ if (!el) {
   document.body.append(el);
 }
 
-ReactDOM.render(
-  <div>
-    <ShowContainer />
-  </div>,
-  el
-);
+ReactDOM.render(<ShowContainer />, el);
 
 const ModalShow = (props: ShowProps, pos: any, modalRef: any) => {
   add(props, pos, modalRef);

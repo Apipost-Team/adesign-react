@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import { TextareaProps } from './interface';
 import Union from '../assets/Union.svg';
-import './Textarea.less';
+import './style/index.less';
 
 const Textarea: React.FC<TextareaProps> = (props) => {
-  // const Textarea = (props) => {
   const {
     style,
     className,
@@ -16,14 +15,15 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     allowClear,
     readonly,
     placeholder,
-    // stopEnter = false, // 禁止回车换行
     width,
     height = 80,
     lineHeight = 20,
     autoFocus = false,
+    bordered = true,
     onChange,
-    onPressEnter,
     onBlur = () => {},
+    autoHeight = true,
+    ...restProps
   } = props;
 
   const textareaRef: any = useRef<HTMLTextAreaElement>();
@@ -70,18 +70,21 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     height,
   };
 
-  const onKeyDownchange = (e: any) => {
-    if (e.keyCode === 13 && onPressEnter) {
-      onPressEnter(e);
-    }
-  };
+  // const onKeyDownchange = (e: any) => {
+  //   if (e.keyCode === 13 && onPressEnter) {
+  //     onPressEnter(e);
+  //   }
+  // };
   const textareaClassNames = classnames(
     {
+      mousetrap: true,
       'apipost-textarea': true,
+      'apipost-textarea-border': bordered,
     },
     className
   );
   const AutoHeight = (e: any) => {
+    if (!autoHeight) return;
     const StylelineHeight = +e.target.style.lineHeight.replace('px', '');
     let lines = Math.round(textareaRef.current.scrollHeight / StylelineHeight);
     // const splieLength = e.target.value.split(/\r*\n/);
@@ -92,9 +95,10 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     setTextareaStyle({
       ...textareaStyle,
       scrollTop: 0,
-      height: StylelineHeight * lines < height ? height : StylelineHeight * lines,
+      height: StylelineHeight * lines < height ? height : StylelineHeight * lines + 10,
       zIndex: 101,
       position: 'absolute',
+      overflow: 'hidden',
     });
   };
   const handleBlur = (e: any) => {
@@ -118,8 +122,8 @@ const Textarea: React.FC<TextareaProps> = (props) => {
       onFocus={(e) => {
         AutoHeight(e);
       }}
+      autoheight
       onBlur={handleBlur}
-      onKeyDown={(e) => onKeyDownchange(e)}
       value={textareaValue}
       onChange={(e) => {
         setTextareaValue(e.target.value);
@@ -129,6 +133,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
         }
       }}
       onInput={AutoHeight}
+      {...restProps}
     >
       {textareaValue}
     </textarea>

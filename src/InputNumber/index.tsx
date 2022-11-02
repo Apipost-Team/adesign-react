@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import isNumber from 'lodash/isNumber';
+import isFunction from 'lodash/isFunction';
+import isNaN from 'lodash/isNaN';
 import InputUpSvg from '../assets/inputUp.svg';
 import InputDownSvg from '../assets/inputDown.svg';
 import ArrowUp from '../assets/arrowUp.svg';
 import ArrowDown from '../assets/arrowDown.svg';
 import Input from '../Input';
-import './index.less';
+import './style/index.less';
 import { ruleType } from '../util/utils';
 
 import { InputNumberProps } from './interface';
@@ -15,89 +17,79 @@ const SUBTRACT = 'subtract';
 
 export const InputNumber: React.FC<InputNumberProps> = (props) => {
   const {
-    value = '0',
-    min = -Infinity,
-    max = Infinity,
+    defaultValue = 0,
+    min = 0,
+    max = Number.MAX_SAFE_INTEGER,
     onChange,
     disabled,
     modetype = 'input',
     type = 'row',
+    ...restProps
   } = props;
-  const [values, setValues] = useState(value || '0');
+  const [value, setValue] = useState(defaultValue);
+  const mergedValue = 'value' in props ? props.value : value;
 
-  const handleChangeValue = (types = ADD) => {
-    let val: any;
-    val = values;
-    switch (types) {
-      case SUBTRACT:
-        if ((!min && min !== 0) || values > min) {
-          val--;
-        }
-        break;
-      default:
-        if ((!max && max !== 0) || values < max) {
-          val++;
-        }
-        break;
-    }
-    if (onChange) {
-      onChange(val);
+  const handleInputChange = (newVal: string) => {
+    if (isNaN(parseInt(newVal))) {
+      setValue(newVal);
       return;
     }
-    if (val === 0 || val === '0') {
-      val = '0';
+
+    let result = parseInt(newVal);
+    if (newVal === '' || newVal === '0' || newVal === '00') {
+      result = 0;
     }
-    setValues(val);
+    if (result > max) {
+      result = max;
+    }
+    if (result < min && min > 0) {
+      result = min;
+    }
+    setValue(result);
+    if (isFunction(onChange)) {
+      onChange(result);
+    }
   };
-  useEffect(() => {
-    onChange && onChange(values);
-  }, [values]);
-  useEffect(() => {
-    if (ruleType(+value) !== 'Number') {
-      throw new Error('该数据类型不对');
+
+  const handleChangeValue = (types = 'add') => {
+    let result: number = mergedValue;
+    if (types === 'add') {
+      result += 1;
+    } else {
+      result -= 1;
     }
-    setValues(value);
-  }, [value]);
-  const getFinalValue = useCallback(
-    (value) => {
-      let finalValue = value;
-      if (finalValue === '' || finalValue === 0) {
-        return '0';
-      }
-      finalValue = isNumber(finalValue) ? Number(finalValue) : values;
-
-      if (finalValue < min) {
-        finalValue = min;
-      }
-
-      if (finalValue > max) {
-        finalValue = max;
-      }
-
-      return finalValue;
-    },
-    [min, max]
-  );
-  const handleInputChange = (e: any) => {
-    const val = e;
-    console.log(val, !val);
-
-    // eslint-disable-next-line eqeqeq
-    if (val === '' || val === 0 || val === '0' || val == '00') {
-      setValues('0');
+    if (result > max) {
       return;
     }
-    if (!/(^[0-9]\d*$)/.test(val)) {
+    if (result < min) {
       return;
     }
-    if (val > max) {
-      setValues(max);
+    setValue(result);
+    if (isFunction(onChange)) {
+      onChange(result);
     }
-    if (val > max || val < min) {
+  };
+
+  const handleInputBlur = (e) => {
+    const val = e.target.value;
+    const validValue = parseInt(val);
+    if (isNaN(validValue)) {
+      setValue(0);
+      if (isFunction(onChange)) {
+        onChange(0);
+      }
       return;
     }
-    if (val !== 0 || val !== '0') {
-      setValues(parseInt(val, 10));
+    let result = validValue;
+    if (result > max) {
+      result = max;
+    }
+    if (result < min) {
+      result = min;
+    }
+    setValue(result);
+    if (isFunction(onChange)) {
+      onChange(result);
     }
   };
 
@@ -105,17 +97,27 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
     if (tp === 'row') {
       return (
         <>
-          <div onClick={() => handleChangeValue(SUBTRACT)} className="apipost-input-number-step">
+          <div
+            onClick={handleChangeValue.bind(null, 'subtract')}
+            className="apipost-input-number-step"
+          >
             <ArrowDown />
           </div>
           <div style={{ flex: 1, height: '100%' }}>
             {modetype === 'input' ? (
-              <Input value={values} disabled={disabled} onChange={handleInputChange} />
+              <Input
+                forceUseValue
+                value={`${mergedValue}`}
+                disabled={disabled}
+                onBlur={handleInputBlur}
+                onChange={handleInputChange}
+                {...restProps}
+              />
             ) : (
-              <div>{values}</div>
+              <div>{`${mergedValue}`}</div>
             )}
           </div>
-          <div onClick={() => handleChangeValue(ADD)} className="apipost-input-number-step">
+          <div onClick={handleChangeValue.bind(null, 'add')} className="apipost-input-number-step">
             <ArrowUp />
           </div>
         </>
@@ -125,12 +127,19 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
       return (
         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
           <InputUpSvg
-            onClick={() => handleChangeValue(ADD)}
+            onClick={handleChangeValue.bind(null, 'add')}
             className="cur_pointer column_before"
           />
-          <Input value={values} disabled={disabled} onChange={handleInputChange} />
+          <Input
+            forceUseValue
+            value={`${mergedValue}`}
+            disabled={disabled}
+            onBlur={handleInputBlur}
+            onChange={handleInputChange}
+            {...restProps}
+          />
           <InputDownSvg
-            onClick={() => handleChangeValue(SUBTRACT)}
+            onClick={handleChangeValue.bind(null, 'subtract')}
             className="cur_pointer column_after"
           />
         </div>

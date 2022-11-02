@@ -30,10 +30,11 @@ class Uploader extends Component<UploaderProps, UploaderState> {
   }
 
   handleUpload = async (file: UploadItem) => {
-    const { action, headers, name, data, withCookies, customRequest } = this.props;
+    const { action, headers, name, data, withCookies, customRequest, uploadSuccess } = this.props;
 
     const onSuccess = (response?: object) => {
       console.log(response);
+      uploadSuccess && uploadSuccess(response);
       // const targetFile = this.getTargetFile(file);
       // if (targetFile) {
       //   targetFile.status = STATUS.success;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import Iconminus from '../../icons/minus.svg';
-import Iconcheck from '../../icons/check.svg';
-import './index.less';
+import Iconminus from '../assets/minus.svg';
+import Iconcheck from '../assets/check.svg';
+import './style/index.less';
 import { CheckBoxProps, CheckStatus } from './interface';
 
 export const CheckBox: React.FC<CheckBoxProps> = (props) => {
@@ -21,7 +21,9 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
 
   const mergeChecked = 'checked' in props ? checked : _checked;
 
-  const handleOnChange = () => {
+  const handleOnChange = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (disabled || readOnly) {
       return;
     }
@@ -35,7 +37,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
   };
 
   return (
-    <div
+    <span
       {...restProps}
       style={style}
       className={cn(className, {
@@ -49,7 +51,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
     >
       {mergeChecked === CheckStatus.CHECKED && <Iconcheck className="apipost-checkbox-svg" />}
       {mergeChecked === CheckStatus.HALFCHECK && <Iconminus className="apipost-checkbox-svg" />}
-    </div>
+    </span>
   );
 };
 

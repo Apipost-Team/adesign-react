@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classnames from 'classnames';
-import './index.less';
+import './style/index.less';
 import { SwitchProps } from './interface';
 
 const PERFIX = 'apipost-switch';

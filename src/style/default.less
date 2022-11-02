@@ -1,0 +1,107 @@
+@plugin "./generate.js";
+
+//品牌色
+@brand-color: @baseBrandColor;
+@danger-color: #F56C6C;
+@success-color: #67C23A;
+@warning-color: #E6A23C;
+
+
+
+:root {
+
+  /*脚本自动生成颜色开始*/
+
+  /*品牌色*/
+  --base-color-brand-1: generate-color(@brand-color, 1); //浅色 白底悬浮
+  --base-color-brand-2: generate-color(@brand-color, 2); //文字禁用
+  --base-color-brand-3: generate-color(@brand-color, 3); //一般禁用
+  --base-color-brand-4: generate-color(@brand-color, 4); //特殊场景
+  --base-color-brand-5: generate-color(@brand-color, 5); //悬浮
+  --base-color-brand-6: @brand-color; //基色 常规
+  --base-color-brand-7: generate-color(@brand-color, 7); //点击
+
+
+
+  //中性颜色(默认按钮)
+  --base-color-default-1: #f7f8fa;
+  --base-color-default-2: #f2f3f5;
+  --base-color-default-3: #e5e6eb;
+  --base-color-default-4: #c9cdd4;
+  --base-color-default-5: #a9aeb8;
+  --base-color-default-6: #86909c;
+  --base-color-default-7: #6b7785;
+
+
+  //危险颜色
+  --base-color-danger-1:generate-color(@danger-color, 1);
+  --base-color-danger-2:generate-color(@danger-color, 2);
+  --base-color-danger-3:generate-color(@danger-color, 3);
+  --base-color-danger-4:generate-color(@danger-color, 4);
+  --base-color-danger-5:generate-color(@danger-color, 5);
+  --base-color-danger-6: @danger-color;
+  --base-color-danger-7:generate-color(@danger-color, 7);
+
+  //成功颜色
+  --base-color-success-1:generate-color(@success-color, 1);
+  --base-color-success-2: generate-color(@success-color, 2);
+  --base-color-success-3: generate-color(@success-color, 3);
+  --base-color-success-4: generate-color(@success-color, 4);
+  --base-color-success-5:generate-color(@success-color, 5);
+  --base-color-success-6: @success-color;
+  --base-color-success-7: generate-color(@success-color, 7);
+
+  //警告颜色
+  --base-color-warning-1:generate-color(@warning-color, 1);
+  --base-color-warning-2:generate-color(@warning-color, 2);
+  --base-color-warning-3:generate-color(@warning-color, 3);
+  --base-color-warning-4:generate-color(@warning-color, 4);
+  --base-color-warning-5:generate-color(@warning-color, 5);
+  --base-color-warning-6: @warning-color;
+  --base-color-warning-7:generate-color(@warning-color, 7);
+
+  /*脚本自动生成颜色结束*/
+
+
+  /*手动配置颜色开始*/
+
+  //文字色
+  --color-text-primary: #303133;
+  --color-text-regular: #606266;
+  --color-text-secondary: #909399;
+  --color-text-placeholder: #C0C4CC;
+  --color-text-white: #ffffff;
+
+
+  //线条色
+  --border-color-base: #DCDFE6;
+  --border-color-light: #E4E7ED;
+  --border-color-lighter: #EBEEF5;
+  --border-color-extra-light: #F2F6FC;
+
+
+
+  //背景颜色
+  --color-bg-1: #ffffff; //整体背景色
+  --color-bg-2: #f9f9f9; //一级容器背景
+  --color-bg-3: #f2f2f2; //二级容器背景
+  --color-bg-4: #ffffff; //三级容器背景
+  --color-bg-5: rgba(26, 26, 26, 0.5); //下拉弹出框
+  --color-bg-6: #ffffff; //tooltip
+
+
+  //填充色
+  --color-fill-white: #FFFFFF;
+  --color-fill-1: #F7F8FA;
+  --color-fill-2: #F2F3F5;
+  --color-fill-3: #E5E6EB;
+  --color-fill-4: #C9CDD4;
+
+
+  /*手动配置颜色结束*/
+
+  --text-weight-regular: 400;
+  --text-weight-medium: 600;
+  --text-weight-bold: 600;
+
+}

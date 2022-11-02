@@ -24,6 +24,28 @@ export interface SelectProps {
   popupStyle?: React.CSSProperties;
 
   popupClassName?: string | string[];
+  placement:
+    | 'auto'
+    | 'auto-start'
+    | 'auto-end'
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+  autoAdjustWidth: boolean;
+
+  /**
+   * @zh 输入框大小
+   */
+  size?: 'mini' | 'small' | 'middle' | 'large';
 
   // 自定义render组件已被选中的内容
   formatRender?: (value: ReactNode, childList: OptionProps[], text: ReactNode) => ReactNode;

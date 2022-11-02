@@ -1,0 +1,138 @@
+@import './varis.less';
+
+.apipost-tree {
+  text-align: left;
+  color: @text-color;
+  font-size: 12px;
+  padding: 0 5px;
+
+  &-node {
+
+    display: flex;
+    justify-content: flex-start;
+    height: 30px;
+    border-radius: 5px;
+    color:@text-color;
+    padding: 0 5px;
+    align-items: center;
+
+    .tree-node-checkbox{
+      width: 14px;
+      height: 14px;
+      margin-left: 10px;
+    }
+
+    &-icon {
+      display: flex;
+      align-items: center;
+      width: 12px;
+      height: 12px;
+      margin: 0 3px;
+    }
+
+    &-indent {
+      height: 100%;
+      min-width: 16px;
+      display: flex;
+      align-items: center;
+
+      &-unit {
+        width: 15px;
+        display: block;
+        float: left;
+      }
+    }
+
+    &-notleaf {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & .foldbtn {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        border-radius: 3px;
+        background-color:@icon-color-background;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        &:hover{
+          background-color: @icon-color-background-hover;
+        }
+
+        & svg {
+          width: 12px;
+          height: 12px;
+          text-align: center;
+          fill:@icon-color-text;
+        }
+      }
+    }
+
+    &-line {
+      width: 18px;
+      height: 100%;
+      display: block;
+      position: relative;
+      &::after{
+        content: '';
+        height: 100%;
+        width: 1px;
+        display: block;
+        position: absolute;
+        border-right: 1px solid  @icon-color-background;
+        position: absolute;
+        right: 50%;
+      }
+    }
+
+    &-end {
+      width: 18px;
+      height: 100%;
+      fill: #00000055;
+    }
+
+    &-title {
+      flex: 1;
+      width: 0;
+      padding-left: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &-more {
+      width: 24px;
+      height: 24px;
+      justify-content: center;
+      align-items: center;
+      background: #E9E9E9;
+      border-radius: 3px;
+      display: none;
+      cursor: pointer;
+
+      &>svg {
+        width: 12px;
+      }
+    }
+
+    &:hover &-more {
+      display: flex;
+    }
+
+    &.tree-node-selected {
+      .rectbg>svg {
+        fill: #000000;
+      }
+    }
+  }
+
+  .tree-node-list {
+    height: 100%;
+  }
+
+}

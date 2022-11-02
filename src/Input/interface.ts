@@ -9,7 +9,7 @@ export interface InputProps
   /**
    * @zh 输入框的值
    */
-  value?: string;
+  value?: string | number;
 
   /**
    * @zh 输入框大小
@@ -37,6 +37,12 @@ export interface InputProps
   disabled?: boolean;
 
   /**
+   * @zh 是否无边框
+   * @defaultValue true
+   */
+  bordered?: boolean;
+
+  /**
    * @zh 输入框错误状态
    */
   error?: boolean;
@@ -55,6 +61,11 @@ export interface InputProps
    * @zh 允许清空input
    */
   allowClear?: boolean;
+
+  /**
+   * @zh 强制使用外部传入value渲染
+   */
+  forceUseValue?: boolean;
 
   /**
    * @zh 值改变时的回调
@@ -145,6 +156,12 @@ export interface TextareaProps
   readonly?: boolean;
 
   /**
+   * @zh 是否无边框
+   * @defaultValue true
+   */
+  bordered?: boolean;
+
+  /**
    * @zh 值改变时的回调
    */
   onChange?: (value?: string, e?: any) => void;
@@ -166,4 +183,9 @@ export interface TextareaProps
    * @zh 键盘事件的回调
    */
   onKeyDown?: (e: any) => void;
+
+  /**
+   * @zh 自动计算高度
+   */
+  autoHeight?: boolean;
 }

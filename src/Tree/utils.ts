@@ -1,5 +1,7 @@
 import _omit from 'lodash/omit';
 import isArray from 'lodash/isArray';
+import isFunction from 'lodash/isFunction';
+import { isEmpty, isUndefined } from 'lodash';
 
 export const fillFieldNames = (fieldNames) => {
   const { title = 'title', _title, key = 'key', children = 'children' } = fieldNames || {};
@@ -22,7 +24,13 @@ export const getKey = (key, pos) => {
 
 const getNodeLevel = (node) => (node === null ? 0 : getNodeLevel(node.parent) + 1);
 
-export const flattenTreeData = (treeNodeList, expandedKeys = [], fieldNames, nodeSort) => {
+export const flattenTreeData = (
+  treeNodeList,
+  expandedKeys = [],
+  fieldNames,
+  nodeSort,
+  checkLeafNode
+) => {
   const {
     _title: fieldTitles,
     key: fieldKey,
@@ -59,7 +67,9 @@ export const flattenTreeData = (treeNodeList, expandedKeys = [], fieldNames, nod
         children: [],
         data: treeNode,
         isEnd: [...(parent ? parent.isEnd : []), index === list.length - 1],
-        isLeaf: treeNode.children === undefined || treeNode.children?.length === 0,
+        isLeaf: isFunction(checkLeafNode)
+          ? checkLeafNode(treeNode)
+          : isUndefined(treeNode?.children) || isEmpty(treeNode?.children),
         level: getNodeLevel(parent),
         show: [...(parent ? parent.show : []), true],
       };
@@ -89,7 +99,8 @@ export const flattenTreeData = (treeNodeList, expandedKeys = [], fieldNames, nod
 // Array转树形结构对象
 export const arrayToTreeObject = (
   data?: any[],
-  param = { key: 'target_id', parent: 'parent_id' }
+  param = { key: 'target_id', parent: 'parent_id' },
+  filter
 ) => {
   const treeData: any = {};
   const rootData = [];
@@ -108,10 +119,15 @@ export const arrayToTreeObject = (
   for (let i = 0; i < data.length; i++) {
     const itemKey = data[i][param.key];
     const item = treeData[itemKey];
+
     const parent = treeData[item.parent];
     if (parent === undefined) {
       // parent未定义说明被放在了根节点下
-      rootData.push(item);
+      if (isFunction(filter)) {
+        filter(item) && rootData.push(item);
+      } else {
+        rootData.push(item);
+      }
     } else {
       if (parent.children === undefined) {
         parent.children = [];
@@ -119,7 +135,6 @@ export const arrayToTreeObject = (
       parent.children.push(item);
     }
   }
-
   return rootData;
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { TooltipProps } from './interface';
 import Trigger from '../Trigger';
-import './index.less';
+import './style/index.less';
 
 const PERFIX = 'apipost-tooltip-popup';
 
@@ -35,6 +35,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
 
   const getPopup = () => {
     if (
+      content === undefined ||
       typeof content === 'string' ||
       content.type === undefined ||
       content.type.toString() === React.Fragment.toString()

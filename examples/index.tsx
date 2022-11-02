@@ -3,8 +3,15 @@ import ReactDom from 'react-dom';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import './index.less';
 import Menus from './constant';
-
+import ENUS from '../src/locale/en-US';
+import ConfigProvider from '../src/ConfigProvider';
 import Github from './assets/github.svg';
+import Select from '../src/Select';
+
+// import '../dist/style.css';
+import brandColorList from '../config/color.js';
+
+const brandItem = brandColorList.find((item) => item.default);
 
 const Main = (props: any) => {
   const location = useLocation();
@@ -12,6 +19,21 @@ const Main = (props: any) => {
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location]);
+
+  const [brand, setBrand] = useState(brandItem);
+
+  useEffect(() => {
+    const fileName = brand?.default === true ? 'default' : `color-${brand.name}`;
+    require.ensure([], function (require) {
+      const fileModule = require(`../libs/${fileName}.css`);
+      const cssUrl = fileModule.default;
+      document.querySelector(`link[name="apt-template-link"]`).setAttribute('href', cssUrl);
+    });
+  }, [brand]);
+
+  const handleSwitchColor = (item) => {
+    setBrand(item);
+  };
 
   return (
     <div className="examples">
@@ -26,6 +48,12 @@ const Main = (props: any) => {
           <a className="header-nav-link" href="javescritp:">
             资源
           </a> */}
+
+          <Select style={{ width: 80 }} value={brand} onChange={handleSwitchColor}>
+            {brandColorList.map((item) => {
+              return <Select.Option value={item}>{item.title}</Select.Option>;
+            })}
+          </Select>
           <a
             className="header-nav-link"
             target="_blank"
@@ -34,11 +62,13 @@ const Main = (props: any) => {
           >
             关于
           </a>
+
           <a className="header-nav-git" href="https://github.com/Apipost-Team/adesign-react">
             <span className="header-nav-git_ico">
               <Github />
             </span>
           </a>
+
           <div></div>
         </div>
       </div>
@@ -77,7 +107,9 @@ const Main = (props: any) => {
 
 ReactDom.render(
   <BrowserRouter>
-    <Main />
+    <ConfigProvider locale={ENUS} size="middle">
+      <Main />
+    </ConfigProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

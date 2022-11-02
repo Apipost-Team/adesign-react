@@ -12,20 +12,26 @@ export interface TabPanProps {
 }
 
 export interface RenderProps {
-  headerTabItems: React.ReactNode;
-  addButton: React.ReactNode;
-  scrollButtons: React.ReactNode;
+  tabsList?: any;
+  headerTabItems?: React.ReactNode;
+  addButton?: React.ReactNode;
+  scrollButtons?: React.ReactNode;
+  handleMouseWheel?: (ev: MouseEvent) => void;
+  activedContent?: React.ReactNode;
+  renderScrollItems?: (elements: React.ReactNode) => void;
 }
 
-export interface TabsProps {
+export interface TabsProps<T> {
   style?: React.CSSProperties;
   className?: string | string[];
   defaultActiveId?: string;
   activeId?: string;
+  activeIndex?: number;
   draggable?: boolean;
   showAdd?: boolean;
   showScrollBtns?: boolean;
   children?: any;
+  elementCache?: boolean;
   /**
    * @zh 标签页类型  默认样式 default ｜ 选项卡样式 card
    * @defaultValue default
@@ -34,7 +40,19 @@ export interface TabsProps {
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
   onAddTab?: (id: string) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
-  renderHeader?: (tabsList: any[], tabs: RenderProps) => React.ReactNode;
+
+  // tab头自定义渲染
+  headerRender?: (tabParams: RenderProps) => React.ReactNode;
+
+  // tab内容自定义渲染
+  contentRender?: (tabParams: RenderProps) => React.ReactNode;
+  itemWidth?: number;
+
+  // tabs header是否开启滚轮滚动
+  headerAutoScroll: boolean;
+
+  // tab item为空时自定义渲染内容
+  emptyContent?: React.ReactNode;
 }
 
 export interface TabsContextProps {

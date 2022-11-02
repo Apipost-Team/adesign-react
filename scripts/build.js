@@ -34,7 +34,7 @@ const webpackConfig = {
     new HtmlWebpackPlugin({
       title: 'ADesign UI组件库 - 开放、极简、共建 - By Apipost FE',
       filename: path.resolve(__dirname, '../dist/index.html'),
-      template: path.resolve(__dirname, '../src/index.html'),
+      template: path.resolve(__dirname, '../public/index.html'),
     }),
     new CopyWebpackPlugin({
       patterns: [{ from: path.resolve(__dirname, '../public'), to: '../dist' }],

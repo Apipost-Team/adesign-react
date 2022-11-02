@@ -1,28 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import _ from 'lodash';
+import omit from 'lodash/omit';
+import { isBoolean, isUndefined } from 'lodash';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
-import './index.less';
+import './style/index.less';
 import useCheck from './hooks/useCheck';
-import useDrag from './hooks/useDrag';
 import { TreeProps } from './interface';
 
 const { Provider } = TreeContext;
+
 const perfixCls = 'apipost-tree';
+
 const Tree = (props: TreeProps, ref: any) => {
   const {
     dataList, // 数据源 一维数组格式
     showLine = false,
-    draggable = false,
     enableCheck = false,
     checkboxReadOnly = false, // 所有的勾选框是否只读
-    isExpandAllKeys = true,
-    defaultExpandKeys = undefined,
+    // isExpandAllKeys = true,
+    defaultExpandKeys = undefined, // 默认展开节点
     onExpandKeysChange = () => undefined,
-    defaultCheckedKeys,
-    checkedKeys,
+    defaultCheckedKeys, // 默认选中节点
+    checkedKeys, // 选中的节点 （受控）
     fieldNames = {
       key: 'key',
       title: 'title',
@@ -30,24 +31,23 @@ const Tree = (props: TreeProps, ref: any) => {
       children: 'children',
     },
     onCheck = () => undefined,
-    render = undefined,
-    showIcon = true,
+    render,
     onNodeClick = () => undefined,
-    onNodeDragEnd = () => undefined,
     onRightClick = () => undefined,
     onMultiSelect = () => undefined,
     onCheckAll = () => undefined,
     onOutSideClick = () => undefined,
     selectedKeys = [], // 默认选中节点
     style,
-    className,
-    enableVirtualList = false,
+    className, // 数组件class名称
+    enableVirtualList = false, // 是否开启虚拟列表
     nodeSort = undefined, // 节点排序
+    rootFilter, // 过滤顶级节点
+    checkLeafNode, // 检查当前节点是否叶子结点
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [flattenNodes, setFlattenNodes] = useState([]);
-  const [cachedTree, setCachedTree] = useState({});
   const [scrollToIndex, setScrollToIndex] = useState(0);
+
   const { mergeCheckedKeys, halfCheckedKeys, handleCheckNode, handleCheckAll } = useCheck({
     onCheck,
     onCheckAll,
@@ -58,15 +58,12 @@ const Tree = (props: TreeProps, ref: any) => {
     checkedKeys,
   });
 
-  // const mergeCheckedKeys = defaultCheckedKeys !== undefined ? defaultCheckedKeys : checkedKeys;
-
   useEffect(() => {
-    if (defaultExpandKeys !== undefined && _.isEqual(defaultExpandKeys, expandedKeys) === false) {
+    if (Array.isArray(defaultExpandKeys)) {
       setExpandedKeys(defaultExpandKeys);
     }
-  }, [defaultExpandKeys, dataList]);
+  }, [defaultExpandKeys]);
 
-  const { handleNodeDragEnd } = useDrag({ flattenNodes, fieldNames, onNodeDragEnd, cachedTree });
   // 批量展开/折叠
   const prepareExpandKeys = (expand, datalist) => {
     const expandKeys = {};
@@ -90,67 +87,62 @@ const Tree = (props: TreeProps, ref: any) => {
     return expandKeys;
   };
 
-  // 默认展开节点//暂时只支持是否全部展示
-  useEffect(() => {
-    if (expandedKeys !== null || dataList?.length === 0) {
-      // 仅第一次生效
-      return;
-    }
-    const keysObj = prepareExpandKeys(isExpandAllKeys, dataList);
-    setExpandedKeys(Object.keys(keysObj));
-  }, [isExpandAllKeys, dataList]);
+  // 树形菜单对象
+  const cachedTree = useMemo(() => {
+    return arrayToTreeObject(dataList, fieldNames, rootFilter);
+  }, [dataList, fieldNames, rootFilter]);
 
-  useEffect(() => {
-    if (Array.isArray(expandedKeys) === false) {
-      return;
-    }
-    const treeData = arrayToTreeObject(dataList, fieldNames);
-    const node = flattenTreeData(treeData, expandedKeys, fieldNames, nodeSort);
-    setCachedTree(treeData);
-    setFlattenNodes(node);
-  }, [dataList]);
-
-  // 默认勾选节点信息
-  // useEffect(() => {
-  //   if (defaultCheckedKeys.length !== 0) {
-  //     setCheckedKeys(defaultCheckedKeys);
-  //   }
-  // }, [defaultCheckedKeys]);
+  // 被展开菜单节点
+  const flattenNodes = useMemo(() => {
+    return Array.isArray(expandedKeys) === false
+      ? []
+      : flattenTreeData(cachedTree, expandedKeys, fieldNames, nodeSort, checkLeafNode);
+  }, [cachedTree, expandedKeys, fieldNames, nodeSort]);
 
   /*
      展开或闭合节点
     nodeKeys: sring 节点展开闭合/Array 要展开的节点
-    callBack 回调
+    scrollNodeKey 被滚动到的节点key
   */
-  const handleExpandItem = (nodeKeys, nodeIndex) => {
+  const handleExpandItem = (nodeKeys, scrollNodeKey) => {
     let expandKeyData = {};
-    if (typeof nodeKeys === 'boolean') {
+    if (isBoolean(nodeKeys)) {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
     } else {
-      expandKeyData = expandedKeys.reduce((a, b) => ({ ...a, [b]: true }), {});
+      const newExpandKeyData = {};
+      expandedKeys.forEach((item) => {
+        newExpandKeyData[item] = true;
+      });
+      expandKeyData = newExpandKeyData;
     }
     if (Array.isArray(nodeKeys)) {
-      nodeKeys.forEach((nodeKey) => {
+      nodeKeys?.forEach((nodeKey) => {
         expandKeyData[nodeKey] = true;
       });
-    } else if (expandKeyData[nodeKeys] === undefined) {
+    } else if (!isBoolean(nodeKeys) && isUndefined(expandKeyData[nodeKeys])) {
       expandKeyData[nodeKeys] = true;
     } else {
-      expandKeyData = _.omit(expandKeyData, nodeKeys);
+      expandKeyData = omit(expandKeyData, nodeKeys);
     }
-
     const expandKeyArr = Object.keys(expandKeyData);
     setExpandedKeys(expandKeyArr);
-    const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort);
-    setFlattenNodes(nodes);
     onExpandKeysChange(expandKeyArr);
-    setScrollToIndex(nodeIndex);
+
+    const nodes = flattenTreeData(cachedTree, expandKeyArr, fieldNames, nodeSort, checkLeafNode);
+
+    // 滚动节点到指定位置
+    const scrollIndex = nodes.findIndex((item) => item.key === scrollNodeKey);
+    if (!isUndefined(scrollNodeKey) && scrollIndex !== -1) {
+      setScrollToIndex(scrollIndex);
+    }
   };
 
   const handleRightClick = (e, nodeData) => {
     const data = flattenNodes.filter((node) => selectedKeys.includes(node.key));
-    if (data.length > 1) {
-      onRightClick(e, data);
+
+    if (Array.isArray(data) && data.length > 1) {
+      const multiData = data.map((d) => d?.data);
+      onRightClick(e, multiData);
     } else {
       onRightClick(e, nodeData);
     }
@@ -159,10 +151,6 @@ const Tree = (props: TreeProps, ref: any) => {
     return false;
   };
 
-  const TreeNodeList = useMemo(
-    () => <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />,
-    [flattenNodes, dataList]
-  );
   return (
     <div
       style={style}
@@ -178,17 +166,14 @@ const Tree = (props: TreeProps, ref: any) => {
           fieldNames,
           dataList,
           showLine,
-          draggable,
           handleCheckNode,
           expandedKeys,
           handleExpandItem,
-          handleNodeDragEnd,
           enableCheck,
           checkboxReadOnly,
           checkedKeys: mergeCheckedKeys,
           halfCheckedKeys,
           render,
-          showIcon,
           onNodeClick,
           onRightClick: handleRightClick,
           selectedKeys,
@@ -199,7 +184,7 @@ const Tree = (props: TreeProps, ref: any) => {
           setScrollToIndex,
         }}
       >
-        {TreeNodeList}
+        <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />
       </Provider>
     </div>
   );

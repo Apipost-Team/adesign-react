@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useCallback, useImperativeHandle, useRef } from 'react';
 import cn from 'classnames';
-import _cloneDeep from 'lodash/cloneDeep';
 import _throttle from 'lodash/throttle';
-import _debounce from 'lodash/debounce';
+import isFunction from 'lodash/isFunction';
+import { isArray, isUndefined } from 'lodash';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
 import ArrowRight from '../assets/arrow-right2.svg';
-import TabPan from './tabpan';
-import './index.less';
+import './style/index.less';
 import { TabPanProps, TabsProps } from './interface';
 
-const Tabs = (props: TabsProps, rootRef: any) => {
+const Tabs = (props: TabsProps<any>, rootRef: any) => {
   const {
     style,
     className,
     defaultActiveId,
     activeId,
+    activeIndex = -1,
     showAdd = false,
     showScrollBtns = false,
     children,
@@ -24,12 +24,15 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     onChange,
     onAddTab = () => undefined,
     onRemoveTab,
-    renderHeader,
-    itemWidth = 150,
+    headerRender,
+    contentRender,
+    itemWidth,
+    elementCache = true,
+    headerAutoScroll = false,
+    emptyContent,
     ...restProps
   } = props;
 
-  const [enableTransition, setEnableTransition] = useState(true); // 是否开启动画效果
   const [activeTabId, setActiveTabId] = useState(defaultActiveId);
   const [translateX, setTranslateX] = useState(0);
 
@@ -38,30 +41,30 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   const refHeadOuter = useRef<HTMLDivElement>(null);
   const refTranslateData = useRef<any>(null);
 
-  const handleMouseWeelDone = useCallback(
-    _debounce(() => {
-      setEnableTransition(true);
-    }, 100),
-    []
-  );
-
   useEffect(() => {
     refTranslateData.current = {
       translateX,
     };
-    handleMouseWeelDone();
+    //  handleMouseWheelDone();
   }, [translateX]);
 
-  const handleMouseWeel = useCallback(
+  const handleMouseWheel = useCallback(
     _throttle((e) => {
+      if (!headerAutoScroll) {
+        return;
+      }
+
       // e.preventDefault();
       // e.stopPropagation();
-      setEnableTransition(false);
+      //  setEnableTransition(false);
       const moveStepX = e.nativeEvent.deltaY;
       let movedWidth = 0;
       if (e.nativeEvent.deltaY > 0) {
-        const innerPanel = refHeadOuter.current?.firstElementChild;
-        const outerPanel = refHeadOuter.current;
+        if (refHeadOuter.current === null) {
+          return;
+        }
+        const outerPanel: HTMLDivElement = refHeadOuter.current;
+        const innerPanel: HTMLDivElement = refHeadOuter.current?.firstElementChild;
         movedWidth = refTranslateData.current.translateX - moveStepX;
         if (movedWidth < outerPanel?.offsetWidth - innerPanel.offsetWidth) {
           movedWidth = outerPanel?.offsetWidth - innerPanel.offsetWidth;
@@ -72,6 +75,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
       if (movedWidth > 0) {
         movedWidth = 0;
       }
+
       setTranslateX(movedWidth);
 
       // e.stopPropagation();
@@ -104,15 +108,21 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     return index;
   };
 
+  const mergedActiveIndex =
+    'activeIndex' in props ? activeIndex : getTabIndex(tabsList, mergedActiveId);
+
   useEffect(() => {
-    if (tabsList === 0) {
-      setTranslateX(0);
+    if (mergedActiveIndex === 0) {
+      return;
     }
     if (refHeadOuter.current === null) {
       return;
     }
-    const index = getTabIndex(tabsList, mergedActiveId);
+    const index = mergedActiveIndex;
     if (index === -1) {
+      return;
+    }
+    if (itemWidth === undefined) {
       return;
     }
     const outerWidth = refHeadOuter.current.offsetWidth;
@@ -127,7 +137,6 @@ const Tabs = (props: TabsProps, rootRef: any) => {
       newTranslateX = outerWidth - rightOffset;
       // setTranslateX(outerWidth - rightOffset);
     }
-
     // 右侧有空间时
     if (translateX < outerWidth - innerWidth) {
       if (outerWidth >= innerWidth) {
@@ -139,7 +148,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     if (newTranslateX !== null) {
       setTranslateX(newTranslateX);
     }
-  }, [mergedActiveId, tabsList.length]);
+  }, [mergedActiveIndex, children]);
 
   useEffect(() => {
     refTranslateData.current = {
@@ -196,7 +205,7 @@ const Tabs = (props: TabsProps, rootRef: any) => {
   const activedContent = tabsList.find((item: TabPanProps) => item?.props?.id === mergedActiveId)
     ?.props?.children;
 
-  const headerTabItems = (
+  const headerTabItems: React.ReactNode = (
     <div
       className={cn({
         'tabs-content': true,
@@ -205,9 +214,6 @@ const Tabs = (props: TabsProps, rootRef: any) => {
       ref={refHeadOuter}
     >
       <div
-        className={cn({
-          enableTransition: enableTransition === true,
-        })}
         style={{
           transform: `translate3d(${translateX}px,0,0)`,
         }}
@@ -216,7 +222,28 @@ const Tabs = (props: TabsProps, rootRef: any) => {
       </div>
     </div>
   );
-  const scrollButtons = (
+
+  const renderScrollItems = (tabsItemList) => {
+    return (
+      <div
+        className={cn({
+          'tabs-content': true,
+          [`tabs-content_${type}`]: true,
+        })}
+        ref={refHeadOuter}
+      >
+        <div
+          style={{
+            transform: `translate3d(${translateX}px,0,0)`,
+          }}
+        >
+          {tabsItemList}
+        </div>
+      </div>
+    );
+  };
+
+  const scrollButtons: React.ReactNode = (
     <div className="scroll-buttons">
       <div className="scroll-btn " onClick={handleMoveLeft}>
         <ArrowLeft />
@@ -227,20 +254,25 @@ const Tabs = (props: TabsProps, rootRef: any) => {
     </div>
   );
 
-  const addButton = (
+  const addButton: React.ReactNode = (
     <div className="add-button" onClick={onAddTab}>
       <ButtonAdd />
     </div>
   );
 
+  useImperativeHandle(rootRef, () => ({
+    handleMoveLeft,
+    handleMoveRight,
+  }));
+
+  useEffect(() => {
+    if (tabsList?.length === 0) {
+      setTranslateX(0);
+    }
+  }, [tabsList?.length]);
+
   return (
-    <div
-      onWheel={handleMouseWeel}
-      style={style}
-      ref={rootRef}
-      {...restProps}
-      className={cn('apipost-tabs', className)}
-    >
+    <div style={style} ref={rootRef} {...restProps} className={cn('apipost-tabs', className)}>
       <Provider
         value={{
           activeId: mergedActiveId,
@@ -249,27 +281,53 @@ const Tabs = (props: TabsProps, rootRef: any) => {
           itemWidth,
         }}
       >
-        <div className="apipost-tabs-header">
-          {typeof renderHeader !== 'function' ? (
-            <>
-              {headerTabItems}
-              {showAdd && addButton}
-              {showScrollBtns && scrollButtons}
-            </>
+        {isFunction(headerRender) ? (
+          headerRender({
+            tabsList,
+            headerTabItems,
+            renderScrollItems,
+            addButton,
+            scrollButtons,
+            handleMouseWheel,
+          })
+        ) : (
+          <div onWheel={handleMouseWheel} className="apipost-tabs-header">
+            {renderScrollItems(tabsList)}
+            {showAdd && addButton}
+            {showScrollBtns && scrollButtons}
+          </div>
+        )}
+        <div className="apipost-tabs-content">
+          {elementCache !== true ? (
+            activedContent
           ) : (
-            <>{renderHeader(tabsList, { headerTabItems, addButton, scrollButtons })}</>
+            <>
+              {(!isArray(tabsList) || tabsList.length == 0) && !isUndefined(emptyContent) && (
+                <>{emptyContent}</>
+              )}
+
+              {isFunction(contentRender) ? (
+                contentRender({ tabsList, activeId: mergedActiveId })
+              ) : (
+                <>
+                  {tabsList.map((item, index) => (
+                    <div
+                      key={index}
+                      className={cn('tab-content-item', {
+                        active: item?.props?.id === mergedActiveId,
+                      })}
+                    >
+                      {item.props.children}
+                    </div>
+                  ))}
+                </>
+              )}
+            </>
           )}
-        </div>
-        <div
-          className={cn({
-            'apipost-tabs-content': true,
-          })}
-        >
-          {activedContent}
         </div>
       </Provider>
     </div>
   );
 };
 
-export default React.forwardRef<HTMLDivElement, TabsProps>(Tabs);
+export default React.forwardRef<HTMLDivElement, TabsProps<any>>(Tabs);

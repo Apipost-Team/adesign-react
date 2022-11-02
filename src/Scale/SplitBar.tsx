@@ -1,12 +1,21 @@
-import type { FC } from 'react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import cn from 'classnames';
 import { SplitBarProps, ScaleData } from './interface';
 
-const SplitBar: FC<SplitBarProps> = (props) => {
-  const { onScaling = (scaleData: ScaleData) => undefined, barLocation } = props;
+const SplitBar: React.FC<SplitBarProps> = (props) => {
+  const {
+    onScaling = (scaleData: ScaleData) => undefined,
+    className,
+    barLocation,
+    scaleData,
+    direction,
+  } = props;
+
+  const preRef = useRef(null);
 
   const handleMouseDown = (ev: React.MouseEvent) => {
     const { pageX, pageY } = ev;
+    preRef.current = true;
     onScaling({
       enable: true,
       startX: pageX,
@@ -15,11 +24,17 @@ const SplitBar: FC<SplitBarProps> = (props) => {
   };
 
   const handleMouseUp = (ev: MouseEvent) => {
+    if (preRef.current !== true) {
+      return;
+    }
+
+    const { pageX, pageY } = ev;
     onScaling({
       enable: false,
-      startX: 0,
-      startY: 0,
+      startX: pageX,
+      startY: pageY,
     });
+    preRef.current = false;
   };
 
   useEffect(() => {
@@ -27,23 +42,41 @@ const SplitBar: FC<SplitBarProps> = (props) => {
     return () => {
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, []);
+  }, [scaleData]);
 
   const splitStyles = () => {
     const splitStyle: React.CSSProperties = {};
-    if (barLocation === 'start') {
-      splitStyle.top = '0px';
-      splitStyle.left = '0px';
+
+    // 'horizontal' | 'vertical';
+    if (direction === 'horizontal') {
+      if (barLocation === 'start') {
+        splitStyle.left = '-7px';
+      } else {
+        splitStyle.right = '-7px';
+      }
+    } else if (barLocation === 'start') {
+      splitStyle.top = '-7px';
     } else {
-      splitStyle.bottom = '0px';
-      splitStyle.right = '0px';
+      splitStyle.bottom = '-7px';
     }
+
+    // if (barLocation === 'start') {
+    //   splitStyle.top = '0px';
+    //   splitStyle.left = '0px';
+    // } else {
+    //   splitStyle.bottom = '0px';
+    //   splitStyle.right = '0px';
+    // }
     return splitStyle;
   };
 
   return (
-    <div style={{ ...splitStyles() }} className="split-item" onMouseDown={handleMouseDown}>
-      <div className="split-bar" />
+    <div
+      style={{ ...props.style, ...splitStyles() }}
+      className={cn('split-item', className)}
+      onMouseDown={handleMouseDown}
+    >
+      <div className="split-bar"></div>
     </div>
   );
 };

@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { isUndefined } from 'lodash';
 import cn from 'classnames';
 import { InputProps } from './interface';
 import Textarea from './Textarea';
-import './index.less';
-import Iconcancel from '../../icons/cancel.svg';
+import './style/index.less';
+import Iconcancel from '../assets/cancel.svg';
 
 export const Input: React.FC<InputProps> = (props) => {
   const {
+    defaultValue,
     value,
+    type,
     onChange,
     className,
     style,
@@ -16,6 +19,7 @@ export const Input: React.FC<InputProps> = (props) => {
     beforeFix = null,
     afterFix = null,
     disabled = false,
+    bordered = true,
     error,
     onClear,
     onBlur = () => undefined,
@@ -23,24 +27,27 @@ export const Input: React.FC<InputProps> = (props) => {
     onKeyDown = () => undefined,
     readonly = false,
     allowClear,
+    forceUseValue = false,
+    ...restProps
   } = props;
 
   const isComposition = useRef(false);
-  const [inputValue, setInputValue] = useState(value || '');
+  const [inputValue, setInputValue] = useState(defaultValue || '');
 
   useEffect(() => {
-    setInputValue(value);
+    if (!isUndefined(value)) {
+      setInputValue(value || '');
+    }
   }, [value]);
   const [compositionValue, setCompositionValue] = useState<string | undefined>('');
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     if (!isComposition.current) {
+      setInputValue(newValue);
       if (onChange) {
         onChange(newValue, e);
-        return;
       }
-      setInputValue(newValue);
     } else {
       setCompositionValue(newValue);
     }
@@ -52,7 +59,6 @@ export const Input: React.FC<InputProps> = (props) => {
       setCompositionValue(undefined);
       if (onChange) {
         onChange(e.currentTarget.value, e);
-        return;
       }
       setInputValue(e.currentTarget.value);
     } else {
@@ -70,6 +76,7 @@ export const Input: React.FC<InputProps> = (props) => {
     'apipost-input-inner-wrapper-error': error,
     'apipost-input-inner-wrapper-disabled': disabled,
     [`apipost-input-inner-wrapper-${size}`]: true,
+    'apipost-input-inner-wrapper-border': bordered,
   });
 
   const handleFocus = (e: any) => {
@@ -87,23 +94,36 @@ export const Input: React.FC<InputProps> = (props) => {
     onClear && onClear();
   };
 
-  const inputProps = {
-    value: compositionValue || inputValue || '',
+  // const inputProps = {
+  //   value: compositionValue || inputValue || '',
+  // };
+  const getInputValue = () => {
+    if (compositionValue) {
+      return compositionValue;
+    }
+    if (!isUndefined(inputValue) && !forceUseValue) {
+      return inputValue;
+    }
+    if (!isUndefined(value)) {
+      return value;
+    }
+    return '';
   };
-
   return (
     <span
       ref={inputEl}
       className={cn(className, wrapperClassnames)}
       style={{ width, height, border, borderRadius }}
     >
-      {beforeFix !== undefined && beforeFix}
+      {beforeFix !== undefined && React.cloneElement(<>{beforeFix}</>, { key: 'beforeFix' })}
       <input
-        className="apipost-input"
         spellCheck="false"
+        className="apipost-input mousetrap"
         placeholder={placeholder}
         style={{ ...restStyles }}
-        // value={compositionValue !== '' ? compositionValue : inputValue !== '' ? inputValue : ''}
+        type={type}
+        value={getInputValue()}
+        // value={compositionValue !== '' ? compositionValue : value !== '' ? value : ''}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -114,9 +134,9 @@ export const Input: React.FC<InputProps> = (props) => {
         onCompositionUpdate={handleComposition}
         onCompositionEnd={handleComposition}
         onKeyDown={onKeyDown}
-        {...inputProps}
+        {...restProps}
       />
-      {afterFix !== undefined && afterFix}
+      {afterFix !== undefined && React.cloneElement(<>{afterFix}</>, { key: 'afterFix' })}
       {allowClear && (
         <span onClick={handleClear} className="apipost-input-inner-clear">
           <Iconcancel />

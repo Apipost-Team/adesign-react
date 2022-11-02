@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import _ from 'lodash';
+import _, { isUndefined } from 'lodash';
 import { CheckStatus } from '../interface';
 
 const useCheck = (props) => {
@@ -43,20 +43,21 @@ const useCheck = (props) => {
   };
 
   useEffect(() => {
-    const treeDatas = dataList?.reduce((a, b) => {
+    const treeDatas = {};
+    dataList?.forEach((item) => {
       const node = {};
-      if (halfCheckedKeys.includes(b[fieldNames.key])) {
+      if (halfCheckedKeys.includes(item[fieldNames.key])) {
         node.checked = CheckStatus.HALFCHECK;
-      } else if (mergeCheckedKeys.includes(b[fieldNames.key])) {
+      } else if (mergeCheckedKeys.includes(item[fieldNames.key])) {
         node.checked = CheckStatus.CHECKED;
       } else {
         node.checked = CheckStatus.UNCHECK;
       }
-      return { ...a, [b[fieldNames.key]]: node };
-    }, {});
+      treeDatas[item[fieldNames.key]] = node;
+    });
+    // / console.log(treeDatas, '------');
 
     // 设置parent
-    const root = {};
     dataList?.forEach((d) => {
       const parent = treeDatas[d[fieldNames.parent]];
       if (parent) {
@@ -66,11 +67,31 @@ const useCheck = (props) => {
       }
     });
     const rootStatus = getNodeStatus(treeDatas);
-    // 查询半选数据列表
+
+    // // step3//便利全部节点，如果有children，并且被选中，则勾选
+    // for (const dataItem of dataList) {
+    //   const ckdItem = treeDatas[dataItem[fieldNames.key]];
+
+    //   // 如果当前节点未勾选且子存在子节点
+    //   if (ckdItem.checked === CheckStatus.UNCHECK && !isUndefined(ckdItem.children)) {
+    //     const childList = Object.values(ckdItem.children);
+    //     let ckdCount = 0;
+    //     childList.forEach((item) => {
+    //       if (item.checked === CheckStatus.CHECKED) {
+    //         ckdCount++;
+    //       }
+    //     });
+    //     if (childList.length > 0 && ckdCount < childList.length) {
+    //       ckdItem.checked = CheckStatus.HALFCHECK;
+    //     } else if (childList.length > 0 && ckdCount === childList.length) {
+    //       ckdItem.checked = CheckStatus.CHECKED;
+    //     }
+    //   }
+    // }
 
     setCheckedDatas(treeDatas);
     onCheckAll(rootStatus);
-  }, [dataList]);
+  }, [dataList, checkedKeys]);
 
   const updateChildStatus = (node, status) => {
     node.checked = status;

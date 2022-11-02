@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import _cloneDeep from 'lodash/cloneDeep';
 
 const useSelect = (props) => {

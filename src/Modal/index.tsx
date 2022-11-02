@@ -13,12 +13,16 @@ import Button from '../Button';
 import TabCloseSvg from '../assets/tabpan-close.svg';
 import { ConfirmProps, ModalProps } from './interface';
 import Confirm from './Confirm';
-import './index.less';
+import Show from './Show';
+import './style/index.less';
+import { ConfigContext } from '../ConfigProvider';
 
 const PERFIXNAME = 'apipost-modal';
 // const Modal: React.FC<ModalProps> = (props) => {
 // const Modal = (props) => {
 function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
+  const { locale } = React.useContext(ConfigContext);
+
   const {
     style,
     className,
@@ -31,9 +35,10 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     footer,
     footerClassName = '',
     visible,
-    okText = '确认',
-    cancelText = '取消',
+    okText = locale?.Modal.okText,
+    cancelText = locale?.Modal.cancelText,
     escToExit = true,
+    showTopClosable = true,
     onOk,
     onCancel = () => undefined,
   } = props;
@@ -85,16 +90,30 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
             <div
               className={cn({ [`${PERFIXNAME}-wrapper`]: true }, className)}
               style={{ ...style, zIndex: zIndex + 1 }}
+              onClick={() => {
+                maskClosable && onCancel();
+              }}
             >
-              <div className={cn({ [`${PERFIXNAME}-container`]: true })}>
+              <div
+                className={cn({ [`${PERFIXNAME}-container`]: true })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 {title !== null && (
                   <div className={cn({ [`${PERFIXNAME}-header`]: true }, headerClassName)}>
                     {title}
                   </div>
                 )}
-                <div onClick={onCancel} className={`${PERFIXNAME}-close`}>
-                  <TabCloseSvg />
-                </div>
+                {showTopClosable && (
+                  <Button
+                    className={`${PERFIXNAME}-close`}
+                    type="info"
+                    size="mini"
+                    icon={<TabCloseSvg />}
+                    onClick={onCancel}
+                  />
+                )}
                 <div className={cn({ [`${PERFIXNAME}-body`]: true }, bodyClassName)}>
                   {children}
                 </div>
@@ -123,11 +142,13 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
 
 export interface ModalComponent extends ForwardRefExoticComponent<PropsWithChildren<ModalProps>> {
   confirm: (props: ConfirmProps) => void;
+  Show: (props: any) => void;
 }
 
 const ExportedModalComponent: ModalComponent = forwardRef(Modal) as ModalComponent;
 ExportedModalComponent.displayName = 'Modal';
 
 ExportedModalComponent.confirm = Confirm;
+ExportedModalComponent.Show = Show;
 
 export default ExportedModalComponent;
