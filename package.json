@@ -17,12 +17,11 @@
   "scripts": {
     "debug": "cross-env NODE_ENV=development webpack-dev-server --config scripts/debug.js",
     "start": "npm run css && cross-env NODE_ENV=development webpack-dev-server --config scripts/start.js",
-    "test": "npm run css && cross-env NODE_ENV=development webpack --config scripts/test.js",
     "build": "npm run css &&  webpack --config scripts/build.js",
     "build:lib": "npm run css &&  vite build",
     "update:npm": "npm version patch && vite build && npm publish",
     "svgmap": "node scripts/svgmap.js",
-    "css": "gulp --gulpfile ./scripts/gulpfile.js  --cwd ./ "
+    "test": "gulp --gulpfile ./scripts/gulpfile.js  --cwd ./ "
   },
   "dependencies": {
     "core-js": "^3.9.0",
