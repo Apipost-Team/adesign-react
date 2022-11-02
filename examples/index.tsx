@@ -25,7 +25,7 @@ const Main = (props: any) => {
   useEffect(() => {
     const fileName = brand?.default === true ? 'default' : `color-${brand.name}`;
     require.ensure([], function (require) {
-      const fileModule = require(`../libs/${fileName}.css`);
+      const fileModule = require(`../themes/${fileName}.css`);
       const cssUrl = fileModule.default;
       document.querySelector(`link[name="apt-template-link"]`).setAttribute('href', cssUrl);
     });
