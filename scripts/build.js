@@ -14,7 +14,7 @@ const webpackConfig = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
-    // libraryTarget: 'commonjs', // 重要！
+    libraryTarget: 'commonjs', // 重要！
   },
   mode: 'development',
   devtool: 'eval-source-map',
@@ -37,7 +37,7 @@ const webpackConfig = {
       template: path.resolve(__dirname, '../public/index.html'),
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: path.resolve(__dirname, '../public'), to: '../dist' }],
+      patterns: [{ from: 'public/favicon.ico', to: '../dist' }],
     }),
   ],
 };
