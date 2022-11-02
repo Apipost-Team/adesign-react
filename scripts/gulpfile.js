@@ -36,7 +36,7 @@ function compileComponentCss(cb) {
     // .pipe(concat('style.css'))
     .pipe(gulpLess())
     // .pipe(cssMinify())
-    .pipe(concat('global.css'))
+    .pipe(concat('style.css'))
     .pipe(cssMinify())
     .pipe(gulp.dest('libs/'));
   cb();
