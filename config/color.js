@@ -3,7 +3,6 @@ const brandColorList = [
     color: '#722ed2',
     title: '紫色',
     name: 'purple',
-    default: true,
   },
   {
     color: '#12c2c2',
@@ -19,6 +18,7 @@ const brandColorList = [
     color: '#1990ff',
     title: '天蓝色',
     name: 'blue',
+    default: true,
   },
   {
     color: 'red',
