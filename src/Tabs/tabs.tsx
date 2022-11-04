@@ -113,9 +113,11 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
 
   useEffect(() => {
     if (mergedActiveIndex === 0) {
+      setTranslateX(0);
       return;
     }
     if (refHeadOuter.current === null) {
+      setTranslateX(0);
       return;
     }
     const index = mergedActiveIndex;
