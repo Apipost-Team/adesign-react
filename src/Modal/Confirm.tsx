@@ -10,7 +10,7 @@ import { ConfirmProps } from './interface';
 const PERFIX = 'apipost-confirm';
 
 let add = (props: ConfirmProps) => {};
-export const ConfirmContainer = () => {
+export const ConfirmContainer:React.FC<any> = () => {
   const [visible, setVisible] = useState(false);
   const [props, setProps] = useState<ConfirmProps>({});
   const { locale } = React.useContext(ConfigContext);

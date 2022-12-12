@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-import classNames from 'classnames';
-import Indent from './Indent';
-import TreeContext from './TreeContext';
-import CheckBox from '../CheckBox';
-import { CheckStatus } from '../CheckBox/interface';
+import React, { useContext } from "react";
+import classNames from "classnames";
+import Indent from "./Indent";
+import TreeContext from "./TreeContext";
+import CheckBox from "../CheckBox";
+import { CheckStatus } from "../CheckBox/interface";
+import { TreeNodeProps } from "./interface";
 
-const TreeNode = (props) => {
+const TreeNode: React.FC<TreeNodeProps> = (props) => {
   const { style, perfixCls, disabled, ...restNodeProps } = props;
 
   const {
@@ -33,7 +34,7 @@ const TreeNode = (props) => {
     return CheckStatus.UNCHECK;
   };
 
-  const handleNodeClick = (e) => {
+  const handleNodeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.metaKey || e.ctrlKey) {
@@ -43,7 +44,7 @@ const TreeNode = (props) => {
     onNodeClick(props?.data);
   };
 
-  const handleContextMenu = (e) => {
+  const handleContextMenu = (e: React.MouseEvent) => {
     onRightClick(e, props?.data);
     e.preventDefault();
     e.stopPropagation();
@@ -66,13 +67,15 @@ const TreeNode = (props) => {
       )}
     </>
   );
-  const nodeTitle = <div className={`${nodePerfixCls}-title`}>{props.title}</div>;
+  const nodeTitle = (
+    <div className={`${nodePerfixCls}-title`}>{props.title}</div>
+  );
 
   const nodeProperties = {
     style,
     className: classNames({
       [nodePerfixCls]: true,
-      'tree-node-selected': selectedKeys.includes(props.nodeKey),
+      "tree-node-selected": selectedKeys.includes(props.nodeKey),
     }),
     onClick: handleNodeClick,
     onContextMenu: handleContextMenu,
@@ -80,7 +83,7 @@ const TreeNode = (props) => {
 
   return (
     <>
-      {typeof render !== 'function' ? (
+      {typeof render !== "function" ? (
         <div {...nodeProperties}>
           {indent}
           {nodeTitle}

@@ -5,7 +5,7 @@ export interface CollapseProps {
   className?: string | string[];
   activeKey?: string | string[];
   defaultActiveKey?: string | string[];
-  onChange?: (key: string | string[]) => void;
+  onChange?: (key: string | string[] | null) => void;
 }
 
 export interface CollapseItemProps {
@@ -17,6 +17,5 @@ export interface CollapseItemProps {
 
 export interface CollapseContextProps {
   activeKeys: string | string[] | null;
-
-  handleToggleActiveKey: (key: string) => void;
+  handleUpdateKeys: (key: string | string[] | null) => void;
 }

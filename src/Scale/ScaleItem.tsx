@@ -1,15 +1,21 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-import cn from 'classnames';
-import omit from 'lodash/omit';
-import { isNull, isUndefined } from 'lodash';
-import SplitBar from './SplitBar';
-import { ScaleItemProps, Layout, ScaleData, Layouts } from './interface';
+import React, { useEffect, useState, useRef } from "react";
+import ResizeObserver from "resize-observer-polyfill";
+import cn from "classnames";
+import omit from "lodash/omit";
+import { isFunction, isNull, isObject, isUndefined } from "lodash";
+import SplitBar from "./SplitBar";
+import {
+  ScaleItemProps,
+  Layout,
+  ScaleData,
+  Layouts,
+  PanelOffset,
+} from "./interface";
 
-const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
+const ScaleItem: React.ForwardRefRenderFunction<any, ScaleItemProps>= (props, refForward) => {
   const {
     index = -1,
-    barLocation = 'end', // 分隔条位置 start/end
+    barLocation = "end", // 分隔条位置 start/end
     children,
     layouts = {}, // 默认宽高
     onLayoutChange = (layout: Layout, index: number) => undefined,
@@ -18,9 +24,9 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
     minHeight = 0, // 最小可调整高度
     maxHeight, // 最大可调整高度
     enableScale = true, // 是否可拖拽
-    direction = 'horizontal',
+    direction = "horizontal",
     className,
-    panelOffset = {},
+    panelOffset = { height: 0, width: 0 },
     realTimeRender,
     enableOverflow,
   } = props;
@@ -33,9 +39,9 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
     defaultLayout: null,
   });
 
-  const mergedItemRef = isNull(refForward) ? useRef(null) : refForward;
+  const mergedItemRef:React.RefObject<HTMLDivElement> =  isNull(refForward)||isFunction(refForward) ? useRef(null) : refForward;
 
-  const refItemOffset = useRef(null);
+  const refItemOffset = useRef<PanelOffset>({ width: 0, height: 0 });
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -46,7 +52,7 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
         };
       }
     });
-    if (!isUndefined(mergedItemRef?.current)) {
+    if (!isNull(mergedItemRef)&& isObject(mergedItemRef?.current) ) {
       resizeObserver.observe(mergedItemRef?.current);
     }
 
@@ -55,39 +61,49 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
     };
   }, [refForward]);
 
-  const [barLayout, setBarLayout] = useState({ x: 0, y: 0 });
+  const [barLayout, setBarLayout] = useState<any>({ x: 0, y: 0 });
 
-  const excuteUpdateLayout = (pageX, pageY) => {
-    const newLayout = { ...layout };
+  const excuteUpdateLayout = (pageX: number, pageY: number) => {
+    const newLayout: any = { ...layout };
     const { width: preWidth = 0, height: preHeight = 0 } =
-      realTimeRender === true ? scaleData.defaultLayout || {} : refItemOffset.current;
+      realTimeRender === true
+        ? scaleData.defaultLayout || {}
+        : refItemOffset.current;
 
-    if (direction === 'horizontal') {
+    if (direction === "horizontal") {
       const scaledX = pageX - scaleData.startX;
       const parentWidth = panelOffset?.width || 0;
-      newLayout.width = preWidth + (barLocation === 'start' ? -scaledX : scaledX);
+      newLayout.width =
+        preWidth + (barLocation === "start" ? -scaledX : scaledX);
       if (minWidth !== undefined && newLayout.width <= minWidth) {
         newLayout.width = minWidth;
       }
       if (maxWidth !== undefined && newLayout.width >= maxWidth) {
         newLayout.width = maxWidth;
       }
-      const layoutsWidth = getLayoutsWidths({ ...layouts, [index]: scaleData.defaultLayout });
+      const layoutsWidth = getLayoutsWidths({
+        ...layouts,
+        [index]: scaleData.defaultLayout,
+      });
       if (scaledX > parentWidth - layoutsWidth && enableOverflow === false) {
         // 不允许拖动到外面
         //  newLayout.width = preWidth + parentWidth - layoutsWidth;
       }
-    } else if (direction === 'vertical') {
+    } else if (direction === "vertical") {
       const scaledY = pageY - scaleData.startY;
       const parentHeight = panelOffset?.height || 0;
-      newLayout.height = preHeight + (barLocation === 'start' ? -scaledY : scaledY);
+      newLayout.height =
+        preHeight + (barLocation === "start" ? -scaledY : scaledY);
       if (minHeight !== undefined && newLayout.height <= minHeight) {
         newLayout.height = minHeight;
       }
       if (maxHeight !== undefined && newLayout.height >= maxHeight) {
         newLayout.height = maxHeight;
       }
-      const layoutsHeight = getLayoutsHeights({ ...layouts, [index]: scaleData.defaultLayout });
+      const layoutsHeight = getLayoutsHeights({
+        ...layouts,
+        [index]: scaleData.defaultLayout,
+      });
       if (scaledY > parentHeight - layoutsHeight && enableOverflow === false) {
         // 不允许拖动到外面
         // newLayout.height = preHeight + parentHeight - layoutsHeight;
@@ -116,33 +132,33 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
   };
 
   const getBarTransStyle = () => {
-    if (scaleData.enable && direction === 'horizontal') {
+    if (scaleData.enable && direction === "horizontal") {
       return `translateX(${barLayout.x}px)`;
     }
-    if (scaleData.enable && direction === 'vertical') {
+    if (scaleData.enable && direction === "vertical") {
       return `translateY(${barLayout.y}px)`;
     }
   };
 
   let itemStyle = { ...layout };
   if (layout?.flex === 1) {
-    if (direction === 'horizontal') {
-      itemStyle = omit(layout, ['height']);
+    if (direction === "horizontal") {
+      itemStyle = omit(layout, ["height"]);
     } else {
-      itemStyle = omit(layout, ['width']);
+      itemStyle = omit(layout, ["width"]);
     }
   } else {
-    itemStyle = omit(layout, ['flex']);
+    itemStyle = omit(layout, ["flex"]);
   }
 
   const getLayoutsWidths = (layouts: Layouts) => {
     let layoutsWidth = 0;
     Object.entries(layouts).forEach(([key, item]) => {
-      if (Number(key) <= index && typeof item?.width === 'number') {
+      if (Number(key) <= index && typeof item?.width === "number") {
         layoutsWidth += item.width;
       } else if (item.flex !== 1) {
-        layoutsWidth += typeof item?.width === 'number' ? item.width : 0;
-      } else if (typeof item?.nodeProps?.minWidth === 'number') {
+        layoutsWidth += typeof item?.width === "number" ? item.width : 0;
+      } else if (typeof item?.nodeProps?.minWidth === "number") {
         layoutsWidth += item.nodeProps.minWidth;
       }
     });
@@ -152,11 +168,11 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
   const getLayoutsHeights = (layouts: Layouts) => {
     let layoutsHeight = 0;
     Object.entries(layouts).forEach(([key, item]) => {
-      if (Number(key) <= index && typeof item?.height === 'number') {
+      if (Number(key) <= index && typeof item?.height === "number") {
         layoutsHeight += item.height;
       } else if (item?.flex !== 1) {
-        layoutsHeight += typeof item?.height === 'number' ? item.height : 0;
-      } else if (typeof item?.nodeProps?.minHeight === 'number') {
+        layoutsHeight += typeof item?.height === "number" ? item.height : 0;
+      } else if (typeof item?.nodeProps?.minHeight === "number") {
         layoutsHeight += item.nodeProps.minHeight;
       }
     });
@@ -166,11 +182,11 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
   // 更改滑块位置
   const handleBarMouseMove = (ev: MouseEvent) => {
     const { pageX, pageY } = ev;
-    if (direction === 'horizontal') {
+    if (direction === "horizontal") {
       const changedX = pageX - scaleData.startX;
       setBarLayout({ x: changedX });
     }
-    if (direction === 'vertical') {
+    if (direction === "vertical") {
       const changedY = pageY - scaleData.startY;
       setBarLayout({ y: changedY });
     }
@@ -188,14 +204,18 @@ const ScaleItem: React.FC<ScaleItemProps> = (props, refForward) => {
   };
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [scaleData.enable]);
 
   return (
-    <div ref={mergedItemRef} style={itemStyle} className={cn('scale-item', className)}>
+    <div
+      ref={mergedItemRef}
+      style={itemStyle}
+      className={cn("scale-item", className)}
+    >
       <div className="scale-item-content">{children}</div>
       {enableScale && (
         <SplitBar

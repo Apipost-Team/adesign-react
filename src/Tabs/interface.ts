@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface TabPanProps {
+export interface TabPanProps extends React.ReactElement {
   id: string;
   style?: React.CSSProperties;
   className?: string | string[];
@@ -19,6 +19,7 @@ export interface RenderProps {
   handleMouseWheel?: (ev: MouseEvent) => void;
   activedContent?: React.ReactNode;
   renderScrollItems?: (elements: React.ReactNode) => void;
+  activeId?: string
 }
 
 export interface TabsProps<T> {
@@ -38,7 +39,7 @@ export interface TabsProps<T> {
    */
   type?: string;
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
-  onAddTab?: (id: string) => void;
+  onAddTab?: (e: React.MouseEvent) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
 
   // tab头自定义渲染

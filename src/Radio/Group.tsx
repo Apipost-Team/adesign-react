@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import cn from 'classnames';
-import { v4 as uuidv4 } from 'uuid';
-import { RadioContext } from './RadioContext';
-import { RadioGroupProps } from './interface';
+import React, { useState, useEffect } from "react";
+import cn from "classnames";
+import { v4 as uuidv4 } from "uuid";
+import { RadioContext } from "./RadioContext";
+import { RadioGroupProps } from "./interface";
 
-const prefixCls = 'apipost-radio-group';
+const prefixCls = "apipost-radio-group";
 
 const Group: React.FC<RadioGroupProps> = (props) => {
-  const { style, className, children, onChange, value, disabled, type = 'radio' } = props;
+  const {
+    style,
+    className,
+    children,
+    onChange,
+    value,
+    disabled,
+    type = "radio",
+  } = props;
   let { name } = props;
 
-  const [radioValue, setRadioValue] = useState(value || '');
+  const [radioValue, setRadioValue] = useState(value || "");
   if (!name) {
     name = uuidv4();
   }
@@ -34,13 +42,9 @@ const Group: React.FC<RadioGroupProps> = (props) => {
   return (
     <RadioContext.Provider value={contextProp}>
       <div
-        className={cn(
-          prefixCls,
-          {
-            [`${prefixCls}-button`]: type !== 'radio',
-          },
-          className
-        )}
+        className={cn(prefixCls, className, {
+          [`${prefixCls}-button`]: type !== "radio",
+        })}
         style={{ ...style }}
       >
         {children}
