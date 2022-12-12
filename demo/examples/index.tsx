@@ -7,8 +7,12 @@ import ENUS from '../../src/locale/en-US';
 import ConfigProvider from '../ConfigProvider'
 import Github from './assets/github.svg';
 import {Select} from 'adesign-react'
+import 'adesign-react/libs/styles.css'
 // import '../dist/style.css';
 import brandColorList from '../../config/color.js';
+const baseModule = require(`adesign-react/libs/styles.css`);
+
+
 
 const brandItem = brandColorList.find((item) => item.default);
 
@@ -20,6 +24,10 @@ const Main = (props: any) => {
   }, [location]);
 
   const [brand, setBrand] = useState(brandItem);
+
+  useEffect(()=>{
+    document.querySelector(`link[name="base-style-link"]`).setAttribute('href', baseModule.default);
+  },[])
 
   useEffect(() => {
     const fileName = brand?.default === true ? 'default' : `color-${brand.name}`;

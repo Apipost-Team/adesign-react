@@ -19,6 +19,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime": "^7.20.6",
     "@svgr/webpack": "^6.5.1",
+    "adesign-react": "^0.0.202",
     "babel-loader": "^9.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",

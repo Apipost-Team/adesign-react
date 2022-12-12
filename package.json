@@ -1,25 +1,22 @@
 {
   "name": "adesign-react",
-  "version": "0.0.200",
+  "version": "0.0.202",
   "description": "ADesign Component for React",
   "main": "libs/index.js",
   "files": [
-    "libs",
-    "icons",
-    "themes"
+    "libs/",
+    "icons/",
+    "themes/"
   ],
-  "directories": {
-    "demo": "demo"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run postcss && rollup -c rollup.config.js",
     "buildSvg": "node scripts/build-svg.js",
     "postcss": "gulp --gulpfile ./scripts/gulpfile.js  --cwd ./ "
   },
-  "keywords": [],
-  "author": " ",
-  "license": "ISC",
+  "keywords": ["Apipost","Adesign","Adesign-react","React Components"],
+  "author": "Apipost-Team",
+  "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",

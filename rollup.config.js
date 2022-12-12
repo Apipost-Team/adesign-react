@@ -14,14 +14,14 @@ export default [
         input: 'src/index.ts',
         output: [
             {
-                file:"libs/index.js",
+                file: "libs/index.js",
                 format: 'es',
                 sourcemap: true
             }
         ],
         external: ['react'],
         plugins: [
-           // external(),
+            external(),
             resolve(),
             commonjs(),
             typescript({ tsconfig: './tsconfig.json' }),
@@ -29,8 +29,8 @@ export default [
             postcss({
                 extract: true,
                 extract: 'styles.css'
-            })
-           // terser()
+            }),
+            terser()
         ],
     },
     {
