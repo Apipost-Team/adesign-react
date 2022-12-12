@@ -11,7 +11,7 @@ const SplitBar: React.FC<SplitBarProps> = (props) => {
     direction,
   } = props;
 
-  const preRef = useRef(null);
+  const preRef = useRef<Boolean>(false);
 
   const handleMouseDown = (ev: React.MouseEvent) => {
     const { pageX, pageY } = ev;

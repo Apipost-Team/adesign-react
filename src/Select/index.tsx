@@ -7,6 +7,7 @@ import Option from './Option';
 import './style/index.less';
 import Context from './Context';
 import { ConfigContext } from '../ConfigProvider';
+import {TriggerProps} from '../Trigger/interface'
 
 const PERFIX = 'apipost-select';
 
@@ -36,15 +37,15 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const triggerRef = useRef(null);
+  const triggerRef = useRef<any>(null);
 
   const [selectValue, setSelectValue] = useState<string | number | undefined>(defaultValue);
 
   const mergedValue = value !== undefined ? value : selectValue;
 
-  const childrenList = Array.isArray(children)
-    ? children.reduce((a: OptionProps[], b: OptionProps) => a.concat(b), [])
-    : [children];
+  const childrenList:OptionProps[] = Array.isArray(children)
+    ? (children as OptionProps[]).reduce((a: OptionProps[], b: OptionProps) => a.concat(b), [])
+    : [children] as OptionProps[];
 
   const getPopup = () => {
     const popup =

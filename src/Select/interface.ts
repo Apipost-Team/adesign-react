@@ -59,7 +59,7 @@ export interface SelectProps {
   disabled?: boolean;
 }
 
-export interface OptionProps {
+export interface OptionProps extends React.ReactElement {
   style?: CSSProperties;
   className?: string | string[];
   disabled?: boolean;

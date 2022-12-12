@@ -1,21 +1,21 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 
 export enum CheckStatus {
-  UNCHECK = 'uncheck',
-  CHECKED = 'checked',
-  HALFCHECK = 'halfcheck',
+  UNCHECK = "uncheck",
+  CHECKED = "checked",
+  HALFCHECK = "halfcheck",
 }
 
 // 拖拽悬停位置
 export enum DragHover {
-  TOP = 'top',
-  INSIDE = 'inside',
-  BOTTOM = 'bottom',
+  TOP = "top",
+  INSIDE = "inside",
+  BOTTOM = "bottom",
 }
 
 export interface TreeProps {
   style?: React.CSSProperties;
-  className?: string | string[];
+  className?: string;
 
   /**
    * @zh 数据源列表
@@ -110,7 +110,7 @@ export interface TreeProps {
   /**
    * @zh 节点右侧内容点击回调方法
    */
-  onRightClick?: () => void;
+  onRightClick?: (e:React.MouseEvent,nodeData?:any) => void;
 
   /**
    * @zh 当前选中节点
@@ -133,8 +133,19 @@ export interface TreeProps {
   nodeSort?: any;
 
   checkLeafNode: (nodeItem: any) => boolean;
+
+  rootFilter?: (pre: any, after: any) => any[];
 }
 
 export interface treeContextProps {
   [key: string]: any;
+}
+
+export interface TreeNodeProps extends React.ReactElement {
+  nodeKey: string;
+  data: any;
+  title: string;
+  disabled: boolean;
+  perfixCls: string;
+  style: React.CSSProperties;
 }

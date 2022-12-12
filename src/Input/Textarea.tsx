@@ -22,7 +22,6 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     bordered = true,
     onChange,
     onBlur = () => {},
-    autoHeight = true,
     ...restProps
   } = props;
 
@@ -84,7 +83,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     className
   );
   const AutoHeight = (e: any) => {
-    if (!autoHeight) return;
+
     const StylelineHeight = +e.target.style.lineHeight.replace('px', '');
     let lines = Math.round(textareaRef.current.scrollHeight / StylelineHeight);
     // const splieLength = e.target.value.split(/\r*\n/);
@@ -122,7 +121,6 @@ const Textarea: React.FC<TextareaProps> = (props) => {
       onFocus={(e) => {
         AutoHeight(e);
       }}
-      autoheight
       onBlur={handleBlur}
       value={textareaValue}
       onChange={(e) => {

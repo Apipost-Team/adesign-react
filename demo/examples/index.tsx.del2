@@ -1,0 +1,18 @@
+import React from "react";
+import ReactDom from "react-dom";
+import { Button,Input ,CheckBox} from "adesign-react";
+import "adesign-react/libs/styles.css";
+import "adesign-react/themes/default.css";
+
+const CheckStatus=CheckBox.CheckStatus
+
+const Main = () => {
+  return (
+    <>
+      <CheckBox checked={CheckStatus.HALFCHECK} />
+
+    </>
+  );
+};
+
+ReactDom.render(<Main />, document.getElementById("root"));

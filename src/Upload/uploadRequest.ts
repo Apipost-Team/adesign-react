@@ -1,4 +1,5 @@
-import { UploadRequest, RequestOptions } from './interface';
+import { isObject, isString } from "lodash";
+import { UploadRequest, RequestOptions } from "./interface";
 
 function getBody(xhr: XMLHttpRequest) {
   const text = xhr.responseText || xhr.response;
@@ -17,15 +18,15 @@ const uploadRequest: UploadRequest = function (options: RequestOptions) {
   const {
     onError = () => undefined,
     onSuccess = () => undefined,
-    action,
+    action = "",
     headers = {},
     name: originName,
-    file,
+    file = "",
     data: originData = {},
     withCookies = false,
   } = options;
   function getValue(value: any) {
-    if (typeof value === 'function') {
+    if (typeof value === "function") {
       return value(file);
     }
     return value;
@@ -44,12 +45,12 @@ const uploadRequest: UploadRequest = function (options: RequestOptions) {
     onSuccess(getBody(xhr));
   };
   const formData = new FormData();
-  formData.append(name || 'file', file);
-  if (data) {
-    Object.keys(data).map((key) => formData.append(key, data[key]));
+  formData.append(name || "file", file);
+  if (isObject(data) && data) {
+    Object.keys(data).map((key: string) => formData.append(key, data[key]));
   }
-  xhr.open('post', action, true);
-  if (withCookies && 'withCredentials' in xhr) {
+  xhr.open("post", action, true);
+  if (withCookies && "withCredentials" in xhr) {
     xhr.withCredentials = true;
   }
   for (const h in headers) {

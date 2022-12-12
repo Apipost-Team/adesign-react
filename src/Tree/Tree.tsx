@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import omit from 'lodash/omit';
-import { isBoolean, isUndefined } from 'lodash';
+import { isArray, isBoolean, isUndefined } from 'lodash';
 import { arrayToTreeObject, flattenTreeData } from './utils';
 import NodeList from './NodeList';
 import TreeContext from './TreeContext';
@@ -48,6 +48,7 @@ const Tree = (props: TreeProps, ref: any) => {
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [scrollToIndex, setScrollToIndex] = useState(0);
 
+
   const { mergeCheckedKeys, halfCheckedKeys, handleCheckNode, handleCheckAll } = useCheck({
     onCheck,
     onCheckAll,
@@ -65,20 +66,23 @@ const Tree = (props: TreeProps, ref: any) => {
   }, [defaultExpandKeys]);
 
   // 批量展开/折叠
-  const prepareExpandKeys = (expand, datalist) => {
-    const expandKeys = {};
+  const prepareExpandKeys = (expand:boolean, datalist?:any[]) => {
+    const expandKeys :any= {};
+    if(datalist===undefined){
+      return expandKeys
+    }
     if (expand === true) {
-      const rootNode = {};
+      const rootNode:any = {};
       datalist.forEach((item) => {
-        rootNode[item[fieldNames.key]] = {};
+        rootNode[item[ fieldNames.key||'']] = {};
       });
       datalist.forEach((item) => {
-        const parent = rootNode[item[fieldNames.parent]];
+        const parent = rootNode[item[fieldNames.parent||'']];
         if (parent !== undefined) {
           parent.notLeaf = true;
         }
       });
-      Object.entries(rootNode).forEach(([key, item]) => {
+      Object.entries(rootNode).forEach(([key, item]:[string,any]) => {
         if (item.notLeaf === true) {
           expandKeys[key] = true;
         }
@@ -89,7 +93,7 @@ const Tree = (props: TreeProps, ref: any) => {
 
   // 树形菜单对象
   const cachedTree = useMemo(() => {
-    return arrayToTreeObject(dataList, fieldNames, rootFilter);
+    return arrayToTreeObject(isArray(dataList)?dataList:[], fieldNames, rootFilter);
   }, [dataList, fieldNames, rootFilter]);
 
   // 被展开菜单节点
@@ -104,19 +108,19 @@ const Tree = (props: TreeProps, ref: any) => {
     nodeKeys: sring 节点展开闭合/Array 要展开的节点
     scrollNodeKey 被滚动到的节点key
   */
-  const handleExpandItem = (nodeKeys, scrollNodeKey) => {
-    let expandKeyData = {};
+  const handleExpandItem = (nodeKeys:string|string[], scrollNodeKey:string) => {
+    let expandKeyData:{[key:string]:any} = {};
     if (isBoolean(nodeKeys)) {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
     } else {
-      const newExpandKeyData = {};
+      const newExpandKeyData:any = {};
       expandedKeys.forEach((item) => {
         newExpandKeyData[item] = true;
       });
       expandKeyData = newExpandKeyData;
     }
     if (Array.isArray(nodeKeys)) {
-      nodeKeys?.forEach((nodeKey) => {
+      nodeKeys?.forEach((nodeKey:string) => {
         expandKeyData[nodeKey] = true;
       });
     } else if (!isBoolean(nodeKeys) && isUndefined(expandKeyData[nodeKeys])) {
@@ -124,7 +128,7 @@ const Tree = (props: TreeProps, ref: any) => {
     } else {
       expandKeyData = omit(expandKeyData, nodeKeys);
     }
-    const expandKeyArr = Object.keys(expandKeyData);
+    const expandKeyArr:string[] = Object.keys(expandKeyData);
     setExpandedKeys(expandKeyArr);
     onExpandKeysChange(expandKeyArr);
 
@@ -137,7 +141,7 @@ const Tree = (props: TreeProps, ref: any) => {
     }
   };
 
-  const handleRightClick = (e, nodeData) => {
+  const handleRightClick = (e:React.MouseEvent, nodeData?:any) => {
     const data = flattenNodes.filter((node) => selectedKeys.includes(node.key));
 
     if (Array.isArray(data) && data.length > 1) {
@@ -154,10 +158,7 @@ const Tree = (props: TreeProps, ref: any) => {
   return (
     <div
       style={style}
-      className={cn({
-        [perfixCls]: true,
-        [className]: className !== undefined,
-      })}
+      className={cn(perfixCls, className)}
       onClick={onOutSideClick}
       onContextMenu={handleRightClick}
     >

@@ -25,7 +25,7 @@ export const Button = React.forwardRef<HTMLDivElement, ButtonProps>((props, ref)
     ...restProps
   } = merge({ size: globalProps.size, prefixCls: globalProps.prefixCls }, props);
 
-  const tempClassName = {
+  const tempClassName:any = {
     [`${prefixCls}-btn`]: true,
     [`${prefixCls}-btn-${type}`]: true,
     [`${prefixCls}-btn-${size}`]: true,

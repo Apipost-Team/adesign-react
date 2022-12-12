@@ -21,9 +21,9 @@ export default function useMergeValue<T>(
       return;
     }
 
-    if (value === undefined) {
-      setStateValue(value);
-    }
+    // if (value === undefined) {
+    //   setStateValue(value);
+    // }
   }, [value]);
 
   const mergedValue = _isUndefined(value) ? stateValue : value;

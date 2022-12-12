@@ -1,8 +1,14 @@
-import React, { PureComponent, ReactElement, PropsWithChildren, CSSProperties } from 'react';
-import ReactDom from 'react-dom';
-import cn from 'classnames';
-import { TriggerProps, TriggerState, PopupStyleProps } from './interface';
-import { addEvent, removeEvent, getScrollElements } from '../util/dom';
+import React, {
+  PureComponent,
+  ReactElement,
+  PropsWithChildren,
+  CSSProperties,
+  HtmlHTMLAttributes,
+} from "react";
+import ReactDom from "react-dom";
+import cn from "classnames";
+import { TriggerProps, TriggerState, PopupStyleProps } from "./interface";
+import { addEvent, removeEvent, getScrollElements } from "../util/dom";
 
 class Trigger extends PureComponent<TriggerProps, TriggerState> {
   triggerRef: any = null;
@@ -11,9 +17,9 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
   childrenComponent: any = null;
 
-  scrollElements: any = null;
+  scrollElements: HTMLElement[] | null = null;
 
-  constructor(props: any, context: any) {
+  constructor(props:  TriggerProps, context: any) {
     super(props, context);
     this.state = {
       popupVisible: this.props.popupVisible === true,
@@ -25,17 +31,22 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     if (this.scrollElements) {
       return;
     }
-    const childrenDom = ReactDom.findDOMNode(this);
-    this.scrollElements = getScrollElements(childrenDom, this.popupRef?.parentNode);
-    this.scrollElements.forEach((item) => {
-      addEvent(item, 'scroll', this.updatePopupPosition);
+    const childrenDom = ReactDom.findDOMNode(this) as HTMLElement;
+
+    this.scrollElements = getScrollElements(
+      childrenDom,
+      this.popupRef?.parentNode
+    );
+    this.scrollElements.forEach((item: HTMLElement) => {
+      addEvent(item, "scroll", this.updatePopupPosition);
     });
   };
 
   // 点击区域外部关闭
   onClickOutside = (event: any) => {
     if (
-      (this.props.trigger !== 'click' && this.props.trigger !== 'contextmenu') ||
+      (this.props.trigger !== "click" &&
+        this.props.trigger !== "contextmenu") ||
       this.state.popupVisible === false ||
       this.props.outsideClose !== true
     ) {
@@ -44,7 +55,8 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     const eleTrigger = ReactDom.findDOMNode(this.triggerRef);
     const elePopup = ReactDom.findDOMNode(this.popupRef);
     const isInsideClick =
-      [eleTrigger, elePopup].some((ref) => ref?.contains(event.target)) || false;
+      [eleTrigger, elePopup].some((ref) => ref?.contains(event.target)) ||
+      false;
     if (isInsideClick !== true) {
       this.setPopupVisible(false);
     }
@@ -52,13 +64,14 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
   // 鼠标移到外部关闭
   onMouseMovingOutside = (event: any) => {
-    if (this.props.trigger !== 'hover' || this.state.popupVisible === false) {
+    if (this.props.trigger !== "hover" || this.state.popupVisible === false) {
       return;
     }
     const eleTrigger = ReactDom.findDOMNode(this.triggerRef);
     const elePopup = ReactDom.findDOMNode(this.popupRef);
     const isInsideClick =
-      [eleTrigger, elePopup].some((ref) => ref?.contains(event.target)) || false;
+      [eleTrigger, elePopup].some((ref) => ref?.contains(event.target)) ||
+      false;
     if (isInsideClick !== true) {
       this.setPopupVisible(false);
     }
@@ -77,12 +90,16 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
   componentDidMount() {
     this.updatePopupPosition();
     // 注册页面点击事件
-    if (this.props.trigger === 'click') {
-      document.body.addEventListener('mousedown', this.onClickOutside, false);
+    if (this.props.trigger === "click") {
+      document.body.addEventListener("mousedown", this.onClickOutside, false);
     }
 
-    if (this.props.trigger === 'hover') {
-      document.body.addEventListener('mousemove', this.onMouseMovingOutside, false);
+    if (this.props.trigger === "hover") {
+      document.body.addEventListener(
+        "mousemove",
+        this.onMouseMovingOutside,
+        false
+      );
     }
   }
 
@@ -91,15 +108,23 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
   }
 
   componentWillUnmount() {
-    if (this.props.trigger === 'click') {
-      document.body.removeEventListener('mousedown', this.onClickOutside, false);
+    if (this.props.trigger === "click") {
+      document.body.removeEventListener(
+        "mousedown",
+        this.onClickOutside,
+        false
+      );
     }
 
-    if (this.props.trigger === 'hover') {
-      document.body.removeEventListener('mousemove', this.onMouseMovingOutside, false);
+    if (this.props.trigger === "hover") {
+      document.body.removeEventListener(
+        "mousemove",
+        this.onMouseMovingOutside,
+        false
+      );
     }
     this.scrollElements?.forEach((item) => {
-      removeEvent(item, 'scroll', this.updatePopupPosition);
+      removeEvent(item, "scroll", this.updatePopupPosition);
     });
   }
 
@@ -115,7 +140,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
         popupVisible: val,
       },
       () => {
-        if (typeof onVisibleChange === 'function') {
+        if (typeof onVisibleChange === "function") {
           onVisibleChange(val);
           this.updatePopupPosition();
         }
@@ -129,7 +154,11 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
       return;
     }
 
-    const { placement = 'bottom-start', autoAdjustWidth = false, offset = [0, 0] } = this.props;
+    const {
+      placement = "bottom-start",
+      autoAdjustWidth = false,
+      offset = [0, 0],
+    } = this.props;
 
     const triggerOffset = this.triggerRef?.getBoundingClientRect();
     const popupOffset = this.popupRef?.getBoundingClientRect();
@@ -144,37 +173,45 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
       popupStyle.width = triggerOffset.width;
     }
 
-    if (['bottom', 'bottom-start', 'bottom-end'].includes(placement)) {
+    if (["bottom", "bottom-start", "bottom-end"].includes(placement)) {
       popupStyle.top = triggerOffset.top + triggerOffset.height + offset[1];
     }
-    if (['top', 'top-start', 'top-end'].includes(placement)) {
+    if (["top", "top-start", "top-end"].includes(placement)) {
       popupStyle.top = triggerOffset.top - popupOffset.height - offset[1];
     }
-    if (['bottom', 'top'].includes(placement)) {
+    if (["bottom", "top"].includes(placement)) {
       const midLeft = triggerOffset.left + triggerOffset.width / 2;
       popupStyle.left = midLeft - popupOffset.width / 2 + offset[0];
     }
-    if (['top-start', 'bottom-start'].includes(placement)) {
+    if (["top-start", "bottom-start"].includes(placement)) {
       popupStyle.left = triggerOffset.left - offset[0];
     }
-    if (['top-end', 'bottom-end'].includes(placement)) {
-      popupStyle.left = triggerOffset.left + triggerOffset.width - popupOffset.width + offset[0];
+    if (["top-end", "bottom-end"].includes(placement)) {
+      popupStyle.left =
+        triggerOffset.left +
+        triggerOffset.width -
+        popupOffset.width +
+        offset[0];
     }
-    if (['left-start', 'left', 'left-end'].includes(placement)) {
+    if (["left-start", "left", "left-end"].includes(placement)) {
       popupStyle.left = triggerOffset.left - popupOffset.width - offset[0];
     }
-    if (['right-start', 'right', 'right-end'].includes(placement)) {
+    if (["right-start", "right", "right-end"].includes(placement)) {
       popupStyle.left = triggerOffset.left + triggerOffset.width + offset[0];
     }
-    if (['left-start', 'right-start'].includes(placement)) {
+    if (["left-start", "right-start"].includes(placement)) {
       popupStyle.top = triggerOffset.top - offset[0];
     }
-    if (['left', 'right'].includes(placement)) {
+    if (["left", "right"].includes(placement)) {
       const midTop = triggerOffset.top + triggerOffset.height / 2;
       popupStyle.top = midTop - popupOffset.height / 2 + offset[1];
     }
-    if (['left-end', 'right-end'].includes(placement)) {
-      popupStyle.top = triggerOffset.top + triggerOffset.height - popupOffset.height - offset[1];
+    if (["left-end", "right-end"].includes(placement)) {
+      popupStyle.top =
+        triggerOffset.top +
+        triggerOffset.height -
+        popupOffset.height -
+        offset[1];
     }
 
     // 底部空间不足时往上展开
@@ -189,22 +226,22 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     });
   };
 
-  render(): React.ReactNode {
-    const { popup, children, className, trigger = 'click' } = this.props;
+  render() {
+    const { popup, children, className, trigger = "click" } = this.props;
 
     const mergeProps: any = {};
 
-    if (trigger === 'click') {
+    if (trigger === "click") {
       mergeProps.onClick = () => {
         this.setPopupVisible(!this.state.popupVisible);
       };
     }
-    if (trigger === 'hover') {
+    if (trigger === "hover") {
       mergeProps.onMouseOver = () => {
         this.setPopupVisible(true);
       };
     }
-    if (trigger === 'contextmenu') {
+    if (trigger === "contextmenu") {
       mergeProps.onContextMenu = (e: MouseEvent) => {
         this.setPopupVisible(true);
         e.preventDefault();
@@ -215,7 +252,7 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
     const childrenComponent = React.cloneElement(children, {
       ...mergeProps,
       className: cn(children?.props?.className, {
-        'popup-open': this.state.popupVisible === true,
+        "popup-open": this.state.popupVisible === true,
       }),
       ref: (val: any) => {
         this.triggerRef = val;
@@ -237,12 +274,9 @@ class Trigger extends PureComponent<TriggerProps, TriggerState> {
 
     return (
       <React.Fragment>
-        <React.Fragment key="child">{childrenComponent}</React.Fragment>
-        {this.state.popupVisible && (
-          <React.Fragment key="portal">
-            {ReactDom.createPortal(portal, document.body)}
-          </React.Fragment>
-        )}
+        {childrenComponent}
+        {this.state.popupVisible &&
+          ReactDom.createPortal(portal, document.body)}
       </React.Fragment>
     );
   }

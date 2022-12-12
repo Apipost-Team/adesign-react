@@ -6,7 +6,7 @@ import './style/index.less';
 
 const PERFIX = 'apipost-dropdown';
 
-const DropDown = React.forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
+const DropDown = React.forwardRef<any, DropdownProps>((props, ref) => {
   const {
     style,
     className,

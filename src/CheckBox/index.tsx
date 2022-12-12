@@ -10,7 +10,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
     style,
     className,
     checked = CheckStatus.UNCHECK,
-    defaultChecked,
+    defaultChecked=CheckStatus.UNCHECK,
     readOnly,
     onChange,
     disabled = false,
@@ -55,4 +55,13 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
   );
 };
 
-export default CheckBox;
+
+const CheckBoxComponent = CheckBox as typeof CheckBox & {
+  CheckStatus:typeof CheckStatus
+};
+
+CheckBoxComponent.CheckStatus = CheckStatus;
+export default CheckBoxComponent;
+
+
+
