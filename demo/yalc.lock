@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "adesign-react": {
-      "signature": "40f6d1a31d1e4d873a26d5c5ec5ce960",
-      "file": true
-    }
-  }
-}
