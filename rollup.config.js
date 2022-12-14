@@ -28,7 +28,7 @@ export default [
             svg(),
             postcss({
                 extract: true,
-                extract: 'styles.css'
+                extract: 'style.css'
             }),
             terser()
         ],

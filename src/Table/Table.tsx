@@ -32,7 +32,7 @@ const Table: React.FC<TableProps> = (props) => {
     setTableData(data || []);
   }, [data]);
   const handleLayoutChange = (_ayout: any, index: number) => {
-    const newLayout:any = layouts !== undefined ? cloneDeep(layouts) : {};
+    const newLayout: any = layouts !== undefined ? cloneDeep(layouts) : {};
     newLayout[index] = _ayout;
     onLayoutsChange(newLayout);
   };
@@ -42,13 +42,10 @@ const Table: React.FC<TableProps> = (props) => {
   }
 
   const renderRowItem = (rowData: any, index: number) => {
-    if(rowKey===undefined){
-      return <></>
-    }
     return (
       <TableRow
         key={`${index}`}
-        rowKey={rowData?.[rowKey]}
+        rowKey={rowKey === undefined ? rowKey : rowData?.[rowKey]}
         rowIndex={index}
         rowData={rowData}
         columns={columns}

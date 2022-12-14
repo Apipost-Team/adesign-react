@@ -6,6 +6,7 @@ export interface CollapseProps {
   activeKey?: string | string[];
   defaultActiveKey?: string | string[];
   onChange?: (key: string | string[] | null) => void;
+  children?: React.ReactElement | React.ReactElement[];
 }
 
 export interface CollapseItemProps {
@@ -13,6 +14,7 @@ export interface CollapseItemProps {
   headerStyle?: React.CSSProperties;
   headerClassName?: string | string[];
   header?: React.ReactNode;
+  children?: React.ReactElement;
 }
 
 export interface CollapseContextProps {

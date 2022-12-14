@@ -7,10 +7,10 @@ import ENUS from '../../src/locale/en-US';
 import ConfigProvider from '../ConfigProvider'
 import Github from './assets/github.svg';
 import {Select} from 'adesign-react'
-import 'adesign-react/libs/styles.css'
+import 'adesign-react/libs/style.css'
 // import '../dist/style.css';
 import brandColorList from '../../config/color.js';
-const baseModule = require(`adesign-react/libs/styles.css`);
+const baseModule = require(`adesign-react/libs/style.css`);
 
 
 
