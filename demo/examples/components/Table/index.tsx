@@ -66,7 +66,6 @@ const TableSamples = () => {
 
   const renderSortRows = (dataList, renderItem) => {
     const SortableItem = SortableElement(({ rowData, rowIndex }) => {
-      debugger
       return renderItem(rowData, rowIndex);
     });
 

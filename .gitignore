@@ -4,6 +4,7 @@
 /node_modules
 /dist/*
 /demo/node_modules/*
+/demo/.yalc/*
 
 .DS_Store
 package-lock.json
