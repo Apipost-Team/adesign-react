@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import {Table,Input,InputNumber} from  'adesign-react'
+import {Input,InputNumber,Table} from  'adesign-react'
+
 import './index.less';
 import ExampleItem from '../_exampleItem';
 import { data, columns, columnsResizeAble, columnsHeaderFulter } from './constant';
@@ -65,13 +66,15 @@ const TableSamples = () => {
 
   const renderSortRows = (dataList, renderItem) => {
     const SortableItem = SortableElement(({ rowData, rowIndex }) => {
+      debugger
       return renderItem(rowData, rowIndex);
     });
+
 
     const SortableList = SortableContainer(({ items }) => {
       return (
         <tbody>
-          {items.map((rowData, index) => (
+          {items?.map((rowData, index) => (
             <SortableItem
               key={`item-${rowData.key}`}
               index={index}
