@@ -7,7 +7,7 @@ import Option from './Option';
 import './style/index.less';
 import Context from './Context';
 import { ConfigContext } from '../ConfigProvider';
-import {TriggerProps} from '../Trigger/interface'
+import { TriggerProps } from '../Trigger/interface';
 
 const PERFIX = 'apipost-select';
 
@@ -43,9 +43,9 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
 
   const mergedValue = value !== undefined ? value : selectValue;
 
-  const childrenList:OptionProps[] = Array.isArray(children)
+  const childrenList: OptionProps[] = Array.isArray(children)
     ? (children as OptionProps[]).reduce((a: OptionProps[], b: OptionProps) => a.concat(b), [])
-    : [children] as OptionProps[];
+    : ([children] as OptionProps[]);
 
   const getPopup = () => {
     const popup =
@@ -65,7 +65,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   };
 
   let selectedText = placeholder;
-  childrenList.forEach((item) => {
+  childrenList.forEach((item: any) => {
     if (item.props.value === mergedValue) {
       selectedText = item?.props?.children;
     }
