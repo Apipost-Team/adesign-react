@@ -20,7 +20,7 @@ export interface ScalePanelProps {
   className?: string | string[];
   direction?: "horizontal" | "vertical";
   layouts?: Layouts;
-  defaultLayouts: Layouts;
+  defaultLayouts?: Layouts;
   onLayoutsChange?: (layouts: Layouts, panelOffset: PanelOffset) => void;
 
   // 拖动时是否实时渲染
