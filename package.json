@@ -1,6 +1,6 @@
 {
   "name": "adesign-react",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "ADesign Component for React",
   "main": "libs/index.js",
   "files": [

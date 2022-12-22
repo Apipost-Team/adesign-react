@@ -39,7 +39,7 @@ export interface ModalProps {
   /**
    * @zh 弹框底部内容
    */
-  footer?: ReactDOM;
+  footer?: ReactNode;
   /**
    * @zh 底部div类名
    */
