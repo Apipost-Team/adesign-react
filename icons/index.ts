@@ -13,6 +13,7 @@ export { default as CaretRight } from './CaretRight.svg';
 export { default as CaretUp } from './CaretUp.svg';
 export { default as CheckUp } from './CheckUp.svg';
 export { default as Close } from './Close.svg';
+export { default as Close2 } from './Close2.svg';
 export { default as Collection } from './Collection.svg';
 export { default as Community } from './Community.svg';
 export { default as Console } from './Console.svg';
