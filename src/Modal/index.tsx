@@ -28,6 +28,7 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     style,
     className,
     children,
+    width,
     mask = true,
     maskClosable,
     title,
@@ -96,6 +97,7 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
               }}
             >
               <div
+                style={{ width }}
                 className={cn({ [`${PERFIXNAME}-container`]: true })}
                 onClick={(e) => {
                   e.stopPropagation();

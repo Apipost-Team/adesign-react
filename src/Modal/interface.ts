@@ -5,6 +5,8 @@ export interface ModalProps {
   style?: CSSProperties;
   children?: ReactNode;
 
+  width?:number;
+
   /**
    * @zh 是否显示遮罩
    * @defaultValue true
