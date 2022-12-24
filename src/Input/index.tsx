@@ -14,7 +14,7 @@ export const Input: React.FC<InputProps> = (props) => {
     onChange,
     className,
     style,
-    size = 'large',
+    size = 'middle',
     placeholder,
     beforeFix = null,
     afterFix = null,
