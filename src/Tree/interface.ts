@@ -132,7 +132,7 @@ export interface TreeProps {
    */
   nodeSort?: any;
 
-  checkLeafNode: (nodeItem: any) => boolean;
+  checkLeafNode?: (nodeItem: any) => boolean;
 
   rootFilter?: (pre: any, after: any) => any[];
 }
