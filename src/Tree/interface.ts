@@ -80,7 +80,7 @@ export interface TreeProps {
   /**
    * @zh 选中复选框回调事件
    */
-  onCheck?: () => void;
+  onCheck?: (keys:any[]) => void;
 
   /**
    * @zh 自定义树节点
@@ -105,7 +105,7 @@ export interface TreeProps {
   /**
    * @zh 全选全部节回调方法，该属性仅在enableCheck为true时生效
    */
-  onCheckAll?: () => void;
+  onCheckAll?: (status:boolean) => void;
 
   /**
    * @zh 节点右侧内容点击回调方法
