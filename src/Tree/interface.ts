@@ -85,7 +85,7 @@ export interface TreeProps {
   /**
    * @zh 自定义树节点
    */
-  render?: ReactNode;
+  render?:(nodeItem: any, props: any)=> ReactNode;
 
   /**
    * @zh 是否显示icon
