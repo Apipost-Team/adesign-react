@@ -1,10 +1,16 @@
 import React, { CSSProperties, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+
 import { Omit } from '../util/utils';
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'prefix' | 'className'> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'prefix' | 'className' | 'size'> {
+
   style?: CSSProperties;
+
   className?: string | string[];
+
+
+  //默认值
+  defaultValue?: string;
 
   /**
    * @zh 输入框的值
@@ -80,7 +86,7 @@ export interface InputProps
   /**
    * @zh 失去焦点的回调
    */
-  onBlur?: (e: React.FormEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 
   /**
    * @zh 获取焦点的回调
@@ -93,12 +99,15 @@ export interface InputProps
   onKeyDown?: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
+
+
 export interface TextareaProps
   extends Omit<
     TextareaHTMLAttributes<HTMLTextAreaElement>,
     'onChange' | 'className' | 'maxLength'
   > {
   style?: CSSProperties;
+
   className?: string | string[];
 
   /**
@@ -112,6 +121,7 @@ export interface TextareaProps
   defaultValue?: string | number;
 
   width?: number;
+
   height?: number;
 
   /**
@@ -184,8 +194,7 @@ export interface TextareaProps
    */
   onKeyDown?: (e: any) => void;
 
-  /**
-   * @zh 自动计算高度
-   */
-  autoHeight?: boolean;
+
 }
+
+

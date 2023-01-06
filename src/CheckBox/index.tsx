@@ -10,10 +10,11 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
     style,
     className,
     checked = CheckStatus.UNCHECK,
-    defaultChecked,
+    defaultChecked = CheckStatus.UNCHECK,
     readOnly,
     onChange,
     disabled = false,
+    children,
     ...restProps
   } = props;
 
@@ -37,9 +38,7 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
   };
 
   return (
-    <span
-      {...restProps}
-      style={style}
+    <label
       className={cn(className, {
         'apipost-checkbox': true,
         readOnly: disabled !== true && readOnly,
@@ -47,12 +46,21 @@ export const CheckBox: React.FC<CheckBoxProps> = (props) => {
         halfcheck: mergeChecked === CheckStatus.HALFCHECK,
         disable: disabled,
       })}
-      onClick={handleOnChange}
+      {...restProps}
+      style={style} onClick={handleOnChange}
     >
-      {mergeChecked === CheckStatus.CHECKED && <Iconcheck className="apipost-checkbox-svg" />}
-      {mergeChecked === CheckStatus.HALFCHECK && <Iconminus className="apipost-checkbox-svg" />}
-    </span>
+      <span className='apipost-checkbox-icon'>
+        {mergeChecked === CheckStatus.CHECKED && <Iconcheck className="apipost-checkbox-svg" />}
+        {mergeChecked === CheckStatus.HALFCHECK && <Iconminus className="apipost-checkbox-svg" />}
+      </span>
+      {children && <span className="apipost-checkbox-text">{children}</span>}
+    </label>
   );
 };
 
-export default CheckBox;
+const CheckBoxComponent = CheckBox as typeof CheckBox & {
+  CheckStatus: typeof CheckStatus;
+};
+
+CheckBoxComponent.CheckStatus = CheckStatus;
+export default CheckBoxComponent;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useImperativeHandle, useRef } 
 import cn from 'classnames';
 import _throttle from 'lodash/throttle';
 import isFunction from 'lodash/isFunction';
-import { isArray, isUndefined } from 'lodash';
+import { isArray, isString, isUndefined } from 'lodash';
 import TabsContext from './context';
 import ButtonAdd from '../assets/add.svg';
 import ArrowLeft from '../assets/arrow-left2.svg';
@@ -38,7 +38,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
 
   const { Provider } = TabsContext;
 
-  const refHeadOuter = useRef<HTMLDivElement>(null);
+  const refHeadOuter = useRef<any>(null);
   const refTranslateData = useRef<any>(null);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     []
   );
 
-  const tabsList = Array.isArray(children)
+  const tabsList :TabPanProps[]= Array.isArray(children)
     ? children.reduce((a: TabPanProps[], b: TabPanProps) => a.concat(b), [])
     : [children];
 
@@ -97,7 +97,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
   //   }
   // }, [tabsList]);
 
-  const getTabIndex = (elements: any[], activeId: string) => {
+  const getTabIndex = (elements: any[], activeId: string|undefined) => {
     let index = -1;
     for (let i = 0; i < elements.length; i++) {
       const item = elements[i];
@@ -113,9 +113,11 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
 
   useEffect(() => {
     if (mergedActiveIndex === 0) {
+      setTranslateX(0);
       return;
     }
     if (refHeadOuter.current === null) {
+      setTranslateX(0);
       return;
     }
     const index = mergedActiveIndex;
@@ -223,7 +225,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     </div>
   );
 
-  const renderScrollItems = (tabsItemList) => {
+  const renderScrollItems = (tabsItemList:React.ReactNode) => {
     return (
       <div
         className={cn({
@@ -276,7 +278,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     <div style={style} ref={rootRef} {...restProps} className={cn('apipost-tabs', className)}>
       <Provider
         value={{
-          activeId: mergedActiveId,
+          activeId: isString(mergedActiveId)?mergedActiveId:'',
           handleSwitchTab,
           handleRemoveTab,
           itemWidth,
@@ -308,7 +310,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
               )}
 
               {isFunction(contentRender) ? (
-                contentRender({ tabsList, activeId: mergedActiveId })
+                contentRender({ tabsList, activeId:  mergedActiveId })
               ) : (
                 <>
                   {tabsList.map((item, index) => (

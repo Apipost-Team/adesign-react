@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 
 
 
@@ -42,11 +43,11 @@ export const isScrollElement = (element: HTMLElement) => {
  * 从当前节点向上查找所有的滚动元素
  */
 export const getScrollElements = (
-  container: HTMLElement,
+  container: HTMLElement|null,
   top: HTMLElement = document.documentElement
   ): HTMLElement[] => {
   const scrollElements: HTMLElement[] = [];
-  let element: HTMLElement | null = container;
+  let element: HTMLElement| null = container;
   while (element && element !== top) {
     if (isScrollElement(element)) {
       scrollElements.push(element);

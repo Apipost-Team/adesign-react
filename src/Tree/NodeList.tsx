@@ -1,15 +1,16 @@
-import React, { useContext, useImperativeHandle } from 'react';
-import { List as VirtualList, AutoSizer } from 'react-virtualized';
-import { isString, isUndefined } from 'lodash';
-import TreeNode from './TreeNode';
-import TreeContext from './TreeContext';
+import React, { useContext, useImperativeHandle } from "react";
+import { List as VirtualList, AutoSizer } from "react-virtualized";
+import { isString, isUndefined } from "lodash";
+import TreeNode from "./TreeNode";
+import TreeContext from "./TreeContext";
+import { TreeNodeProps } from "./interface";
 
 type ScrollSize = {
   width: number;
   height: number;
 };
 
-const NodeList = (props, ref) => {
+const NodeList = React.forwardRef<any, any>((props, ref) => {
   const { perfixCls, data, dataList } = props;
   const {
     handleExpandItem,
@@ -64,7 +65,7 @@ const NodeList = (props, ref) => {
     checkStatus,
   }));
 
-  const renderNodeItem = (item, nodeIndex, params) => {
+  const renderNodeItem = (item:any, nodeIndex:number, params:any) => {
     return (
       item.show.every((visible: boolean) => visible === true) && (
         <TreeNode
@@ -78,7 +79,8 @@ const NodeList = (props, ref) => {
     );
   };
 
-  const virtualRender = ({ key, index, style }) => renderNodeItem(data[index], index, { style });
+  const virtualRender = ({ key, index, style }: any) =>
+    renderNodeItem(data[index], index, { style });
 
   return (
     <>
@@ -102,6 +104,6 @@ const NodeList = (props, ref) => {
       )}
     </>
   );
-};
+});
 
-export default React.forwardRef(NodeList);
+export default NodeList;

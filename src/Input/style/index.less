@@ -19,7 +19,7 @@
   padding-left: 8px;
   padding-right: 8px;
   width: 100%;
-  transition: color .1s linear, border-color .1s linear, background-color .1s linear;
+  transition: color 0.1s linear, border-color 0.1s linear, background-color 0.1s linear;
   color: @input-default-color-text;
   border-radius: 2px;
   border-style: solid;
@@ -90,11 +90,11 @@
   }
 }
 
-
 .apipost-textarea {
   box-sizing: border-box;
   width: 100%;
   outline: none;
+  height: 100%;
   padding: 2px 4px;
   border-radius: 2px;
   overflow-y: hidden;
@@ -103,9 +103,9 @@
   border-width: 0;
   color: @input-default-color-text;
   font-size: 12px;
-  font-family: "PingFang SC";
+  font-family: 'PingFang SC';
   resize: none;
-  caret-color:  @input-default-color-text;
+  caret-color: @input-default-color-text;
   top: 0;
   left: 0;
   overflow: auto;
@@ -116,7 +116,7 @@
 
   &:focus {
     border-color: @input-focus-color-border;
-    background-color: @textarea-focus-color-background
+    background-color: @textarea-focus-color-background;
   }
 
   &-wrapper {
@@ -127,7 +127,6 @@
   &::-webkit-input-placeholder {
     color: @textarea-default-color-scroll;
   }
-
 
   .api-input-clear-icon {
     position: absolute;

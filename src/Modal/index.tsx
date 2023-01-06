@@ -16,6 +16,7 @@ import Confirm from './Confirm';
 import Show from './Show';
 import './style/index.less';
 import { ConfigContext } from '../ConfigProvider';
+import { ShowProps } from './interface';
 
 const PERFIXNAME = 'apipost-modal';
 // const Modal: React.FC<ModalProps> = (props) => {
@@ -27,6 +28,7 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
     style,
     className,
     children,
+    width,
     mask = true,
     maskClosable,
     title,
@@ -95,6 +97,7 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
               }}
             >
               <div
+                style={{ width }}
                 className={cn({ [`${PERFIXNAME}-container`]: true })}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -142,7 +145,7 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
 
 export interface ModalComponent extends ForwardRefExoticComponent<PropsWithChildren<ModalProps>> {
   confirm: (props: ConfirmProps) => void;
-  Show: (props: any) => void;
+  Show: (props: ShowProps, pos: any, modalRef: any) => void;
 }
 
 const ExportedModalComponent: ModalComponent = forwardRef(Modal) as ModalComponent;

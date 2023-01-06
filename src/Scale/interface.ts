@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export type Layout = {
   nodeProps?: any;
@@ -15,12 +15,12 @@ export type PanelOffset = {
 };
 
 export interface ScalePanelProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
   style?: React.CSSProperties;
   className?: string | string[];
-  direction?: 'horizontal' | 'vertical';
+  direction?: "horizontal" | "vertical";
   layouts?: Layouts;
-  defaultLayouts: Layouts;
+  defaultLayouts?: Layouts;
   onLayoutsChange?: (layouts: Layouts, panelOffset: PanelOffset) => void;
 
   // 拖动时是否实时渲染
@@ -33,7 +33,7 @@ export interface ScalePanelProps {
 export interface ScaleItemProps {
   index?: number;
   flex?: number;
-  barLocation?: 'start' | 'end'; // 分隔条位置 start/end
+  barLocation?: "start" | "end"; // 分隔条位置 start/end
   children: React.ReactNode;
   layouts?: Layouts;
   onLayoutChange?: (layout: Layout, index: number) => void;
@@ -42,8 +42,8 @@ export interface ScaleItemProps {
   minHeight?: number; // 最小可调整高度
   maxHeight?: number; // 最大可调整高度
   enableScale?: boolean; // 是否可拖拽
-  direction?: 'horizontal' | 'vertical';
-  className?: React.CSSProperties;
+  direction?: "horizontal" | "vertical";
+  className?: string;
   scaling?: boolean;
   onScaling?: (val: boolean) => void;
   panelOffset?: PanelOffset;
@@ -58,6 +58,11 @@ export type ScaleData = {
   defaultLayout?: Layout | null;
 };
 export interface SplitBarProps {
-  onScaling: (scaleData: ScaleData | undefined) => void;
-  barLocation: 'start' | 'end'; // 拖拽条位置
+  style: React.CSSProperties;
+  className: string;
+  scaleData: ScaleData;
+  direction: "horizontal" | "vertical";
+  onScaling: (scaleData: ScaleData) => void;
+  barLocation: "start" | "end"; // 拖拽条位置
 }
+

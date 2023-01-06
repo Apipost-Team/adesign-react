@@ -35,7 +35,7 @@ npm i adesign-react
 
 ```js
 import { Button } from 'adesign-react';
-import 'adesign-react/index.css'; // 少量公共样式
+import 'adesign-react/libs/styles.css'; // 少量公共样式
 ```
 
 

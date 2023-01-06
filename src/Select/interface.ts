@@ -24,7 +24,7 @@ export interface SelectProps {
   popupStyle?: React.CSSProperties;
 
   popupClassName?: string | string[];
-  placement:
+  placement?:
     | 'auto'
     | 'auto-start'
     | 'auto-end'
@@ -40,7 +40,8 @@ export interface SelectProps {
     | 'left'
     | 'left-start'
     | 'left-end';
-  autoAdjustWidth: boolean;
+
+  autoAdjustWidth?: boolean;
 
   /**
    * @zh 输入框大小

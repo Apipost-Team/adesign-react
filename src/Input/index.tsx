@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { isUndefined } from 'lodash';
 import cn from 'classnames';
-import { InputProps } from './interface';
+import {InputProps} from './interface';
 import Textarea from './Textarea';
 import './style/index.less';
 import Iconcancel from '../assets/cancel.svg';
@@ -14,7 +14,7 @@ export const Input: React.FC<InputProps> = (props) => {
     onChange,
     className,
     style,
-    size = 'large',
+    size = 'middle',
     placeholder,
     beforeFix = null,
     afterFix = null,
@@ -32,7 +32,7 @@ export const Input: React.FC<InputProps> = (props) => {
   } = props;
 
   const isComposition = useRef(false);
-  const [inputValue, setInputValue] = useState(defaultValue || '');
+  const [inputValue, setInputValue] = useState<string|number>(defaultValue || '');
 
   useEffect(() => {
     if (!isUndefined(value)) {
@@ -83,7 +83,7 @@ export const Input: React.FC<InputProps> = (props) => {
     setFocus(true);
     onFocus(e);
   };
-  const handleBlur = (e: any) => {
+  const handleBlur = (e:  React.FocusEvent<HTMLInputElement>) => {
     setFocus(false);
     onBlur(e);
   };
