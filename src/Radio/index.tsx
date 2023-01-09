@@ -1,24 +1,32 @@
-import React, { useState, useContext, PropsWithChildren, useEffect } from 'react';
-import classNames from 'classnames';
-import { RadioContext } from './RadioContext';
-import Group from './Group';
-import './index.less';
-import { RadioProps } from './interface';
+import React, {
+  useState,
+  useContext,
+  PropsWithChildren,
+  useEffect,
+} from "react";
+import classNames from "classnames";
+import { RadioContext } from "./RadioContext";
+import Group from "./Group";
+import "./style/index.less";
+import { RadioProps } from "./interface";
 
 function Radio(props: RadioProps) {
-  const { className, value, children, style, onChange = () => {}, ...restProps } = props;
+  const {
+    className,
+    value,
+    children,
+    style,
+    onChange = () => {},
+    ...restProps
+  } = props;
 
   const [radioCheckbox, setRadioCheckBox] = useState(false);
   const Context = useContext(RadioContext);
-  const prefixCls = 'apipost-radio';
+  const prefixCls = "apipost-radio";
   const radioProps = { ...restProps };
-  const wrapperClassString = classNames(
-    `${prefixCls}-wrapper`,
-    {
-      [`${prefixCls}-wrapper-disabled`]: radioProps.disabled || Context.disabled,
-    },
-    className
-  );
+  const wrapperClassString = classNames(`${prefixCls}-wrapper`, className, {
+    [`${prefixCls}-wrapper-disabled`]: radioProps.disabled || Context.disabled,
+  });
   if (Context) {
     radioProps.checked = Context.value === value;
     radioProps.disabled = Context.disabled;
@@ -54,14 +62,16 @@ function Radio(props: RadioProps) {
         />
         <span className={innerClass}></span>
       </span>
-      {children !== undefined ? <span className="apipost-radio-children">{children}</span> : null}
+      {children !== undefined ? (
+        <span className="apipost-radio-children">{children}</span>
+      ) : null}
     </label>
   );
 }
 
 // const Radio = React.forwardRef<unknown, RadioProps>(InternalRadio);
 
-Radio.displayName = 'Radio';
+Radio.displayName = "Radio";
 Radio.defaultProps = {
   checked: false,
 };

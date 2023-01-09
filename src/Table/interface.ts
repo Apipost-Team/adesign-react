@@ -69,7 +69,7 @@ export interface RowProps {
   // 列描述数据对象的数组
   columns?: any[];
 
-  rowKey: string;
+  rowKey?: string;
 
   // 配置表格行是否可选，选中事件等
   rowSelection?: RowSelectionProps | undefined;
@@ -108,10 +108,16 @@ export interface TableProps {
   onLayoutsChange?: (newLayout: any) => void;
 
   // 自定义表格行
-  renderRow?: (node: React.ReactNode) => React.ReactNode;
+  renderRow?: (node: any[],renderFn:(rowData: any, index: number)=>React.ReactElement) => React.ReactElement;
 
   // 表格内数据变化时回调
   onChange?: (newData: any) => void;
+
+    // 单元格是否有上下左右pandding
+    hasPadding: boolean;
+
+
+
 }
 
 export interface SplitBarProps {

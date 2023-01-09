@@ -3,7 +3,7 @@ import isArray from 'lodash/isArray';
 import isFunction from 'lodash/isFunction';
 import { isEmpty, isUndefined } from 'lodash';
 
-export const fillFieldNames = (fieldNames) => {
+export const fillFieldNames = (fieldNames:any) => {
   const { title = 'title', _title, key = 'key', children = 'children' } = fieldNames || {};
   return {
     title,
@@ -13,23 +13,23 @@ export const fillFieldNames = (fieldNames) => {
   };
 };
 
-export const getPosition = (level, index) => `${level}-${index}`;
+export const getPosition = (level:string|number, index:number) => `${level}-${index}`;
 
-export const getKey = (key, pos) => {
+export const getKey = (key:string, pos:string) => {
   if (key !== null && key !== undefined) {
     return key;
   }
   return pos;
 };
 
-const getNodeLevel = (node) => (node === null ? 0 : getNodeLevel(node.parent) + 1);
+const getNodeLevel = (node:any) => (node === null ? 0 : getNodeLevel(node.parent) + 1);
 
 export const flattenTreeData = (
-  treeNodeList,
-  expandedKeys = [],
-  fieldNames,
-  nodeSort,
-  checkLeafNode
+  treeNodeList :any,
+  expandedKeys = [] as any,
+  fieldNames:any,
+  nodeSort:any,
+  checkLeafNode:any
 ) => {
   const {
     _title: fieldTitles,
@@ -98,9 +98,9 @@ export const flattenTreeData = (
 
 // Array转树形结构对象
 export const arrayToTreeObject = (
-  data?: any[],
-  param = { key: 'target_id', parent: 'parent_id' },
-  filter
+  data: any[],
+  param:any = { key: 'target_id', parent: 'parent_id' },
+  filter:any
 ) => {
   const treeData: any = {};
   const rootData = [];
@@ -139,13 +139,13 @@ export const arrayToTreeObject = (
 };
 
 // 打开树形目录
-export const flatTreeItems = (nodes = [], sortFn) => {
-  const nodeList = [];
+export const flatTreeItems = (nodes = [], sortFn:any) => {
+  const nodeList :any= [];
   if (sortFn !== undefined) {
     nodes.sort(sortFn);
   }
-  const dig = (childList = [], level) => {
-    childList.forEach((item) => {
+  const dig = (childList = [], level:number) => {
+    childList.forEach((item:any) => {
       nodeList.push({ ...item, level });
 
       const childItemList = item.children;

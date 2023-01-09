@@ -1,8 +1,9 @@
-import React, { CSSProperties, ReactNode, HTMLAttributes } from 'react';
+import React, { CSSProperties, ReactNode, HTMLAttributes, HtmlHTMLAttributes } from 'react';
 
-export interface TriggerProps {
-  ref: any;
+export interface TriggerProps  extends Omit<HtmlHTMLAttributes<HTMLElement>, 'onChange' | 'type' |'className' > {
+ // ref: any;
   className?: string | string[];
+
   style?: CSSProperties;
 
   // 弹出层
@@ -11,7 +12,7 @@ export interface TriggerProps {
   // 弹出层触发方式
   trigger: 'click' | 'hover' | 'contextmenu' | 'focus';
 
-  children: ReactNode;
+  children: React.ReactElement;
 
   // 弹出层是否自动调整宽度使其与Trigger保持一致
   autoAdjustWidth?: boolean;
@@ -40,10 +41,13 @@ export interface TriggerProps {
   // 点击区域外部关闭
   outsideClose: boolean;
 
-  onVisibleChange: (val: boolean) => void;
+  onVisibleChange?: (val: boolean) => void;
   // 是否禁用
   disabled?: boolean;
   offset?: [x: number, y: number];
+
+  //设置显示隐藏状态
+  setPopupVisible?:(visible:boolean)=>void
 }
 
 export interface PopupProps {

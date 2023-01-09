@@ -1,0 +1,20 @@
+@import './varis.less';
+
+
+.apipost-card {
+
+  border-radius: 3px;
+  padding: 16px 24px;
+  position: relative;
+  border-color:@card-color-border;
+  border-style: solid;
+
+  & .btn-card-close{
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    svg{
+      fill: @close-btn-text-color;
+    }
+  }
+}

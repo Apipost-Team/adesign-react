@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { CollapseProps } from './interface';
-import './index.less';
+import './style/index.less';
 import Context from './Context';
 
 const { Provider } = Context;
@@ -13,7 +13,7 @@ const Collapse: React.FC<CollapseProps> = (props) => {
   );
   const mergedActiveKey = 'activeKey' in props ? activeKey : _activeKey;
 
-  const handleUpdateKeys = (key: string | null) => {
+  const handleUpdateKeys = (key: string | string[] | null) => {
     setActiveKey(key);
     if (typeof onChange === 'function') {
       onChange(key);

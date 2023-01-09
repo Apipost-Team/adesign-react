@@ -1,0 +1,109 @@
+@import './varis.less';
+
+.apipost-message-group {
+  transition: .3s linear;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: @message-color-text;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum', "tnum";
+  position: fixed;
+  top: 8px;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  pointer-events: none;
+
+  .apipost-message {
+    padding: 8px;
+    text-align: center;
+
+    .apipost-message-content {
+      display: inline-block;
+      padding: 10px 16px;
+      box-shadow: 0 3px 6px -4px @message-box-color-shadow;
+      background-color: @message-color-background;
+      pointer-events: all;
+      border-radius: 3px;
+
+      .apipost-message-icon {
+        top: 3px;
+        position: relative;
+        margin-right: 8px;
+        font-size: var(--size-16px);
+        display: inline-block;
+      }
+
+      .apipost-message-text {
+        display: inline-block;
+      }
+
+      .apipost-message-close {
+        display: inline-block;
+        margin-left: 10px;
+      }
+    }
+
+    .apipost-message-error {
+      //background-color: #fef0f0;
+      border: 1px solid @message-error-border;
+      color:  @message-error-color;
+      svg{
+        fill: @message-error-background;
+      }
+    }
+
+    .apipost-message-info {
+    //  background: #edf2fc;
+      border: 1px solid @message-info-border;
+      color:@message-info-color;
+      svg{
+        fill: @message-info-background;
+      }
+
+    }
+
+    .apipost-message-success {
+      //background-color: #f0f9eb;
+      border: 1px solid @message-success-border;
+      color:@message-success-color;
+
+      svg{
+        fill: @message-success-background;
+      }
+    }
+
+    .apipost-message-warning {
+     // background-color: #fdf6ec;
+      border: 1px solid @message-warning-border;
+      color:@message-warning-color;
+
+      path{
+        fill: @message-warning-background;
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    display: inline-block;
+  }
+  .loading-text {
+    text-align: left;
+    color: #fff;
+    font-size: .24rem;
+    // font-family: sans-serif;
+    line-height: .75rem;
+    padding-left: .85rem;
+    padding-right: .26rem;
+  }
+
+  .loading-enter,
+  .loading-leave-active {
+    opacity: 0;
+  }
+}

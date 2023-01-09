@@ -2,11 +2,11 @@ import React from 'react';
 import cn from 'classnames';
 import { TooltipProps } from './interface';
 import Trigger from '../Trigger';
-import './index.less';
+import './style/index.less';
 
 const PERFIX = 'apipost-tooltip-popup';
 
-const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
+const Tooltip = React.forwardRef<any, TooltipProps>((props, ref) => {
   const {
     style,
     className,
@@ -73,6 +73,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         popup={getPopup()}
         trigger={trigger}
         className={cn(PERFIX, className)}
+        outsideClose
       >
         {children}
       </Trigger>

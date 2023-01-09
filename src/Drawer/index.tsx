@@ -1,12 +1,14 @@
 import React, { FC, useEffect, useState, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import cn from 'classnames';
-import { Button } from '../Button';
-import TabCloseSvg from '../assets/tabpan-close.svg';
+import Button from '../Button';
+import SvgClose from '../assets/close.svg';
 import { DrawerProps } from './interface';
-import './index.less';
+import { ConfigContext } from '../ConfigProvider';
+import './style/index.less';
 
 const Drawer: React.FC<DrawerProps> = (props) => {
+  const { locale } = React.useContext(ConfigContext);
   const {
     visible,
     style,
@@ -16,8 +18,8 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     headerStyle,
     footer,
     footerStyle,
-    okText = '确认',
-    cancelText = '取消',
+    okText = locale?.Drawer.okText,
+    cancelText = locale?.Drawer.cancelText,
     placement = 'right',
     width = 300,
     height = 300,
@@ -88,9 +90,13 @@ const Drawer: React.FC<DrawerProps> = (props) => {
           </div>
         )}
         {closable && (
-          <div onClick={onCancel} className="apipost-drawer-close">
-            <TabCloseSvg />
-          </div>
+          <Button
+            className="apipost-drawer-close"
+            type="info"
+            size="mini"
+            icon={<SvgClose />}
+            onClick={onCancel}
+          />
         )}
         <div className="apipost-drawer-content">{children}</div>
         {footer !== null && (

@@ -2,11 +2,11 @@ import React from 'react';
 import cn from 'classnames';
 import { DropdownProps } from './interface';
 import Trigger from '../Trigger';
-import './index.less';
+import './style/index.less';
 
 const PERFIX = 'apipost-dropdown';
 
-const DropDown = React.forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
+const DropDown = React.forwardRef<any, DropdownProps>((props, ref) => {
   const {
     style,
     className,

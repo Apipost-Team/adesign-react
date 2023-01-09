@@ -5,6 +5,11 @@ export interface ApipostButtonProps {
   className?: string | string[] | CSSProperties;
   children?: ReactNode;
 
+  // 前置className
+  prefixCls?: string;
+
+  icon?: ReactNode;
+
   /**
    * @zh button前置自定义icon
    */
@@ -19,7 +24,7 @@ export interface ApipostButtonProps {
    * @zh 按钮类型 目前支持默认按钮、确认按钮、连接按钮
    * @defaultValue default
    */
-  type?: 'default' | 'primary' | 'link' | 'success' | 'error' | 'warning';
+  type?: 'default' | 'primary' | 'link' | 'success' | 'error' | 'warning' | 'info';
 
   /**
    * @zh 按钮尺寸， 大、中、小、迷你

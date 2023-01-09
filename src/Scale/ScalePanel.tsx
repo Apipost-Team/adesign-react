@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import cn from 'classnames';
 import ScaleItem from './ScaleItem';
-import './index.less';
-import { ScalePanelProps, Layouts, Layout } from './interface';
-import { isFunction, isObject } from 'lodash';
+import './style/index.less';
+import { ScalePanelProps, Layouts, Layout,PanelOffset } from './interface';
+import { isArray, isFunction, isNull, isObject } from 'lodash';
 
 const ScalePanel: React.FC<ScalePanelProps> = (props) => {
   const {
@@ -13,16 +13,16 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
     className = undefined,
     direction = 'horizontal', // 排序方式  horizontal / vertical
     defaultLayouts = {},
-    onLayoutsChange = (layout: Layouts) => undefined,
+    onLayoutsChange = (layout: Layouts, panelOffset: PanelOffset) => undefined,
     realTimeRender = false,
     enableOverflow = false,
   } = props;
 
-  const scaleChildren: React.ReactNode = [].concat(children);
+  const scaleChildren: React.ReactNode = ([] as React.ReactNode[]).concat(children);
   const [_layouts, setLayouts] = useState<Layouts>(defaultLayouts); // 页面内容渲染信息
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  const refPanelOffset = useRef(null);
+  const refPanelOffset = useRef<PanelOffset>({width:0,height:0});
 
   const mergedLayout = isObject(props?.layouts) ? props.layouts : _layouts;
 
@@ -30,14 +30,13 @@ const ScalePanel: React.FC<ScalePanelProps> = (props) => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
-        refPanelOffset.current = {
-          width,
-          height,
-        };
+        refPanelOffset.current.width=width;
+        refPanelOffset.current.height=height;
       }
     });
-
-    resizeObserver.observe(panelRef.current);
+    if(!isNull(panelRef.current)){
+     resizeObserver.observe(panelRef.current);
+    }
     return () => {
       resizeObserver.disconnect();
     };

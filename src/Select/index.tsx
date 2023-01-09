@@ -4,18 +4,22 @@ import { SelectProps, OptionProps } from './interface';
 import SvgArrowDown from '../assets/arrow-down.svg';
 import Trigger from '../Trigger';
 import Option from './Option';
-import './index.less';
+import './style/index.less';
 import Context from './Context';
+import { ConfigContext } from '../ConfigProvider';
+import { TriggerProps } from '../Trigger/interface';
 
 const PERFIX = 'apipost-select';
 
 const { Provider } = Context;
 
 const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
+  const { locale } = React.useContext(ConfigContext);
+
   const {
     defaultValue,
     value,
-    placeholder = '请选择',
+    placeholder = locale?.Select.noData,
     onChange,
     onVisibleChange = () => undefined,
     labelInValue = false,
@@ -33,15 +37,15 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const triggerRef = useRef(null);
+  const triggerRef = useRef<any>(null);
 
   const [selectValue, setSelectValue] = useState<string | number | undefined>(defaultValue);
 
   const mergedValue = value !== undefined ? value : selectValue;
 
-  const childrenList = Array.isArray(children)
-    ? children.reduce((a: OptionProps[], b: OptionProps) => a.concat(b), [])
-    : [children];
+  const childrenList: OptionProps[] = Array.isArray(children)
+    ? (children as OptionProps[]).reduce((a: OptionProps[], b: OptionProps) => a.concat(b), [])
+    : ([children] as OptionProps[]);
 
   const getPopup = () => {
     const popup =
@@ -61,7 +65,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>((props, ref) => {
   };
 
   let selectedText = placeholder;
-  childrenList.forEach((item) => {
+  childrenList.forEach((item: any) => {
     if (item.props.value === mergedValue) {
       selectedText = item?.props?.children;
     }

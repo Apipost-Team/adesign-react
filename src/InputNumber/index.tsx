@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import isNumber from 'lodash/isNumber';
-import isFunction from 'lodash/isFunction';
-import isNaN from 'lodash/isNaN';
-import InputUpSvg from '../assets/inputUp.svg';
-import InputDownSvg from '../assets/inputDown.svg';
-import ArrowUp from '../assets/arrowUp.svg';
-import ArrowDown from '../assets/arrowDown.svg';
-import Input from '../Input';
-import './index.less';
-import { ruleType } from '../util/utils';
+import React, { useCallback, useEffect, useState } from "react";
+import isNumber from "lodash/isNumber";
+import isFunction from "lodash/isFunction";
+import isNaN from "lodash/isNaN";
+import InputUpSvg from "../assets/inputUp.svg";
+import InputDownSvg from "../assets/inputDown.svg";
+import ArrowUp from "../assets/arrowUp.svg";
+import ArrowDown from "../assets/arrowDown.svg";
+import Input from "../Input";
+import "./style/index.less";
+import { ruleType } from "../util/utils";
 
-import { InputNumberProps } from './interface';
+import { InputNumberProps } from "./interface";
 
-const ADD = 'add';
-const SUBTRACT = 'subtract';
+const ADD = "add";
+const SUBTRACT = "subtract";
 
 export const InputNumber: React.FC<InputNumberProps> = (props) => {
   const {
@@ -22,21 +22,21 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
     max = Number.MAX_SAFE_INTEGER,
     onChange,
     disabled,
-    modetype = 'input',
-    type = 'row',
+    modetype = "input",
+    type = "row",
     ...restProps
   } = props;
   const [value, setValue] = useState(defaultValue);
-  const mergedValue = 'value' in props ? props.value : value;
+  const mergedValue = "value" in props ? props.value : value;
 
   const handleInputChange = (newVal: string) => {
     if (isNaN(parseInt(newVal))) {
-      setValue(newVal);
+      //setValue(newVal);
       return;
     }
 
     let result = parseInt(newVal);
-    if (newVal === '' || newVal === '0' || newVal === '00') {
+    if (newVal === "" || newVal === "0" || newVal === "00") {
       result = 0;
     }
     if (result > max) {
@@ -51,9 +51,11 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
     }
   };
 
-  const handleChangeValue = (types = 'add') => {
-    let result: number = mergedValue;
-    if (types === 'add') {
+  const handleChangeValue = (types = "add") => {
+    let result: number = isNumber(mergedValue)
+      ? mergedValue
+      : parseInt(mergedValue || "0");
+    if (types === "add") {
       result += 1;
     } else {
       result -= 1;
@@ -70,7 +72,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
     }
   };
 
-  const handleInputBlur = (e) => {
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const val = e.target.value;
     const validValue = parseInt(val);
     if (isNaN(validValue)) {
@@ -94,17 +96,17 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
   };
 
   const renderType = (tp: string) => {
-    if (tp === 'row') {
+    if (tp === "row") {
       return (
         <>
           <div
-            onClick={handleChangeValue.bind(null, 'subtract')}
+            onClick={handleChangeValue.bind(null, "subtract")}
             className="apipost-input-number-step"
           >
             <ArrowDown />
           </div>
-          <div style={{ flex: 1, height: '100%' }}>
-            {modetype === 'input' ? (
+          <div style={{ flex: 1, height: "100%" }}>
+            {modetype === "input" ? (
               <Input
                 forceUseValue
                 value={`${mergedValue}`}
@@ -117,17 +119,20 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
               <div>{`${mergedValue}`}</div>
             )}
           </div>
-          <div onClick={handleChangeValue.bind(null, 'add')} className="apipost-input-number-step">
+          <div
+            onClick={handleChangeValue.bind(null, "add")}
+            className="apipost-input-number-step"
+          >
             <ArrowUp />
           </div>
         </>
       );
     }
-    if (tp === 'column') {
+    if (tp === "column") {
       return (
-        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <div style={{ width: "100%", height: "100%", position: "relative" }}>
           <InputUpSvg
-            onClick={handleChangeValue.bind(null, 'add')}
+            onClick={handleChangeValue.bind(null, "add")}
             className="cur_pointer column_before"
           />
           <Input
@@ -139,7 +144,7 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
             {...restProps}
           />
           <InputDownSvg
-            onClick={handleChangeValue.bind(null, 'subtract')}
+            onClick={handleChangeValue.bind(null, "subtract")}
             className="cur_pointer column_after"
           />
         </div>

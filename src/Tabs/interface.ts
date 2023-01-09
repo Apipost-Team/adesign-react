@@ -9,6 +9,7 @@ export interface TabPanProps {
   removable?: boolean;
   disabled?: boolean;
   itemWidth?: number;
+  props?: any;
 }
 
 export interface RenderProps {
@@ -19,6 +20,7 @@ export interface RenderProps {
   handleMouseWheel?: (ev: MouseEvent) => void;
   activedContent?: React.ReactNode;
   renderScrollItems?: (elements: React.ReactNode) => void;
+  activeId?: string;
 }
 
 export interface TabsProps<T> {
@@ -38,7 +40,7 @@ export interface TabsProps<T> {
    */
   type?: string;
   onChange?: (activeId: string, tabpan: TabPanProps) => void;
-  onAddTab?: (id: string) => void;
+  onAddTab?: (e: React.MouseEvent) => void;
   onRemoveTab?: (id: string, tabpan: TabPanProps) => void;
 
   // tab头自定义渲染
@@ -49,7 +51,7 @@ export interface TabsProps<T> {
   itemWidth?: number;
 
   // tabs header是否开启滚轮滚动
-  headerAutoScroll: boolean;
+  headerAutoScroll?: boolean;
 
   // tab item为空时自定义渲染内容
   emptyContent?: React.ReactNode;

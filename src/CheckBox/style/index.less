@@ -1,0 +1,52 @@
+@import './varis.less';
+
+.apipost-checkbox {
+  height: 16px;
+  line-height: 16px;
+  display: inline-block;
+  cursor: pointer;
+  padding-left: 5px;
+
+  &-icon {
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid @checkbox-color-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    & > svg {
+      flex: 1;
+      vertical-align: middle;
+      color: @checkbox-color-text;
+      fill: currentColor;
+    }
+  }
+
+  &.checked &-icon {
+    background-color: @checkbox-color-border-checked;
+    border-color: @checkbox-color-border-checked;
+  }
+
+  &.halfcheck &-icon {
+    background-color: @checkbox-color-border-checked;
+    border-color: @checkbox-color-border-checked;
+  }
+
+  &.disable &-icon {
+    background-color: @checkbox-color-background-disabled;
+    border-color: @checkbox-color-border-disabled;
+    cursor: not-allowed;
+  }
+
+  &.readOnly &-icon {
+    opacity: 0.5;
+  }
+
+  &-text {
+    padding-left: 5px;
+    float: left;
+  }
+}

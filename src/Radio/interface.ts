@@ -2,7 +2,7 @@ import React, { CSSProperties, ReactNode } from 'react';
 
 export interface RadioGroupProps {
   style?: CSSProperties;
-  className?: string | string[] | CSSProperties;
+  className?: string ;
   children: ReactNode;
 
   /**
@@ -35,7 +35,7 @@ export interface RadioGroupProps {
 export interface RadioProps {
   style?: CSSProperties;
   children: string;
-  className?: string | string[] | CSSProperties;
+  className?: string;
 
   /**
    * @zh 单选框具体值

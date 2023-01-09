@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './index.less';
+import './style/index.less';
 import cn from 'classnames';
 import cloneDeep from 'lodash/cloneDeep';
 import TableRow from './TableRow';
@@ -25,18 +25,18 @@ const Table: React.FC<TableProps> = (props) => {
     renderRow = () => undefined,
   } = props;
 
-  const refTable = useRef<HTMLDivElement>();
+  const refTable = useRef<any>(null);
   // 内部数据源state
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState<any[]>([]);
   useEffect(() => {
     setTableData(data || []);
   }, [data]);
   const handleLayoutChange = (_ayout: any, index: number) => {
-    const newLayout = layouts !== undefined ? cloneDeep(layouts) : {};
+    const newLayout: any = layouts !== undefined ? cloneDeep(layouts) : {};
     newLayout[index] = _ayout;
     onLayoutsChange(newLayout);
   };
-  
+
   if (tableData === undefined) {
     return null;
   }
@@ -45,7 +45,7 @@ const Table: React.FC<TableProps> = (props) => {
     return (
       <TableRow
         key={`${index}`}
-        rowKey={rowData?.[rowKey]}
+        rowKey={rowKey === undefined ? rowKey : rowData?.[rowKey]}
         rowIndex={index}
         rowData={rowData}
         columns={columns}

@@ -5,6 +5,8 @@ export interface ModalProps {
   style?: CSSProperties;
   children?: ReactNode;
 
+  width?:number;
+
   /**
    * @zh 是否显示遮罩
    * @defaultValue true
@@ -39,7 +41,7 @@ export interface ModalProps {
   /**
    * @zh 弹框底部内容
    */
-  footer?: ReactDOM;
+  footer?: ReactNode;
   /**
    * @zh 底部div类名
    */

@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import SvgArrowDown from '../assets/arrow-down.svg';
 import TreeContext from './TreeContext';
 
-const Indent = (props) => {
+const Indent = (props:any) => {
   const { nodeKey, perfixCls, nodeIndex, level, isLeaf } = props;
   const { handleExpandItem, showLine } = useContext(TreeContext);
 
-  const handleToggleExpand = (ev) => {
+  const handleToggleExpand = (ev:React.MouseEvent) => {
     handleExpandItem(nodeKey, nodeIndex);
     ev.stopPropagation();
   };

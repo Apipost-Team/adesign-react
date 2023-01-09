@@ -1,0 +1,79 @@
+.color-example {
+  h3 {
+    font-weight: 400;
+    color: #1f2f3d;
+  }
+  p {
+    font-size: 14px;
+    color: #5e6d82;
+    line-height: 1.5em;
+  }
+  .demo-color-box {
+    box-sizing: border-box;
+    width: 355px;
+    height: 114px;
+    position: relative;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 5px 0;
+    color: #fff;
+    font-size: 14px;
+    overflow: hidden;
+    .bg-color-sub {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      left: 0;
+      bottom: 0;
+      position: absolute;
+      &-item {
+        flex: 1;
+        height: 100%;
+        display: inline-block;
+      }
+    }
+    .bg-blue-sub-item {
+      flex: 1;
+      height: 100%;
+      display: inline-block;
+    }
+  }
+  .sub-color-box {
+    display: flex;
+    .demo-color-box {
+      width: 220px;
+      height: 124px;
+      margin-right: 8px;
+    }
+  }
+  .demo-color-font {
+    display: flex;
+    &-group {
+      margin-right: 16px;
+    }
+    &-item {
+      position: relative;
+      border-radius: 4px;
+      padding: 15px 20px;
+      margin: 10px 0;
+      height: 74px;
+      width: 208px;
+      box-sizing: border-box;
+      color: #fff;
+      font-size: 14px;
+      .value {
+        font-size: 12px;
+        opacity: .69;
+        line-height: 24px;
+      }
+    }
+    .bg-transparent {
+      border: 1px solid #fcc3c3;
+      color: #303133;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 98 L100 0 L100 1 L1 98' fill='%23FCC3C3' /></svg>");
+      background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: 100% 100%,auto;
+    }
+  }
+}
