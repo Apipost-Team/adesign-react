@@ -10,6 +10,7 @@ import Radio from './components/Radio';
 import Message from './components/Message';
 import Drawer from './components/Drawer';
 import Modal from './components/Modal';
+import Pagination from './components/Pagination';
 import Select from './components/Select';
 import Tooltip from './components/Tooltip';
 import Tree from './components/Tree';
@@ -95,6 +96,12 @@ export const Menus = [
     key: 'modal',
     name: '弹出窗口 Modal',
     elements: <Modal />,
+  },
+  {
+    path: '/pagination',
+    key: 'modal',
+    name: '分页 pagination',
+    elements: <Pagination />,
   },
   {
     path: '/progress',
