@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Button from '../Button';
 import Select from '../Select';
-import Input from '../Select';
+import Input from '../Input';
 import { PageProps } from './interface';
 import './index.less';
 
