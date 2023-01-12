@@ -8,6 +8,7 @@ export { default as Input } from './Input';
 export { default as InputNumber } from './InputNumber';
 export { default as Message } from './Message';
 export { default as Modal } from './Modal';
+export { default as Pagination } from './Pagination';
 export { default as Progress } from './Progress';
 export { default as Radio } from './Radio';
 export { default as Scale } from './Scale';
@@ -19,5 +20,6 @@ export { default as Tabs } from './Tabs';
 export { default as Tooltip } from './Tooltip';
 export { default as Tree } from './Tree';
 export { default as Upload } from './Upload';
+
 
 
