@@ -18,7 +18,7 @@ const TreeNode: React.FC<TreeNodeProps> = (props) => {
     selectedKeys,
     render,
     onRightClick = () => undefined,
-    onNodeClick = () => undefined,
+    onNodeClick = (params:any) => undefined,
     onMultiSelect = () => undefined,
   } = useContext(TreeContext);
 

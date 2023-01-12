@@ -32,7 +32,7 @@ const Tree = (props: TreeProps, ref: any) => {
     },
     onCheck = () => undefined,
     render,
-    onNodeClick = () => undefined,
+    onNodeClick = (params:any) => undefined,
     onRightClick = () => undefined,
     onMultiSelect = () => undefined,
     onCheckAll = () => undefined,
