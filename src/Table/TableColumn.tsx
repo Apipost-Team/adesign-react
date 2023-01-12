@@ -13,7 +13,7 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
     >
       <div className="apipost-table-cell">
         {typeof render === 'function'
-          ? React.cloneElement(render(content, rowData, rowIndex, dataIndex), { key: rowIndex })
+          ? render(content, rowData, rowIndex)
           : content}
       </div>
     </td>
