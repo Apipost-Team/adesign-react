@@ -95,7 +95,7 @@ export interface TreeProps {
   /**
    * @zh 点击节点回调方法
    */
-  onNodeClick?: () => void;
+  onNodeClick?: (params:any) => void;
 
   /**
    * @zh 多选节点回调方法
