@@ -15,7 +15,8 @@ export interface ColumnProps {
   render?: (
     content: React.ReactNode | string, // 返回值
     rowData: any, // 当前行数据
-    rowIndex: number // 所在行索引
+    rowIndex: number, // 所在行索引
+    rowKey: string //列名
   ) => React.ReactNode;
 
   // 表格列名
@@ -108,16 +109,16 @@ export interface TableProps {
   onLayoutsChange?: (newLayout: any) => void;
 
   // 自定义表格行
-  renderRow?: (node: any[],renderFn:(rowData: any, index: number)=>React.ReactElement) => React.ReactElement;
+  renderRow?: (
+    node: any[],
+    renderFn: (rowData: any, index: number) => React.ReactElement
+  ) => React.ReactElement;
 
   // 表格内数据变化时回调
   onChange?: (newData: any) => void;
 
-    // 单元格是否有上下左右pandding
-    hasPadding: boolean;
-
-
-
+  // 单元格是否有上下左右pandding
+  hasPadding?: boolean;
 }
 
 export interface SplitBarProps {

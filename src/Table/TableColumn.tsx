@@ -12,9 +12,7 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
       className={cn(className, 'apipost-table-td')}
     >
       <div className="apipost-table-cell">
-        {typeof render === 'function'
-          ? render(content, rowData, rowIndex)
-          : content}
+        {typeof render === 'function' ? render(content, rowData, rowIndex, dataIndex) : content}
       </div>
     </td>
   );
