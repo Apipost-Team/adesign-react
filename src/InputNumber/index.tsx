@@ -30,6 +30,12 @@ export const InputNumber: React.FC<InputNumberProps> = (props) => {
   const mergedValue = 'value' in props ? props.value : value;
 
   const handleInputChange = (newVal: string) => {
+    if (newVal === '') {
+      if (isFunction(onChange)) {
+        onChange(0);
+        return;
+      }
+    }
     if (isNaN(parseInt(newVal))) {
       setValue(newVal);
       return;
