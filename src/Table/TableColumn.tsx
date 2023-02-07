@@ -2,19 +2,13 @@ import React from 'react';
 import cn from 'classnames';
 import { ColumnProps } from './interface';
 import { isFunction, isObject } from 'lodash';
+import Context from './Context';
 
 const TableColumn: React.FC<ColumnProps> = (props) => {
-  const {
-    bodyCellStyle,
-    className,
-    align,
-    render,
-    element,
-    rowData,
-    dataIndex,
-    onFiledChange,
-    rowIndex,
-  } = props;
+  const { bodyCellStyle, className, align, render, element, rowData, dataIndex, rowIndex } = props;
+
+  const { onFiledChange } = React.useContext(Context);
+
   const content = rowData[dataIndex];
 
   /*

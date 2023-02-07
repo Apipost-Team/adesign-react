@@ -12,7 +12,6 @@ const TableRow: React.FC<RowProps> = (props) => {
     columns,
     rowKey,
     rowIndex,
-    onFiledChange,
     ...restProps
   } = props;
 
@@ -43,7 +42,6 @@ const TableRow: React.FC<RowProps> = (props) => {
         {columns?.map((colItem, colIndex) => (
           <TableColumn
             key={colIndex}
-            onFiledChange={onFiledChange}
             {...colItem}
             rowIndex={rowIndex}
             rowData={rowData}

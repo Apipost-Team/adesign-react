@@ -27,18 +27,13 @@ const Table: React.FC<TableProps> = (props) => {
   } = props;
 
   const refTable = useRef<any>(null);
-  // 内部数据源state
-  const [tableData, setTableData] = useState<any[]>([]);
-  useEffect(() => {
-    setTableData(data || []);
-  }, [data]);
   const handleLayoutChange = (_ayout: any, index: number) => {
     const newLayout: any = layouts !== undefined ? cloneDeep(layouts) : {};
     newLayout[index] = _ayout;
     onLayoutsChange(newLayout);
   };
 
-  if (tableData === undefined) {
+  if (data === undefined) {
     return null;
   }
 
@@ -50,7 +45,6 @@ const Table: React.FC<TableProps> = (props) => {
         rowIndex={index}
         rowData={rowData}
         columns={columns}
-        onFiledChange={onFiledChange}
       />
     );
   };
@@ -61,9 +55,7 @@ const Table: React.FC<TableProps> = (props) => {
         refTable,
         layouts,
         handleLayoutChange,
-        tableData,
-        setTableData,
-        data,
+        onFiledChange,
       }}
     >
       <div style={style} className={cn(className, 'apipost-table-container')}>
@@ -76,13 +68,13 @@ const Table: React.FC<TableProps> = (props) => {
           })}
         >
           {showHeader === true && <Header columns={columns} />}
-          {tableData.length === 0 ? (
+          {data.length === 0 ? (
             noDataElement
           ) : 'renderRow' in props && typeof renderRow === 'function' ? (
-            <>{renderRow(tableData, renderRowItem)}</>
+            <>{renderRow(data, renderRowItem)}</>
           ) : (
             <tbody>
-              {tableData.map((rowData, index) =>
+              {data.map((rowData, index) =>
                 React.cloneElement(<>{renderRowItem(rowData, index)}</>, { key: index })
               )}
             </tbody>

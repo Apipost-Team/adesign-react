@@ -42,7 +42,6 @@ export interface ColumnProps {
   // 当前列是否允许调整列宽
   enableResize: boolean;
 
-  onFiledChange?: (rowIndex: number, rowData: any) => void;
 }
 
 export interface RowSelectionProps {
@@ -84,7 +83,6 @@ export interface RowProps {
   // 选中项发生变化时的回调
   onSelectChange?: (status: any, rowKey: string) => void;
 
-  onFiledChange?: (rowIndex: number, rowData: any) => void;
 }
 
 export interface TableProps {
