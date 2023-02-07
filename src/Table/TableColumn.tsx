@@ -30,6 +30,10 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
     onFiledChange(rowIndex, newData);
   };
 
+  const handleDeleteRow = () => {
+    onDeleteRow(rowIndex);
+  };
+
   const renderContent = (render: any, element: React.ReactNode, content: any) => {
     if (isFunction(render)) {
       return render(content, rowData, rowIndex, dataIndex);
@@ -39,7 +43,7 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
         <TableItem
           value={content}
           rowData={rowData}
-          onDeleteRow={onDeleteRow}
+          onDeleteRow={handleDeleteRow}
           onChange={handleItemChange}
         />
       );
