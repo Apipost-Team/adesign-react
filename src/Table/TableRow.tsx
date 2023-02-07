@@ -5,7 +5,16 @@ import CheckBox from '../CheckBox';
 import { CheckStatus } from '../CheckBox/interface';
 
 const TableRow: React.FC<RowProps> = (props) => {
-  const { onSelectChange, rowSelection, rowData, columns, rowKey, rowIndex, ...restProps } = props;
+  const {
+    onSelectChange,
+    rowSelection,
+    rowData,
+    columns,
+    rowKey,
+    rowIndex,
+    onFiledChange,
+    ...restProps
+  } = props;
 
   const handleSelectRows = (status: CheckStatus) => {
     if (typeof onSelectChange === 'function') {
@@ -32,7 +41,13 @@ const TableRow: React.FC<RowProps> = (props) => {
       <tr className="apipost-table-tr" {...restProps}>
         {rowSelection !== undefined && renderSelection(rowSelection, rowKey)}
         {columns?.map((colItem, colIndex) => (
-          <TableColumn key={colIndex} {...colItem} rowIndex={rowIndex} rowData={rowData} />
+          <TableColumn
+            key={colIndex}
+            onFiledChange={onFiledChange}
+            {...colItem}
+            rowIndex={rowIndex}
+            rowData={rowData}
+          />
         ))}
       </tr>
     </>

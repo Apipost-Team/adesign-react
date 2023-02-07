@@ -23,6 +23,7 @@ const Table: React.FC<TableProps> = (props) => {
     hasPadding = true,
     onLayoutsChange = () => undefined,
     renderRow = () => undefined,
+    onFiledChange,
   } = props;
 
   const refTable = useRef<any>(null);
@@ -49,6 +50,7 @@ const Table: React.FC<TableProps> = (props) => {
         rowIndex={index}
         rowData={rowData}
         columns={columns}
+        onFiledChange={onFiledChange}
       />
     );
   };
