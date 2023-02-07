@@ -7,7 +7,7 @@ import Context from './Context';
 const TableColumn: React.FC<ColumnProps> = (props) => {
   const { bodyCellStyle, className, align, render, element, rowData, dataIndex, rowIndex } = props;
 
-  const { onFiledChange } = React.useContext(Context);
+  const { onFiledChange, onDeleteRow } = React.useContext(Context);
 
   const content = rowData[dataIndex];
 
@@ -35,7 +35,14 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
       return render(content, rowData, rowIndex, dataIndex);
     } else if (isObject(element)) {
       const TableItem: any = element;
-      return <TableItem value={content} rowData={rowData} onChange={handleItemChange} />;
+      return (
+        <TableItem
+          value={content}
+          rowData={rowData}
+          onDeleteRow={onDeleteRow}
+          onChange={handleItemChange}
+        />
+      );
     }
     return content;
   };

@@ -24,6 +24,7 @@ const Table: React.FC<TableProps> = (props) => {
     onLayoutsChange = () => undefined,
     renderRow = () => undefined,
     onFiledChange,
+    onDeleteRow,
   } = props;
 
   const refTable = useRef<any>(null);
@@ -56,6 +57,7 @@ const Table: React.FC<TableProps> = (props) => {
         layouts,
         handleLayoutChange,
         onFiledChange,
+        onDeleteRow
       }}
     >
       <div style={style} className={cn(className, 'apipost-table-container')}>
