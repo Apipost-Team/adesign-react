@@ -24,10 +24,10 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
       return;
     }
     if (coverRowData === true) {
-      onFiledChange(rowIndex, newVal);
+      onFiledChange(newVal, rowIndex);
       return;
     }
-    onFiledChange(rowIndex, newData);
+    onFiledChange(newData, rowIndex);
   };
 
   const handleDeleteRow = () => {
