@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import SplitBar from '../SplitBar';
-import Context from '../Context';
+import {TableContext} from '../Context';
 
 const Column = (props) => {
   const { colItem, colIndex } = props;
-  const { refTable, layouts, handleLayoutChange = () => undefined } = useContext(Context);
+  const { refTable, layouts, handleLayoutChange = () => undefined } = useContext(TableContext);
 
   const tableHeight = refTable?.current?.offsetHeight || 0;
   const defaultLayout = layouts?.[colIndex];

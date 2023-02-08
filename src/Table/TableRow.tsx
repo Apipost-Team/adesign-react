@@ -15,6 +15,8 @@ const TableRow: React.FC<RowProps> = (props) => {
     ...restProps
   } = props;
 
+  //console.log(rowData,'----rowdata----');
+
   const handleSelectRows = (status: CheckStatus) => {
     if (typeof onSelectChange === 'function') {
       onSelectChange(status, rowKey);
@@ -52,4 +54,4 @@ const TableRow: React.FC<RowProps> = (props) => {
   );
 };
 
-export default TableRow;
+export default React.memo(TableRow);

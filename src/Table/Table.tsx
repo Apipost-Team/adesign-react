@@ -1,13 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import './style/index.less';
 import cn from 'classnames';
 import cloneDeep from 'lodash/cloneDeep';
 import TableRow from './TableRow';
-import Context from './Context';
+import { TableContext, ColumnContext } from './Context';
 import Header from './Header';
 import { TableProps } from './interface';
-
-const { Provider } = Context;
 
 const Table: React.FC<TableProps> = (props) => {
   const {
@@ -28,6 +26,7 @@ const Table: React.FC<TableProps> = (props) => {
   } = props;
 
   const refTable = useRef<any>(null);
+
   const handleLayoutChange = (_ayout: any, index: number) => {
     const newLayout: any = layouts !== undefined ? cloneDeep(layouts) : {};
     newLayout[index] = _ayout;
@@ -50,40 +49,47 @@ const Table: React.FC<TableProps> = (props) => {
     );
   };
 
+  const columnContext = useMemo(() => {
+    return {
+      onFiledChange,
+      onDeleteRow,
+    };
+  }, [onFiledChange,onDeleteRow]);
+
   return (
-    <Provider
+    <TableContext.Provider
       value={{
         refTable,
         layouts,
         handleLayoutChange,
-        onFiledChange,
-        onDeleteRow
       }}
     >
-      <div style={style} className={cn(className, 'apipost-table-container')}>
-        <table
-          ref={refTable}
-          className={cn({
-            'apipost-table': true,
-            'apipost-table-haspadding': hasPadding,
-            'apipost-table-border': showBorder === true,
-          })}
-        >
-          {showHeader === true && <Header columns={columns} />}
-          {data.length === 0 ? (
-            noDataElement
-          ) : 'renderRow' in props && typeof renderRow === 'function' ? (
-            <>{renderRow(data, renderRowItem)}</>
-          ) : (
-            <tbody>
-              {data.map((rowData, index) =>
-                React.cloneElement(<>{renderRowItem(rowData, index)}</>, { key: index })
-              )}
-            </tbody>
-          )}
-        </table>
-      </div>
-    </Provider>
+      <ColumnContext.Provider value={columnContext}>
+        <div style={style} className={cn(className, 'apipost-table-container')}>
+          <table
+            ref={refTable}
+            className={cn({
+              'apipost-table': true,
+              'apipost-table-haspadding': hasPadding,
+              'apipost-table-border': showBorder === true,
+            })}
+          >
+            {showHeader === true && <Header columns={columns} />}
+            {data.length === 0 ? (
+              noDataElement
+            ) : 'renderRow' in props && typeof renderRow === 'function' ? (
+              <>{renderRow(data, renderRowItem)}</>
+            ) : (
+              <tbody>
+                {data.map((rowData, index) =>
+                  React.cloneElement(<>{renderRowItem(rowData, index)}</>, { key: index })
+                )}
+              </tbody>
+            )}
+          </table>
+        </div>
+      </ColumnContext.Provider>
+    </TableContext.Provider>
   );
 };
 

@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cn from 'classnames';
 import { ColumnProps } from './interface';
 import { isFunction, isObject } from 'lodash';
-import Context from './Context';
+import { ColumnContext } from './Context';
 
 const TableColumn: React.FC<ColumnProps> = (props) => {
   const { bodyCellStyle, className, align, render, element, rowData, dataIndex, rowIndex } = props;
 
-  const { onFiledChange, onDeleteRow } = React.useContext(Context);
+  const { onFiledChange, onDeleteRow } = useContext(ColumnContext);
 
   const content = rowData[dataIndex];
 
@@ -61,4 +61,4 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
   );
 };
 
-export default TableColumn;
+export default React.memo(TableColumn);
