@@ -26,7 +26,6 @@ const TableRow: React.FC<RowProps> = (props) => {
     }
     return null;
   };
-
   return (
     <>
       <tr className="apipost-table-tr" {...restProps}>
@@ -39,4 +38,4 @@ const TableRow: React.FC<RowProps> = (props) => {
   );
 };
 
-export default TableRow;
+export default React.memo(TableRow);

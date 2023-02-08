@@ -12,12 +12,16 @@ export interface ColumnProps {
   className?: string;
   align?: 'left' | 'center' | 'right';
 
+  //自定义渲染方法
   render?: (
     content: React.ReactNode | string, // 返回值
     rowData: any, // 当前行数据
     rowIndex: number, // 所在行索引
     rowKey: string //列名
   ) => React.ReactNode;
+
+  // 自定义单元格渲染组件，优先级高于render
+  element?: React.ReactNode;
 
   // 表格列名
   title: string;
@@ -119,6 +123,19 @@ export interface TableProps {
 
   // 单元格是否有上下左右pandding
   hasPadding?: boolean;
+
+  /**
+   * element模式下，单元格修改内容式回调方法
+   * @params rowIndex 所要修改的行
+   * @params newVal 当前行被修改后的新值
+   */
+  onFiledChange?: (rowData: any, rowIndex: number) => void;
+
+  /**
+   * 删除指定行数据
+   * @params rowIndex 所要修改的行
+   */
+  onDeleteRow?: (rowIndex: number) => void;
 }
 
 export interface SplitBarProps {
