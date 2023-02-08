@@ -26,7 +26,6 @@ const TableRow: React.FC<RowProps> = (props) => {
     }
     return null;
   };
-
   return (
     <>
       <tr className="apipost-table-tr" {...restProps}>

@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { TextareaProps } from './interface';
 import Union from '../assets/Union.svg';
 import './style/index.less';
+import { isFunction } from 'lodash';
 
 const Textarea: React.FC<TextareaProps> = (props) => {
   const {
@@ -26,8 +27,6 @@ const Textarea: React.FC<TextareaProps> = (props) => {
 
   const textareaRef: any = useRef<HTMLTextAreaElement>();
 
-  const [textareaValue, setTextareaValue] = useState(defaultValue || value);
-
   const textareaWrapperStyle = {
     width,
     height,
@@ -42,6 +41,12 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     className
   );
 
+  const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    if (isFunction(onChange)) {
+      onChange(e.target.value, e);
+    }
+  };
+
   return (
     <div className="apipost-textarea-wrapper" style={textareaWrapperStyle}>
       <textarea
@@ -53,16 +58,11 @@ const Textarea: React.FC<TextareaProps> = (props) => {
         readOnly={readonly}
         style={style}
         autoFocus={autoFocus}
-        value={textareaValue}
-        onChange={(e) => {
-          setTextareaValue(e.target.value);
-          if (onChange) {
-            onChange(e.target.value, e);
-          }
-        }}
+        value={value}
+        onChange={handleChange}
         {...restProps}
       >
-        {textareaValue}
+        {value}
       </textarea>
     </div>
   );
