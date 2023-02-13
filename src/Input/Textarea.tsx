@@ -41,9 +41,9 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     className
   );
 
-  const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e:any) => {
     if (isFunction(onChange)) {
-      onChange(e.target.value, e);
+      onChange(e?.target?.value, e);
     }
   };
 
