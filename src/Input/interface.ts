@@ -197,4 +197,5 @@ export interface TextareaProps
 
 }
 
+export type TextareaRef = HTMLTextAreaElement;
 

@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, forwardRef } from 'react';
 import classnames from 'classnames';
-import { TextareaProps } from './interface';
+import { TextareaProps, TextareaRef } from './interface';
 import Union from '../assets/Union.svg';
 import './style/index.less';
 import { isFunction } from 'lodash';
 
-const Textarea: React.FC<TextareaProps> = (props) => {
+const Textarea: React.ForwardRefRenderFunction<TextareaRef, TextareaProps> = (props, ref) => {
   const {
     style,
     className,
@@ -21,11 +21,9 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     autoFocus = false,
     bordered = true,
     onChange,
-    onBlur = () => {},
+    onBlur = () => { },
     ...restProps
   } = props;
-
-  const textareaRef: any = useRef<HTMLTextAreaElement>();
 
   const textareaWrapperStyle = {
     width,
@@ -41,7 +39,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     className
   );
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     if (isFunction(onChange)) {
       onChange(e?.target?.value, e);
     }
@@ -50,7 +48,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   return (
     <div className="apipost-textarea-wrapper" style={textareaWrapperStyle}>
       <textarea
-        ref={textareaRef}
+        ref={ref}
         spellCheck="false"
         className={textareaClassNames}
         maxLength={maxLength}
@@ -67,4 +65,4 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     </div>
   );
 };
-export default Textarea;
+export default forwardRef(Textarea);

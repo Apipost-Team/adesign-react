@@ -56,24 +56,6 @@ function Modal(props: PropsWithChildren<ModalProps>, ref: any) {
 
   const [uuid] = useState(uuidv4());
   const modalRef = useRef<any>();
-  const onEscExit = (e: any, uuid: string) => {
-    setTimeout(() => {
-      if (
-        e.keyCode === 27 &&
-        onCancel &&
-        escToExit &&
-        modalRef?.current?.getAttribute('data-uuid') === uuid
-      ) {
-        onCancel();
-      }
-    }, 10);
-  };
-  useEffect(() => {
-    document.addEventListener('keyup', (e) => onEscExit(e, uuid), false);
-    return () => {
-      document.addEventListener('keyup', (e) => onEscExit(e, uuid), false);
-    };
-  }, []);
 
   return (
     <>
