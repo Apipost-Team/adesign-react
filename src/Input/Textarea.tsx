@@ -21,7 +21,6 @@ const Textarea: React.ForwardRefRenderFunction<TextareaRef, TextareaProps> = (pr
     autoFocus = false,
     bordered = true,
     onChange,
-    onBlur = () => {},
     ...restProps
   } = props;
 
