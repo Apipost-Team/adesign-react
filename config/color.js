@@ -25,6 +25,11 @@ const brandColorList = [
     title: '红色',
     name: 'red',
   },
+  {
+    color: '#FA7600',
+    title: '橙色',
+    name: 'orange',
+  }
 ];
 
 module.exports = brandColorList;
