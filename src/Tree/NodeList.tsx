@@ -89,8 +89,8 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
     <>
       {enableVirtualList ? (
         <AutoSizer>
-          <>
-            {({ width, height }: ScrollSize) => (
+          {({ width, height }: ScrollSize) => (
+            <>
               <VirtualList
                 width={width}
                 height={height}
@@ -101,9 +101,9 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
                 scrollToIndex={scrollToIndex}
                 onScroll={setScrollToIndex.bind(null, undefined)}
               />
-            )}
-            {afterNodeItem}
-          </>
+              {afterNodeItem}
+            </>
+          )}
         </AutoSizer>
       ) : (
         <div>
