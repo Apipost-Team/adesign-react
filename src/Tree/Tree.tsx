@@ -44,6 +44,7 @@ const Tree = (props: TreeProps, ref: any) => {
     nodeSort = undefined, // 节点排序
     rootFilter, // 过滤顶级节点
     checkLeafNode, // 检查当前节点是否叶子结点
+    afterNodeRender,
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [scrollToIndex, setScrollToIndex] = useState(0);
@@ -183,6 +184,7 @@ const Tree = (props: TreeProps, ref: any) => {
           enableVirtualList,
           scrollToIndex,
           setScrollToIndex,
+          afterNodeRender
         }}
       >
         <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />

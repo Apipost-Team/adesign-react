@@ -1,16 +1,16 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 export enum CheckStatus {
-  UNCHECK = "uncheck",
-  CHECKED = "checked",
-  HALFCHECK = "halfcheck",
+  UNCHECK = 'uncheck',
+  CHECKED = 'checked',
+  HALFCHECK = 'halfcheck',
 }
 
 // 拖拽悬停位置
 export enum DragHover {
-  TOP = "top",
-  INSIDE = "inside",
-  BOTTOM = "bottom",
+  TOP = 'top',
+  INSIDE = 'inside',
+  BOTTOM = 'bottom',
 }
 
 export interface TreeProps {
@@ -80,12 +80,12 @@ export interface TreeProps {
   /**
    * @zh 选中复选框回调事件
    */
-  onCheck?: (keys:any[]) => void;
+  onCheck?: (keys: any[]) => void;
 
   /**
    * @zh 自定义树节点
    */
-  render?:(nodeItem: any, props: any)=> ReactNode;
+  render?: (nodeItem: any, props: any) => ReactNode;
 
   /**
    * @zh 是否显示icon
@@ -95,7 +95,7 @@ export interface TreeProps {
   /**
    * @zh 点击节点回调方法
    */
-  onNodeClick?: (params:any) => void;
+  onNodeClick?: (params: any) => void;
 
   /**
    * @zh 多选节点回调方法
@@ -105,12 +105,12 @@ export interface TreeProps {
   /**
    * @zh 全选全部节回调方法，该属性仅在enableCheck为true时生效
    */
-  onCheckAll?: (status:boolean) => void;
+  onCheckAll?: (status: boolean) => void;
 
   /**
    * @zh 节点右侧内容点击回调方法
    */
-  onRightClick?: (e:React.MouseEvent,nodeData?:any) => void;
+  onRightClick?: (e: React.MouseEvent, nodeData?: any) => void;
 
   /**
    * @zh 当前选中节点
@@ -135,6 +135,9 @@ export interface TreeProps {
   checkLeafNode?: (nodeItem: any) => boolean;
 
   rootFilter?: (pre: any, after: any) => any[];
+
+  /*最后一行自定义渲染*/
+  afterNodeRender?: () => ReactNode;
 }
 
 export interface treeContextProps {
