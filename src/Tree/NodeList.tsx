@@ -69,13 +69,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
   const renderNodeItem = (item: any, nodeIndex: number, params: any) => {
     return (
       item.show.every((visible: boolean) => visible === true) && (
-        <TreeNode
-          {...params}
-          perfixCls={perfixCls}
-          {...item}
-          nodeKey={item.key}
-          nodeIndex={nodeIndex}
-        />
+        <TreeNode perfixCls={perfixCls} {...item} nodeKey={item.key} nodeIndex={nodeIndex} />
       )
     );
   };
