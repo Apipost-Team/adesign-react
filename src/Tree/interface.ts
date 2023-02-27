@@ -138,6 +138,11 @@ export interface TreeProps {
 
   /*最后一行自定义渲染*/
   afterNodeRender?: () => ReactNode;
+
+  /**
+   * @zh 开启虚拟化后每行高度
+   */
+  rowHeight?: ((rowIndex: number) => number) | number;
 }
 
 export interface treeContextProps {

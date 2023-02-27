@@ -11,7 +11,7 @@ type ScrollSize = {
 };
 
 const NodeList = React.forwardRef<any, any>((props, ref) => {
-  const { perfixCls, data, dataList } = props;
+  const { perfixCls, data, dataList, rowHeight = 30 } = props;
   const {
     handleExpandItem,
     handleCheckAll,
@@ -89,7 +89,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
                 width={width}
                 height={height}
                 rowCount={data.length}
-                rowHeight={30}
+                rowHeight={rowHeight}
                 rowRenderer={virtualRender}
                 overscanRowCount={10}
                 scrollToIndex={scrollToIndex}
