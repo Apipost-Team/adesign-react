@@ -89,7 +89,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
                 width={width}
                 height={height}
                 rowCount={data.length}
-                rowHeight={rowHeight}
+                rowHeight={isFunction(rowHeight) ? rowHeight.bind(null, data.length) : rowHeight}
                 rowRenderer={virtualRender}
                 overscanRowCount={10}
                 scrollToIndex={scrollToIndex}
