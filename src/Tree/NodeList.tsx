@@ -11,7 +11,7 @@ type ScrollSize = {
 };
 
 const NodeList = React.forwardRef<any, any>((props, ref) => {
-  const { perfixCls, data, dataList, rowHeight = 30 } = props;
+  const { prefixCls, data, dataList, rowHeight = 30 } = props;
   const {
     handleExpandItem,
     handleCheckAll,
@@ -66,10 +66,17 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
     checkStatus,
   }));
 
-  const renderNodeItem = (item: any, nodeIndex: number, params: any) => {
+  const renderNodeItem = (item: any, nodeIndex: number, params?: any) => {
     return (
       item.show.every((visible: boolean) => visible === true) && (
-        <TreeNode perfixCls={perfixCls} {...item} nodeKey={item.key} nodeIndex={nodeIndex} />
+        <TreeNode
+          {...params}
+          prefixCls={prefixCls}
+          itemCount={data.length}
+          {...item}
+          nodeKey={item.key}
+          nodeIndex={nodeIndex}
+        />
       )
     );
   };
@@ -80,7 +87,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
   const afterNodeItem = isFunction(afterNodeRender) ? afterNodeRender() : null;
 
   return (
-    <>
+    <div className="node-list-container" style={{ height: 500 }}>
       {enableVirtualList ? (
         <AutoSizer>
           {({ width, height }: ScrollSize) => (
@@ -95,17 +102,18 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
                 scrollToIndex={scrollToIndex}
                 onScroll={setScrollToIndex.bind(null, undefined)}
               />
-              {afterNodeItem}
             </>
           )}
         </AutoSizer>
       ) : (
         <div>
-          {data.map(renderNodeItem)}
+          {data.map((item: any, index: number) => (
+            <>{renderNodeItem(item, index)}</>
+          ))}
           {afterNodeItem}
         </div>
       )}
-    </>
+    </div>
   );
 });
 

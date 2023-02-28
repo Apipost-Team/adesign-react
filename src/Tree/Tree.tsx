@@ -11,7 +11,7 @@ import { TreeProps } from './interface';
 
 const { Provider } = TreeContext;
 
-const perfixCls = 'apipost-tree';
+const prefixCls = 'apipost-tree';
 
 const Tree = (props: TreeProps, ref: any) => {
   const {
@@ -159,7 +159,7 @@ const Tree = (props: TreeProps, ref: any) => {
   return (
     <div
       style={style}
-      className={cn(perfixCls, className)}
+      className={cn(prefixCls, className)}
       onClick={onOutSideClick}
       onContextMenu={handleRightClick}
     >
@@ -190,7 +190,7 @@ const Tree = (props: TreeProps, ref: any) => {
         <NodeList
           rowHeight={rowHeight}
           dataList={dataList}
-          perfixCls={perfixCls}
+          prefixCls={prefixCls}
           data={flattenNodes}
           ref={ref}
         />
