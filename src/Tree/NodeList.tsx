@@ -87,7 +87,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
   const afterNodeItem = isFunction(afterNodeRender) ? afterNodeRender() : null;
 
   return (
-    <div className="node-list-container" style={{ height: 500 }}>
+    <>
       {enableVirtualList ? (
         <AutoSizer>
           {({ width, height }: ScrollSize) => (
@@ -113,7 +113,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
           {afterNodeItem}
         </div>
       )}
-    </div>
+    </>
   );
 });
 
