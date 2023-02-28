@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
 import Indent from './Indent';
 import TreeContext from './TreeContext';
 import CheckBox from '../CheckBox';
 import { CheckStatus } from '../CheckBox/interface';
 import { TreeNodeProps } from './interface';
+import { isUndefined } from 'lodash';
 
 const TreeNode: React.FC<TreeNodeProps> = (props) => {
-  const { style, itemCount, prefixCls, disabled, ...restNodeProps } = props;
+  const { style, isSpecial = false, itemCount, prefixCls, disabled, ...restNodeProps } = props;
 
   const {
     enableCheck,
@@ -69,15 +70,22 @@ const TreeNode: React.FC<TreeNodeProps> = (props) => {
   );
   const nodeTitle = <div className={`${nodePrefixCls}-title`}>{props.title}</div>;
 
-  const nodeProperties = {
-    style,
-    className: classNames({
-      [nodePrefixCls]: true,
-      'tree-node-selected': selectedKeys.includes(props.nodeKey),
-    }),
-    onClick: handleNodeClick,
-    onContextMenu: handleContextMenu,
-  };
+  const nodeProperties = useMemo(() => {
+    if (isSpecial === true) {
+      return {
+        style,
+      };
+    }
+    return {
+      style,
+      className: classNames({
+        [nodePrefixCls]: true,
+        'tree-node-selected': selectedKeys.includes(props.nodeKey),
+      }),
+      onClick: handleNodeClick,
+      onContextMenu: handleContextMenu,
+    };
+  }, [style, selectedKeys, props.nodeKey]);
 
   return (
     <>

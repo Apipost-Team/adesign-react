@@ -157,4 +157,5 @@ export interface TreeNodeProps extends React.ReactElement {
   prefixCls: string;
   style: React.CSSProperties;
   itemCount: number;
+  isSpecial?: boolean;
 }
