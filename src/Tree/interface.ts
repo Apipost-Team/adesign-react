@@ -142,7 +142,7 @@ export interface TreeProps {
   /**
    * @zh 开启虚拟化后每行高度
    */
-  rowHeight?: ((rowIndex: number) => number) | number;
+  rowHeight?: ((rowCount: number, rowParams: { index: number }) => number) | number;
 }
 
 export interface treeContextProps {
