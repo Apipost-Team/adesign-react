@@ -6,7 +6,7 @@ const defaultStrokeWidth: any = {
   large: 8,
 };
 
-function LineProgress(props) {
+function LineProgress(props: any) {
   const {
     // textInside,
     type,
