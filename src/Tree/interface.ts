@@ -134,7 +134,7 @@ export interface TreeProps {
 
   checkLeafNode?: (nodeItem: any) => boolean;
 
-  rootFilter?: (pre: any, after: any) => any[];
+  rootFilter?: (item: any) => boolean;
 
   /*最后一行自定义渲染*/
   afterNodeRender?: () => ReactNode;
