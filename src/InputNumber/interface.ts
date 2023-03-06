@@ -39,6 +39,8 @@ export interface InputNumberProps {
    */
   modetype?: string;
 
+  readOnly?:string
+
   /**
    * @zh 值改变时的回调
    */
