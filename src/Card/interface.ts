@@ -5,4 +5,5 @@ export interface CardProps {
   bordered?: boolean; // 是否有边框
   style?: React.CSSProperties;
   className?: string | string[];
+  children?:React.ReactNode
 }
