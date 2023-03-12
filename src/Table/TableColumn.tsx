@@ -31,6 +31,10 @@ const TableColumn: React.FC<ColumnProps> = (props) => {
   };
 
   const handleDeleteRow = () => {
+    if (!isFunction(onDeleteRow)) {
+      debugger
+      return;
+    }
     onDeleteRow(rowIndex);
   };
 
