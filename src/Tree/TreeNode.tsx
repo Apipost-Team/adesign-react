@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-import classNames from "classnames";
-import Indent from "./Indent";
-import TreeContext from "./TreeContext";
-import CheckBox from "../CheckBox";
-import { CheckStatus } from "../CheckBox/interface";
-import { TreeNodeProps } from "./interface";
+import React, { useContext, useMemo } from 'react';
+import classNames from 'classnames';
+import Indent from './Indent';
+import TreeContext from './TreeContext';
+import CheckBox from '../CheckBox';
+import { CheckStatus } from '../CheckBox/interface';
+import { TreeNodeProps } from './interface';
+import { isUndefined } from 'lodash';
 
 const TreeNode: React.FC<TreeNodeProps> = (props) => {
-  const { style, perfixCls, disabled, ...restNodeProps } = props;
+  const { style, isSpecial = false, itemCount, prefixCls, disabled, ...restNodeProps } = props;
 
   const {
     enableCheck,
@@ -18,11 +19,11 @@ const TreeNode: React.FC<TreeNodeProps> = (props) => {
     selectedKeys,
     render,
     onRightClick = () => undefined,
-    onNodeClick = (params:any) => undefined,
+    onNodeClick = (params: any) => undefined,
     onMultiSelect = () => undefined,
   } = useContext(TreeContext);
 
-  const nodePerfixCls = `${perfixCls}-node`;
+  const nodePrefixCls = `${prefixCls}-node`;
 
   const getCheckStatus = () => {
     if (halfCheckedKeys.includes(props.nodeKey)) {
@@ -51,7 +52,7 @@ const TreeNode: React.FC<TreeNodeProps> = (props) => {
     return false;
   };
 
-  const indent = <Indent perfixCls={nodePerfixCls} {...restNodeProps} />;
+  const indent = <Indent prefixCls={nodePrefixCls} {...restNodeProps} />;
   const checkbox = (
     <>
       {enableCheck && (
@@ -67,23 +68,28 @@ const TreeNode: React.FC<TreeNodeProps> = (props) => {
       )}
     </>
   );
-  const nodeTitle = (
-    <div className={`${nodePerfixCls}-title`}>{props.title}</div>
-  );
+  const nodeTitle = <div className={`${nodePrefixCls}-title`}>{props.title}</div>;
 
-  const nodeProperties = {
-    style,
-    className: classNames({
-      [nodePerfixCls]: true,
-      "tree-node-selected": selectedKeys.includes(props.nodeKey),
-    }),
-    onClick: handleNodeClick,
-    onContextMenu: handleContextMenu,
-  };
+  const nodeProperties = useMemo(() => {
+    if (isSpecial === true) {
+      return {
+        style,
+      };
+    }
+    return {
+      style,
+      className: classNames({
+        [nodePrefixCls]: true,
+        'tree-node-selected': selectedKeys.includes(props.nodeKey),
+      }),
+      onClick: handleNodeClick,
+      onContextMenu: handleContextMenu,
+    };
+  }, [style, selectedKeys, props.nodeKey]);
 
   return (
     <>
-      {typeof render !== "function" ? (
+      {typeof render !== 'function' ? (
         <div {...nodeProperties}>
           {indent}
           {nodeTitle}
@@ -95,6 +101,7 @@ const TreeNode: React.FC<TreeNodeProps> = (props) => {
             indent,
             nodeTitle,
             checkbox,
+            itemCount,
           }),
           nodeProperties
         )

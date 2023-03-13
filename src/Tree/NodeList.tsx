@@ -1,9 +1,9 @@
-import React, { useContext, useImperativeHandle } from "react";
-import { List as VirtualList, AutoSizer } from "react-virtualized";
-import { isString, isUndefined } from "lodash";
-import TreeNode from "./TreeNode";
-import TreeContext from "./TreeContext";
-import { TreeNodeProps } from "./interface";
+import React, { useContext, useImperativeHandle } from 'react';
+import { List as VirtualList, AutoSizer } from 'react-virtualized';
+import { isFunction, isString, isUndefined } from 'lodash';
+import TreeNode from './TreeNode';
+import TreeContext from './TreeContext';
+import { TreeNodeProps } from './interface';
 
 type ScrollSize = {
   width: number;
@@ -11,7 +11,7 @@ type ScrollSize = {
 };
 
 const NodeList = React.forwardRef<any, any>((props, ref) => {
-  const { perfixCls, data, dataList } = props;
+  const { prefixCls, data, dataList, rowHeight = 30 } = props;
   const {
     handleExpandItem,
     handleCheckAll,
@@ -21,6 +21,7 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
     enableVirtualList,
     scrollToIndex,
     setScrollToIndex,
+    afterNodeRender,
   } = useContext(TreeContext);
 
   const handleScrollTo = (key: string, checkedKey = true) => {
@@ -65,12 +66,13 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
     checkStatus,
   }));
 
-  const renderNodeItem = (item:any, nodeIndex:number, params:any) => {
+  const renderNodeItem = (item: any, nodeIndex: number, params?: any) => {
     return (
       item.show.every((visible: boolean) => visible === true) && (
         <TreeNode
           {...params}
-          perfixCls={perfixCls}
+          prefixCls={prefixCls}
+          itemCount={data.length}
           {...item}
           nodeKey={item.key}
           nodeIndex={nodeIndex}
@@ -82,25 +84,34 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
   const virtualRender = ({ key, index, style }: any) =>
     renderNodeItem(data[index], index, { style });
 
+  const afterNodeItem = isFunction(afterNodeRender) ? afterNodeRender() : null;
+
   return (
     <>
       {enableVirtualList ? (
         <AutoSizer>
           {({ width, height }: ScrollSize) => (
-            <VirtualList
-              width={width}
-              height={height}
-              rowCount={data.length}
-              rowHeight={30}
-              rowRenderer={virtualRender}
-              overscanRowCount={10}
-              scrollToIndex={scrollToIndex}
-              onScroll={setScrollToIndex.bind(null, undefined)}
-            />
+            <>
+              <VirtualList
+                width={width}
+                height={height}
+                rowCount={data.length}
+                rowHeight={isFunction(rowHeight) ? rowHeight.bind(null, data.length) : rowHeight}
+                rowRenderer={virtualRender}
+                overscanRowCount={10}
+                scrollToIndex={scrollToIndex}
+                onScroll={setScrollToIndex.bind(null, undefined)}
+              />
+            </>
           )}
         </AutoSizer>
       ) : (
-        <div>{data.map(renderNodeItem)}</div>
+        <div>
+          {data.map((item: any, index: number) => (
+            <>{renderNodeItem(item, index)}</>
+          ))}
+          {afterNodeItem}
+        </div>
       )}
     </>
   );

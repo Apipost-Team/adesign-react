@@ -11,7 +11,7 @@ import { TreeProps } from './interface';
 
 const { Provider } = TreeContext;
 
-const perfixCls = 'apipost-tree';
+const prefixCls = 'apipost-tree';
 
 const Tree = (props: TreeProps, ref: any) => {
   const {
@@ -32,7 +32,7 @@ const Tree = (props: TreeProps, ref: any) => {
     },
     onCheck = () => undefined,
     render,
-    onNodeClick = (params:any) => undefined,
+    onNodeClick = (params: any) => undefined,
     onRightClick = () => undefined,
     onMultiSelect = () => undefined,
     onCheckAll = () => undefined,
@@ -44,10 +44,11 @@ const Tree = (props: TreeProps, ref: any) => {
     nodeSort = undefined, // 节点排序
     rootFilter, // 过滤顶级节点
     checkLeafNode, // 检查当前节点是否叶子结点
+    afterNodeRender,
+    rowHeight,
   } = props;
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [scrollToIndex, setScrollToIndex] = useState(0);
-
 
   const { mergeCheckedKeys, halfCheckedKeys, handleCheckNode, handleCheckAll } = useCheck({
     onCheck,
@@ -66,23 +67,23 @@ const Tree = (props: TreeProps, ref: any) => {
   }, [defaultExpandKeys]);
 
   // 批量展开/折叠
-  const prepareExpandKeys = (expand:boolean, datalist?:any[]) => {
-    const expandKeys :any= {};
-    if(datalist===undefined){
-      return expandKeys
+  const prepareExpandKeys = (expand: boolean, datalist?: any[]) => {
+    const expandKeys: any = {};
+    if (datalist === undefined) {
+      return expandKeys;
     }
     if (expand === true) {
-      const rootNode:any = {};
+      const rootNode: any = {};
       datalist.forEach((item) => {
-        rootNode[item[ fieldNames.key||'']] = {};
+        rootNode[item[fieldNames.key || '']] = {};
       });
       datalist.forEach((item) => {
-        const parent = rootNode[item[fieldNames.parent||'']];
+        const parent = rootNode[item[fieldNames.parent || '']];
         if (parent !== undefined) {
           parent.notLeaf = true;
         }
       });
-      Object.entries(rootNode).forEach(([key, item]:[string,any]) => {
+      Object.entries(rootNode).forEach(([key, item]: [string, any]) => {
         if (item.notLeaf === true) {
           expandKeys[key] = true;
         }
@@ -93,7 +94,7 @@ const Tree = (props: TreeProps, ref: any) => {
 
   // 树形菜单对象
   const cachedTree = useMemo(() => {
-    return arrayToTreeObject(isArray(dataList)?dataList:[], fieldNames, rootFilter);
+    return arrayToTreeObject(isArray(dataList) ? dataList : [], fieldNames, rootFilter);
   }, [dataList, fieldNames, rootFilter]);
 
   // 被展开菜单节点
@@ -108,19 +109,19 @@ const Tree = (props: TreeProps, ref: any) => {
     nodeKeys: sring 节点展开闭合/Array 要展开的节点
     scrollNodeKey 被滚动到的节点key
   */
-  const handleExpandItem = (nodeKeys:string|string[], scrollNodeKey:string) => {
-    let expandKeyData:{[key:string]:any} = {};
+  const handleExpandItem = (nodeKeys: string | string[], scrollNodeKey: string) => {
+    let expandKeyData: { [key: string]: any } = {};
     if (isBoolean(nodeKeys)) {
       expandKeyData = prepareExpandKeys(nodeKeys, dataList);
     } else {
-      const newExpandKeyData:any = {};
+      const newExpandKeyData: any = {};
       expandedKeys.forEach((item) => {
         newExpandKeyData[item] = true;
       });
       expandKeyData = newExpandKeyData;
     }
     if (Array.isArray(nodeKeys)) {
-      nodeKeys?.forEach((nodeKey:string) => {
+      nodeKeys?.forEach((nodeKey: string) => {
         expandKeyData[nodeKey] = true;
       });
     } else if (!isBoolean(nodeKeys) && isUndefined(expandKeyData[nodeKeys])) {
@@ -128,7 +129,7 @@ const Tree = (props: TreeProps, ref: any) => {
     } else {
       expandKeyData = omit(expandKeyData, nodeKeys);
     }
-    const expandKeyArr:string[] = Object.keys(expandKeyData);
+    const expandKeyArr: string[] = Object.keys(expandKeyData);
     setExpandedKeys(expandKeyArr);
     onExpandKeysChange(expandKeyArr);
 
@@ -141,7 +142,7 @@ const Tree = (props: TreeProps, ref: any) => {
     }
   };
 
-  const handleRightClick = (e:React.MouseEvent, nodeData?:any) => {
+  const handleRightClick = (e: React.MouseEvent, nodeData?: any) => {
     const data = flattenNodes.filter((node) => selectedKeys.includes(node.key));
 
     if (Array.isArray(data) && data.length > 1) {
@@ -158,7 +159,7 @@ const Tree = (props: TreeProps, ref: any) => {
   return (
     <div
       style={style}
-      className={cn(perfixCls, className)}
+      className={cn(prefixCls, className)}
       onClick={onOutSideClick}
       onContextMenu={handleRightClick}
     >
@@ -183,9 +184,16 @@ const Tree = (props: TreeProps, ref: any) => {
           enableVirtualList,
           scrollToIndex,
           setScrollToIndex,
+          afterNodeRender,
         }}
       >
-        <NodeList dataList={dataList} perfixCls={perfixCls} data={flattenNodes} ref={ref} />
+        <NodeList
+          rowHeight={rowHeight}
+          dataList={dataList}
+          prefixCls={prefixCls}
+          data={flattenNodes}
+          ref={ref}
+        />
       </Provider>
     </div>
   );

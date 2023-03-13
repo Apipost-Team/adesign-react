@@ -58,6 +58,8 @@ export interface SelectProps {
 
   // 是否禁用
   disabled?: boolean;
+
+  readOnly?: boolean;
 }
 
 export interface OptionProps {
