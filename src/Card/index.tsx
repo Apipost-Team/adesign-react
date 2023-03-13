@@ -4,11 +4,19 @@ import { CardProps } from './interface';
 import SvgClose from '../assets/close.svg';
 import Button from '../Button';
 import './style/index.less';
+import { isFunction } from 'lodash';
 
 const Card: React.FC<CardProps> = (props) => {
-  const { style, className, bordered, extra } = props;
+  const { style, className, bordered, onClose, extra } = props;
 
   const [visible, setVisible] = useState<boolean>(true);
+
+  const handleClose = () => {
+    setVisible(false);
+    if (isFunction(onClose)) {
+      onClose();
+    }
+  };
 
   return (
     <>
@@ -29,7 +37,7 @@ const Card: React.FC<CardProps> = (props) => {
               type="info"
               size="mini"
               icon={<SvgClose />}
-              onClick={setVisible.bind(null, false)}
+              onClick={handleClose}
             />
           )}
         </div>
