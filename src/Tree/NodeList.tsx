@@ -41,6 +41,10 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
 
     const ckdList = [key];
     const targetItem = treeDatas[key];
+    if (isUndefined(targetItem)) {
+      return;
+    }
+
     const findParentNodes = (parentNode: any) => {
       if (isUndefined(parentNode)) {
         return;
@@ -52,6 +56,9 @@ const NodeList = React.forwardRef<any, any>((props, ref) => {
       const newParent = treeDatas[parentNode[parentKey]];
       findParentNodes(newParent);
     };
+    if (isUndefined(treeDatas?.[targetItem?.[parentKey]])) {
+      return;
+    }
     findParentNodes(treeDatas[targetItem[parentKey]]);
     if (checkedKey === true) {
       handleExpandItem(ckdList, key);
