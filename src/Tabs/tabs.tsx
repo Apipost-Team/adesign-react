@@ -84,7 +84,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     []
   );
 
-  const tabsList :TabPanProps[]= Array.isArray(children)
+  const tabsList: TabPanProps[] = Array.isArray(children)
     ? children.reduce((a: TabPanProps[], b: TabPanProps) => a.concat(b), [])
     : [children];
 
@@ -97,7 +97,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
   //   }
   // }, [tabsList]);
 
-  const getTabIndex = (elements: any[], activeId: string|undefined) => {
+  const getTabIndex = (elements: any[], activeId: string | undefined) => {
     let index = -1;
     for (let i = 0; i < elements.length; i++) {
       const item = elements[i];
@@ -225,7 +225,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     </div>
   );
 
-  const renderScrollItems = (tabsItemList:React.ReactNode) => {
+  const renderScrollItems = (tabsItemList: React.ReactNode) => {
     return (
       <div
         className={cn({
@@ -278,7 +278,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
     <div style={style} ref={rootRef} {...restProps} className={cn('apipost-tabs', className)}>
       <Provider
         value={{
-          activeId: isString(mergedActiveId)?mergedActiveId:'',
+          activeId: isString(mergedActiveId) ? mergedActiveId : '',
           handleSwitchTab,
           handleRemoveTab,
           itemWidth,
@@ -302,7 +302,11 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
         )}
         <div className="apipost-tabs-content">
           {elementCache !== true ? (
-            activedContent
+            isFunction(contentRender) ? (
+              contentRender({ tabsList, activeId: mergedActiveId })
+            ) : (
+              activedContent
+            )
           ) : (
             <>
               {(!isArray(tabsList) || tabsList.length == 0) && !isUndefined(emptyContent) && (
@@ -310,7 +314,7 @@ const Tabs = (props: TabsProps<any>, rootRef: any) => {
               )}
 
               {isFunction(contentRender) ? (
-                contentRender({ tabsList, activeId:  mergedActiveId })
+                contentRender({ tabsList, activeId: mergedActiveId })
               ) : (
                 <>
                   {tabsList.map((item, index) => (
